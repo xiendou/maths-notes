@@ -1,0 +1,43 @@
+# Track only the four mathematics course folders and repository documentation.
+# Everything else at the workspace root stays local by default.
+/*
+!/.gitignore
+!/README.md
+!/0003 Analysis 1/
+!/0005 Algebra 1/
+!/0008 Applied Mathematics 1/
+!/0010 Mathematical Methods 1/
+
+# LaTeX build intermediates; keep the finished personal-note PDFs.
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.synctex(busy)
+*.fls
+*.fdb_latexmk
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.dvi
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Original lecture scans and local reference backups are not published.
+**/Slides*.pdf
+**/MATH0005 lecture notes.pdf
+**/reference/
+
+# Local editor, operating-system and credential files.
+**/.DS_Store
+**/.env
+**/.env.*
+**/*.swp
+**/*.swo
+**/*~

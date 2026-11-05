@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\title{Analysis 1\\[0.4em]\large Lecture Notes and Revision}
+\author{Dou}
+\date{2026/27}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+
+% Each lecture can be a new \section. Use \subsection for its main topics.
+% Lines beginning with % are reminders to you; they do not appear in the PDF.
+\section{Real numbers: natural numbers and integers}
+\noindent\textbf{Lecture date:} \emph{Add date here}
+
+\subsection{Natural numbers}
+For this lecture, the natural numbers start at $1$:
+\[
+\mathbb{N}=\{1,2,3,4,\ldots\}.
+\]
+Thus $0\notin\mathbb{N}$.
+
+\subsection{Operations and order on $\mathbb{N}$}
+The natural numbers are closed under addition and multiplication:
+\[
+m,n\in\mathbb{N}\quad\Longrightarrow\quad
+m+n\in\mathbb{N}\quad\text{and}\quad mn\in\mathbb{N}.
+\]
+For any $m,n\in\mathbb{N}$, exactly one of $m>n$, $m=n$, or $m<n$
+holds. Also, $m\geq n$ means $m>n$ or $m=n$.
+
+\subsection{Properties}
+For $m,n,p\in\mathbb{N}$:
+\begin{align*}
+m+n &= n+m, & mn &= nm && \text{(commutativity)},\\
+(m+n)+p &= m+(n+p), & (mn)p &= m(np) && \text{(associativity)},\\
+m(n+p) &= mn+mp &&&& \text{(distributivity)}.
+\end{align*}
+Order is transitive:
+\[
+m>n\ \text{and}\ n>p\quad\Longrightarrow\quad m>p,
+\]
+and similarly
+\[
+m\geq n\ \text{and}\ n\geq p\quad\Longrightarrow\quad m\geq p.
+\]
+
+\subsection{Why introduce integers?}
+Some equations have no solution in $\mathbb{N}$. For example,
+$x+1=0$ requires $x=-1$. This motivates the integers:
+\[
+\mathbb{Z}=\{\ldots,-3,-2,-1,0,1,2,3,\ldots\}.
+\]
+
+\subsection{Questions to revisit}
+% Add questions during the lecture; answer them afterwards.
+
+\subsection{Revision summary}
+% In your own words: what does N contain, and why do we need Z?
+
+% For the next lecture, copy this pattern:
+% \section{Next lecture title}
+% \noindent\textbf{Lecture date:} ...
+% \subsection{First topic}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
