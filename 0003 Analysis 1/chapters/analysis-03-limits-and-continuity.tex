@@ -1,0 +1,342 @@
+% !TeX root = ../analysis1.tex
+\chapter{Limits of Functions and Continuity}\label{chap:analysis-continuity}
+
+\section{Limits and one-sided limits}
+A function limit describes values near a point. Its value at that point
+can be different, or the function may not be defined there at all.
+
+\begin{definition}[Limit at an interior point]
+Suppose $f$ is defined on an open interval about $c$, except possibly at $c$.
+We write $\lim_{x\to c}f(x)=L$ if
+\[
+\forall\varepsilon>0\ \exists\delta>0:\quad
+0<|x-c|<\delta\ \Longrightarrow\ |f(x)-L|<\varepsilon.
+\]
+The condition $0<|x-c|$ excludes the point $c$ itself.
+\end{definition}
+
+\begin{definition}[One-sided limits]
+The right-hand limit $\lim_{x\to a^+}f(x)=L$ means that for every
+$\varepsilon>0$ there is $\delta>0$ such that
+\[
+a<x<a+\delta\ \Longrightarrow\ |f(x)-L|<\varepsilon,
+\]
+for $x$ in the domain. The left-hand limit at $b$ uses $b-\delta<x<b$.
+We also write $x\downarrow a$ and $x\uparrow b$, respectively.
+\end{definition}
+At an interior point a two-sided limit exists with value $L$ exactly when
+both one-sided limits exist and equal $L$.
+
+\begin{example}[Different one-sided limits]
+Let
+\[
+f(x)=\begin{cases}2x,&x<1,\\1,&x=1,\\4-x,&x>1.\end{cases}
+\]
+Then $\lim_{x\to1^-}f(x)=2$ and $\lim_{x\to1^+}f(x)=3$, so the two-sided
+limit does not exist. For the left limit,
+$|f(x)-2|=2|x-1|$, so choose $\delta=\varepsilon/2$.
+For the right limit, $|f(x)-3|=|x-1|$, so choose $\delta=\varepsilon$.
+The assigned value $f(1)=1$ does not affect either limit.
+\end{example}
+
+\begin{example}[Oscillation controlled by a small factor]
+For $x\ne0$, let $f(x)=1+x^2\cos(1/x)$. Since
+\[
+|f(x)-1|\leq x^2,
+\]
+choosing $\delta=\sqrt\varepsilon$ proves $\lim_{x\to0}f(x)=1$.
+No value of $f(0)$ was needed.
+\end{example}
+
+\section{Continuity}
+\begin{definition}[Continuity on a domain]
+Let $S\subseteq\mathbb R$ and $c\in S$. A function $f:S\to\mathbb R$
+is continuous at $c$ if
+\[
+\forall\varepsilon>0\ \exists\delta>0\ \forall x\in S:\quad
+|x-c|<\delta\ \Longrightarrow\ |f(x)-f(c)|<\varepsilon.
+\]
+It is continuous on $S$, written $f\in C(S)$, if it is continuous at every
+point of $S$. Otherwise it is discontinuous at any point where the condition
+fails.
+\end{definition}
+At an interior point of an interval, continuity is equivalent to
+$\lim_{x\to c}f(x)=f(c)$. On $[a,b]$, the endpoint conditions are
+\[
+\lim_{x\to a^+}f(x)=f(a),\qquad
+\lim_{x\to b^-}f(x)=f(b).
+\]
+Only points in the domain are tested.
+
+\begin{example}[A removable discontinuity]
+Extend $1+x^2\cos(1/x)$ to $0$ by setting $f(0)=\gamma$.
+The extension is continuous at $0$ if and only if $\gamma=1$.
+\end{example}
+
+\begin{example}[Thomae's function]
+On $(0,1)$ define
+\[
+T(x)=\begin{cases}
+0,&x\notin\mathbb Q,\\
+1/q,&x=p/q\text{ in lowest terms},\ q>0.
+\end{cases}
+\]
+Then $\lim_{x\to c}T(x)=0$ for every $c\in(0,1)$. It is continuous at
+every irrational point and discontinuous at every rational point.
+
+\textit{Supplementary explanation.} Given $\varepsilon>0$, choose an
+integer $Q>1/\varepsilon$. There are only finitely many reduced fractions
+in $(0,1)$ with denominator at most $Q$. A sufficiently small punctured
+neighbourhood of $c$ avoids all of them, other than possibly $c$ itself.
+At any other rational point in that neighbourhood, $q>Q$, so
+$T(x)<\varepsilon$; at an irrational point $T(x)=0$.
+Therefore the punctured limit is zero. This equals $T(c)$ exactly when
+$c$ is irrational.
+\end{example}
+
+\section{Sequential criteria and algebra}
+\begin{theorem}[Sequential criterion for limits]\label{thm:analysis-sequential}
+Under the domain assumptions for an interior limit,
+$\lim_{x\to c}f(x)=L$ if and only if every sequence $(x_n)$ in the domain
+with $x_n\ne c$ and $x_n\to c$ satisfies $f(x_n)\to L$.
+For a one-sided limit, require the sequence to approach from that side.
+\end{theorem}
+\begin{proof}
+Suppose the limit exists. Given $\varepsilon>0$, choose a corresponding
+$\delta>0$. Since $x_n\to c$, eventually $0<|x_n-c|<\delta$, and therefore
+$|f(x_n)-L|<\varepsilon$.
+
+Conversely, if the limit condition fails, there is $\varepsilon_0>0$ such
+that for every $\delta>0$ there is a domain point $x$ satisfying
+$0<|x-c|<\delta$ and $|f(x)-L|\geq\varepsilon_0$.
+Choose such a point $x_n$ for $\delta=1/n$. Then $x_n\to c$, but
+$f(x_n)\not\to L$, contradicting the sequential hypothesis.
+Restrict the selected points to the appropriate side for one-sided limits.
+\end{proof}
+
+\begin{corollary}[Sequential continuity]
+A function $f:S\to\mathbb R$ is continuous at $c\in S$ if and only if
+for every sequence $x_n\in S$ tending to $c$, we have $f(x_n)\to f(c)$.
+\end{corollary}
+The proof is the same, without requiring $x_n\ne c$.
+
+\begin{theorem}[Algebra of function limits]
+If $f(x)\to L$ and $g(x)\to M$ as $x\to c$, then
+\[
+f(x)+g(x)\to L+M,\qquad f(x)g(x)\to LM.
+\]
+If $M\ne0$, then $g$ is nonzero sufficiently near $c$ and
+$f(x)/g(x)\to L/M$. The analogous rules hold for one-sided limits.
+In particular, sums and products of functions continuous at $c$ are
+continuous there; their quotient is continuous if $g(c)\ne0$.
+\end{theorem}
+\begin{proof}
+Apply the sequence limit rules to $f(x_n)$ and $g(x_n)$ for every sequence
+approaching $c$, then use Theorem~\ref{thm:analysis-sequential}.
+Nonvanishing follows by making $|g(x)-M|<|M|/2$.
+\end{proof}
+
+\begin{theorem}[Sandwich theorem for functions]
+If $f(x)\leq g(x)\leq h(x)$ sufficiently near $c$, and both bounding
+functions tend to $L$ as $x\to c$, then $g(x)\to L$.
+Continuity of $g$ is not assumed.
+\end{theorem}
+\begin{proof}
+Apply the sequence sandwich theorem to $f(x_n),g(x_n),h(x_n)$ for any
+sequence approaching $c$, or use the same $L\pm\varepsilon$ bounds directly.
+\end{proof}
+\begin{example}
+For $x>0$, $-\sqrt x\leq\sqrt x\cos(1/x)\leq\sqrt x$. Both bounds tend
+to zero as $x\to0^+$, so $\sqrt x\cos(1/x)\to0$.
+\end{example}
+
+\begin{example}[Standard continuous functions]
+Constant functions and $f(x)=x$ are continuous directly from the definition.
+The algebra rules show that every polynomial is continuous, and every
+rational function $p(x)/q(x)$ is continuous wherever $q(x)\ne0$.
+For instance $(x^2-2x+7)/(x^2+1)$ is continuous on $\mathbb R$.
+\end{example}
+
+\begin{theorem}[Composition]
+If $g$ is continuous at $c$ and $f$ is continuous at $g(c)$, with the
+composition defined near $c$ in its domain, then $f\circ g$ is continuous
+at $c$.
+\end{theorem}
+\begin{proof}
+For $x_n\to c$, continuity gives $g(x_n)\to g(c)$, then
+$f(g(x_n))\to f(g(c))$.
+\end{proof}
+
+\section{Continuity of the exponential}
+Recall the definition $\exp(x)=\sum_{n=0}^{\infty}x^n/n!$ and the addition
+law from Chapter~\ref{chap:analysis-series}. We already know positivity
+and $\exp(-x)=1/\exp(x)$.
+
+\begin{lemma}[Bounds near zero]\label{lem:analysis-exp-bounds}
+For $0\leq x<1$,
+\[
+1+x\leq\exp(x)\leq\sum_{n=0}^{\infty}x^n=\frac1{1-x}.
+\]
+For $-1<x<0$, writing $t=-x\in(0,1)$ and taking reciprocals gives
+\[
+1+x\leq\exp(x)\leq\frac1{1-x}.
+\]
+Hence the same bounds hold throughout $|x|<1$.
+\end{lemma}
+\begin{proof}
+For nonnegative $x$, use positivity of the exponential terms and
+$1/n!\leq1$. For $x=-t$, reciprocate
+$1+t\leq\exp(t)\leq1/(1-t)$, using positivity.
+\end{proof}
+This argument supplies local bounds without assuming any continuity in
+advance. The stronger inequality $\exp(x)\geq1+x$ for all real $x$ is
+cited as homework in the source; these local bounds suffice here.
+
+\begin{theorem}
+The exponential function is continuous on $\mathbb R$.
+\end{theorem}
+\begin{proof}
+As $x\to0$, both $1+x$ and $1/(1-x)$ tend to $1$. The sandwich theorem
+gives $\exp(x)\to1=\exp(0)$.
+For any fixed $c$,
+\[
+\exp(c+h)=\exp(c)\exp(h)\longrightarrow\exp(c)
+\quad(h\to0),
+\]
+which proves continuity at $c$.
+\end{proof}
+For example, $\exp((x^3-7x)/(3x^2+5))$ is continuous on all of $\mathbb R$
+by composition.
+
+\section{Continuous functions on a closed bounded interval}
+\begin{lemma}
+If $x_n\in[a,b]$ and $x_n\to x$, then $x\in[a,b]$.
+\end{lemma}
+\begin{proof}
+Pass to limits in $a\leq x_n\leq b$ using preservation of order under limits.
+\end{proof}
+Together with Bolzano--Weierstrass, this shows every sequence in $[a,b]$
+has a subsequence converging to a point still in $[a,b]$. This property
+is called \emph{sequential compactness}.
+
+\begin{theorem}[Boundedness]
+Every continuous function $f:[a,b]\to\mathbb R$ is bounded.
+\end{theorem}
+\begin{proof}
+If it were unbounded, choose $x_n\in[a,b]$ with $|f(x_n)|>n$.
+A subsequence $x_{j_n}$ converges to $c\in[a,b]$ by compactness.
+Continuity implies $f(x_{j_n})\to f(c)$, hence this image subsequence is
+bounded. But $|f(x_{j_n})|>j_n\geq n$, a contradiction.
+\end{proof}
+
+\begin{theorem}[Extreme value theorem]\label{thm:analysis-evt}
+Every continuous function $f:[a,b]\to\mathbb R$ attains both a maximum
+and a minimum: there exist $x_{\max},x_{\min}\in[a,b]$ with
+\[
+f(x_{\max})=\sup f([a,b]),\qquad
+f(x_{\min})=\inf f([a,b]).
+\]
+\end{theorem}
+\begin{proof}
+Boundedness gives $M=\sup f([a,b])\in\mathbb R$.
+For each $n$ choose $x_n\in[a,b]$ with $M-1/n<f(x_n)\leq M$.
+A subsequence tends to $c\in[a,b]$; its image tends to $f(c)$ by continuity
+and to $M$ by the sandwich theorem. Therefore $f(c)=M$.
+Apply the same argument to $-f$ to obtain the minimum.
+This completes the proof left unfinished on source p.~59.
+\end{proof}
+
+\begin{example}[Why the hypotheses matter]
+The continuous function $1/x$ on $(0,1]$ is unbounded: the interval is not
+closed. The continuous function $x$ on $[0,\infty)$ is unbounded: this
+interval is closed but not bounded. Finally, on the compact interval $[0,1]$,
+setting $f(0)=1$ and $f(x)=1/x$ for $x>0$ gives an unbounded function
+because continuity at $0$ fails.
+\end{example}
+
+\section{The intermediate value theorem}
+\begin{lemma}[Preservation of a strict inequality]
+If $f$ is continuous at $c$ and $f(c)>\lambda$, then $f(x)>\lambda$
+for all domain points sufficiently near $c$. An analogous statement holds
+for $f(c)<\lambda$.
+\end{lemma}
+\begin{proof}
+Choose $\varepsilon=(f(c)-\lambda)/2>0$ and require
+$|f(x)-f(c)|<\varepsilon$. Then
+$f(x)>f(c)-\varepsilon>\lambda$. Apply this to $-f$ for the other case.
+\end{proof}
+
+\begin{theorem}[Intermediate value theorem]\label{thm:analysis-ivt}
+Let $f:[a,b]\to\mathbb R$ be continuous. Every real number $\lambda$
+between $f(a)$ and $f(b)$ equals $f(c)$ for some $c\in[a,b]$.
+\end{theorem}
+\begin{proof}
+The endpoint cases are immediate. Replacing $f$ by $-f$ if necessary,
+assume $f(a)<\lambda<f(b)$. Set
+$S=\{x\in[a,b]:f(x)<\lambda\}$ and $c=\sup S$.
+Continuity at the endpoints gives points of $S$ strictly larger than $a$
+and excludes a whole left neighbourhood of $b$ from $S$.
+Consequently $a<c<b$.
+
+If $f(c)<\lambda$, the lemma gives a point $x>c$ close to $c$ with
+$f(x)<\lambda$, contradicting that $c$ bounds $S$.
+If $f(c)>\lambda$, a neighbourhood $(c-\delta,c+\delta)$ has
+$f(x)>\lambda$. Since $S$ contains no point above $c$ either,
+$c-\delta$ would be an upper bound for $S$, after shrinking $\delta$
+if necessary. This contradicts minimality of $c$.
+Therefore $f(c)=\lambda$.
+\end{proof}
+
+Combining the extreme and intermediate value theorems gives
+\[
+f([a,b])=[m,M],\qquad m=\min f([a,b]),\quad M=\max f([a,b]).
+\]
+In particular a continuous function taking opposite signs at the endpoints
+has a zero between them.
+
+\section{The logarithm and real powers}
+\begin{definition}[Bijection and inverse]
+A function $f:A\to B$ is injective if different inputs give different
+outputs, and surjective if every $y\in B$ has an input $x\in A$.
+If both hold it is bijective and has an inverse $f^{-1}:B\to A$ with
+$f^{-1}(f(x))=x$ and $f(f^{-1}(y))=y$.
+\end{definition}
+
+\begin{theorem}
+The exponential is a strictly increasing bijection
+$\exp:\mathbb R\to(0,\infty)$.
+\end{theorem}
+\begin{proof}
+For $h>0$, its series gives $\exp(h)\geq1+h>1$. Thus if $y=x+h$,
+\[
+\exp(y)=\exp(x)\exp(h)>\exp(x).
+\]
+It is therefore injective. Also $\exp(x)\geq1+x\to+\infty$ as
+$x\to+\infty$, and $\exp(x)=1/\exp(-x)\to0$ as $x\to-\infty$.
+Given $u>0$, choose $x_1<x_2$ with $\exp(x_1)<u<\exp(x_2)$.
+Continuity and the intermediate value theorem give $x$ with $\exp(x)=u$,
+proving surjectivity.
+\end{proof}
+
+\begin{definition}[Natural logarithm]
+The inverse of $\exp$ is the natural logarithm
+$\log=\ln:(0,\infty)\to\mathbb R$. In particular,
+\[
+\exp(\log x)=x,\qquad \log(\exp t)=t.
+\]
+Define $e=\exp(1)=\sum_{n=0}^{\infty}1/n!\approx2.718281828459$.
+\end{definition}
+
+\begin{definition}[Real powers]
+For $a>0$ and $x\in\mathbb R$, define $a^x=\exp(x\log a)$.
+\end{definition}
+This agrees with the usual definition for rational exponents: for positive
+integers $q$, $(a^{p/q})^q=a^p$, and positivity selects the positive root.
+The addition law gives, for $a>0$ and $x,y\in\mathbb R$,
+\[
+a^{x+y}=a^xa^y,\qquad (a^x)^y=a^{xy}.
+\]
+Also $e^x=\exp(x)$. If $a\ne1$, the map $x\mapsto a^x$ is a bijection
+$\mathbb R\to(0,\infty)$, with inverse $\log_a$. For $a=1$ it is constant.
+For a negative base, a real-valued $a^x$ cannot be defined for every real
+$x$ with these same conventions.

@@ -1,0 +1,589 @@
+% !TeX root = ../applied-mathematics1-companion.tex
+\chapter{Continuous Mathematical Models}\label{chap:applied-continuous}
+
+\section{From a verbal model to an ODE}
+Continuous time describes a state through a rate of change:
+\[
+\dot x=\frac{dx}{dt}=F(x,t),\qquad x(0)=x_0.
+\]
+An equation is \emph{autonomous} when its right-hand side has no explicit
+time dependence: $\dot x=f(x)$. Distinguish this from the discrete equation
+$x_{t+1}=f(x_t)$: the same expression on the right can give very different
+behaviour in the two settings.
+
+\studyguide{Choose the state variables and units; state assumptions;
+identify gains and losses; write rate of change = gains minus losses;
+check units and physical constraints; impose initial conditions; then solve
+or analyse equilibria and signs.}
+For a scalar state of units $U$, the right side of an ODE must have units
+$U/\text{time}$. This simple check often catches a missing factor.
+The models here have smooth right sides, so standard local existence and
+uniqueness results apply. A solution is followed only while it exists in
+the relevant domain; not every nonlinear model has solutions for all time.
+
+\subsection{Partial derivatives and first-order expansion}
+For $f(x,y)$, partial differentiation varies one argument while fixing the
+other. In symbols,
+\[
+f_x(x,y)=\lim_{h\to0}\frac{f(x+h,y)-f(x,y)}h,
+\quad
+f_y(x,y)=\lim_{h\to0}\frac{f(x,y+h)-f(x,y)}h.
+\]
+For instance, $f=x^2y+\cos y$ gives $f_x=2xy$ and $f_y=x^2-\sin y$.
+For a differentiable function,
+\[
+f(a+X,b+Y)=f(a,b)+f_x(a,b)X+f_y(a,b)Y
++o\bigl(\sqrt{X^2+Y^2}\bigr).
+\]
+The derivatives evaluated at $(a,b)$ are constants in the linear approximation.
+
+\section{Scalar population models}
+\subsection{Exponential growth}
+If growth rate is proportional to the population, $\dot P=kP$, $k>0$.
+The solution is $P(t)=P_0e^{kt}$, including $P\equiv0$ when $P_0=0$.
+Positive initial populations increase indefinitely. This can describe a
+limited time range but ignores eventual resource constraints.
+
+\subsection{Continuous logistic growth}
+Competition within a population suggests
+\begin{equation}\label{eq:applied-cont-logistic}
+\dot P=kP\left(1-\frac PK\right),\qquad k,K>0.
+\end{equation}
+Here $k$ has units inverse time and $K$ has population units. The equilibria
+are $0$ and $K$. For $0<P<K$, $\dot P>0$; for $P>K$, $\dot P<0$.
+Thus the phase line points towards $K$ on both sides in the positive domain.
+
+To solve, first treat the equilibria separately, since separation divides
+by $P(K-P)$. For other initial values,
+\begin{align*}
+\frac{dP}{P(K-P)}&=\frac{k}{K}\,dt,\\
+\frac1K\left(\frac1P+\frac1{K-P}\right)dP&=\frac{k}{K}\,dt,\\
+\log\left|\frac P{K-P}\right|
+-\log\left|\frac{P_0}{K-P_0}\right|&=kt.
+\end{align*}
+The sign of $P/(K-P)$ is preserved along a non-equilibrium trajectory.
+After applying the initial condition and rearranging,
+\begin{equation}\label{eq:applied-logistic-solution}
+P(t)=\frac{KP_0}{P_0+(K-P_0)e^{-kt}}.
+\end{equation}
+This formula also gives both equilibrium solutions when $P_0=0$ or $K$.
+For $P_0>0$, its denominator remains positive for $t\geq0$ and
+$P(t)\to K$. If $P_0>K$, absolute values in the logarithmic derivation
+are essential, even though the final formula has the same form.
+
+\section{Phase lines and scalar stability}
+For $\dot P=f(P)$, an equilibrium satisfies $f(P^*)=0$.
+Write $P=P^*+p$ and expand:
+\[
+\dot p=f(P^*+p)=f'(P^*)p+o(p).
+\]
+The linearised equation $\dot p=\lambda p$ has solution
+$p(t)=p_0e^{\lambda t}$, with $\lambda=f'(P^*)$.
+For a continuously differentiable $f$ near $P^*$:
+\begin{itemize}
+\item $f'(P^*)<0$ implies local asymptotic stability;
+\item $f'(P^*)>0$ implies instability;
+\item $f'(P^*)=0$ leaves the linear test inconclusive.
+\end{itemize}
+The condition here is a \emph{negative derivative}, not derivative modulus
+less than $1$. The latter belongs to discrete maps.
+
+\begin{example}[A periodic array of equilibria: source Example 2.1]
+For $\dot P=\sin P$, equilibria satisfy $P^*=n\pi$, $n\in\mathbb Z$.
+Since $f'(P^*)=\cos(n\pi)=(-1)^n$, odd multiples attract and even multiples
+are unstable. Between neighbouring even multiples $2j\pi$ and
+$2(j+1)\pi$, every non-equilibrium solution tends to $(2j+1)\pi$.
+If $P$ denotes a population, restrict the mathematical phase line to
+nonnegative values.
+\end{example}
+
+\begin{example}[Additional handwritten example, 15 October]
+Consider $\dot x=f(x)=e^{-x}\sin x$ for initial values $x_0\in[0,6]$.
+The equilibria in this interval are $0$ and $\pi$.
+Since $f'(x)=e^{-x}(\cos x-\sin x)$,
+\[
+f'(0)=1>0,\qquad f'(\pi)=-e^{-\pi}<0.
+\]
+Thus $0$ is unstable, while $\pi$ attracts. For $0<x<\pi$ the state moves
+right; for $\pi<x\leq6<2\pi$ it moves left. Every $x_0\in(0,6]$ tends to
+$\pi$, while $x_0=0$ stays fixed.
+
+To interpret the changing speed, note $|\dot x|=|f(x)|$.
+The positive velocity has its maximum at $x=\pi/4$; the negative velocity
+has its minimum at $x=5\pi/4$. A right-moving state below $\pi/4$ first
+speeds up and then slows down. A left-moving state above $5\pi/4$ first
+speeds up as it approaches $5\pi/4$, then slows towards $\pi$.
+A negative velocity and a decreasing speed are different statements.
+\end{example}
+
+\section{A mixing model}
+A tank initially contains $100$ litres of pure water. Brine with concentration
+$5$ grams per litre enters at $2$ litres per minute; an equal outflow keeps
+the volume constant. Assume perfect instantaneous mixing.
+Let $M(t)$ be the salt mass in grams and $t$ be measured in minutes.
+\[
+\text{inflow salt rate}=5\times2=10\ \mathrm{g/min},\qquad
+\text{outflow salt rate}=\frac{M}{100}\times2=\frac{M}{50}\ \mathrm{g/min}.
+\]
+Therefore $\dot M=10-M/50$, with $M(0)=0$. An integrating factor gives
+\begin{align*}
+\frac d{dt}\left(Me^{t/50}\right)&=10e^{t/50},\\
+M(t)&=500+Ce^{-t/50},\\
+M(0)=0&\quad\Longrightarrow\quad C=-500.
+\end{align*}
+The mass and concentration are
+\[
+M(t)=500(1-e^{-t/50})\ \mathrm g,\qquad
+c(t)=\frac{M(t)}{100}=5(1-e^{-t/50})\ \mathrm{g/L}.
+\]
+As $t\to\infty$, the tank concentration approaches the incoming concentration.
+If inflow and outflow volumes differed, the volume would vary and the
+outflow concentration would be $M(t)/V(t)$ instead.
+
+\section{Coupled systems, phase planes and nullclines}
+A two-species model has the form
+\[
+\dot x=f(x,y),\qquad\dot y=g(x,y).
+\]
+Terms proportional to $xy$ represent encounters under a well-mixed
+assumption. Their signs encode the interaction. For positive constants:
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Interaction&$\dot x$&$\dot y$\\\midrule
+Predation ($x$ prey, $y$ predator)&$ax-bxy$&$-cy+dxy$\\
+Competition&$ax-bxy$&$cy-dxy$\\
+Mutual benefit&$ax+bxy$&$cy+dxy$\\\bottomrule
+\end{tabular}
+\end{center}
+These are simplified models; sign information alone does not capture all
+resource limitations or guarantee bounded populations.
+
+\begin{definition}[Phase portrait and nullclines]
+A trajectory is the curve traced by $(x(t),y(t))$ in the phase plane,
+with arrows showing increasing time. The vector field is $(f(x,y),g(x,y))$.
+The $x$-nullclines satisfy $f(x,y)=0$, where nonzero arrows are vertical.
+The $y$-nullclines satisfy $g(x,y)=0$, where nonzero arrows are horizontal.
+Equilibria satisfy both equations simultaneously.
+\end{definition}
+Under uniqueness, two distinct trajectories cannot cross at a non-equilibrium
+point: the same state cannot have two different future solutions.
+A nullcline is generally not a trajectory, and a point on just one
+nullcline need not be an equilibrium.
+
+\begin{example}[Reading the source phase portrait: source Example 2.3]
+The supplied sketch has rightward flow on the $x$-axis and downward flow
+on the $y$-axis, with an unstable origin, an unstable interior equilibrium,
+and a closed orbit attracting nearby trajectories. It illustrates an
+attracting \emph{limit cycle}: an isolated periodic orbit.
+One cannot infer this entire portrait from interaction signs alone.
+In particular, the closed Lotka--Volterra orbits studied below are not
+attracting limit cycles, because they form a family of neighbouring cycles.
+\end{example}
+
+\studyguide{For a phase portrait: solve $f=g=0$; draw both types of nullcline;
+check signs of $f$ and $g$ in each region; combine them into flow arrows;
+then draw trajectories consistent with those directions and uniqueness.}
+
+\begin{example}[Competing species: source Section 2.4.2]\label{ex:applied-competition}
+Consider
+\[
+\dot x=x(5-x-y),\qquad\dot y=y(8-x-2y).
+\]
+The $x$-nullclines are $x=0$ and $x+y=5$; the $y$-nullclines are $y=0$
+and $x+2y=8$. Their intersections give
+\[
+(0,0),\qquad(5,0),\qquad(0,4),\qquad(2,3).
+\]
+For $x,y>0$, $\dot x$ has the sign of $5-x-y$, and $\dot y$ has the sign
+of $8-x-2y$. At $(1,1)$, both are positive, so arrows point up and right.
+Above both oblique nullclines, both are negative, so arrows point down and left.
+The axes are invariant because the corresponding population derivative vanishes.
+\end{example}
+\input{figures/applied-competition-nullclines}
+
+\section{Linearisation of two-dimensional systems}
+At an equilibrium $(x^*,y^*)$, write $x=x^*+X$ and $y=y^*+Y$.
+First-order expansion gives the linearised system
+\[
+\begin{pmatrix}\dot X\\\dot Y\end{pmatrix}
+=J\begin{pmatrix}X\\Y\end{pmatrix},\qquad
+J=\begin{pmatrix}A&B\\C&D\end{pmatrix}
+=\left.\begin{pmatrix}f_x&f_y\\g_x&g_y\end{pmatrix}\right|_{(x^*,y^*)}.
+\]
+The matrix $J$ is the \emph{Jacobian at the equilibrium}. For the original
+nonlinear system there are also higher-order remainder terms.
+
+Try a mode $(X,Y)^{\mathsf T}=\mathbf v e^{\lambda t}$, with
+$\mathbf v\ne\mathbf0$. Substitution gives $J\mathbf v=\lambda\mathbf v$.
+Thus $\lambda$ is an eigenvalue and must satisfy
+\begin{equation}\label{eq:applied-characteristic}
+\det(\lambda I-J)=(\lambda-A)(\lambda-D)-BC=0.
+\end{equation}
+This determinant approach works even when $B=0$ or $C=0$; dividing by a
+matrix entry could lose those cases.
+
+For distinct eigenvalues with independent eigenvectors, the general linear
+solution is
+\[
+\begin{pmatrix}X\\Y\end{pmatrix}
+=c_1\mathbf v_1e^{\lambda_1t}+c_2\mathbf v_2e^{\lambda_2t}.
+\]
+There are two independent constants, not four unrelated coefficients in
+$X$ and $Y$. Repeated eigenvalues may require a term involving $te^{\lambda t}$.
+Complex conjugate modes combine into real sine and cosine terms.
+Superposition applies to the homogeneous linearised system, not generally
+to the original nonlinear model.
+
+\begin{proposition}[Local linear stability]
+For a continuously differentiable nonlinear vector field, if all eigenvalues
+of its equilibrium Jacobian have negative real part, the equilibrium is
+locally asymptotically stable. If at least one has positive real part,
+it is unstable. If some real parts are zero and none are positive,
+linearisation alone generally does not decide nonlinear stability.
+\end{proposition}
+These standard linearisation results justify using the modes as a local
+stability test. The linear solution is not an exact formula for the full
+nonlinear trajectory, even when it predicts stability correctly.
+
+\subsection{Trace and determinant: a supplementary shortcut}
+Let $\tau=A+D$ and $\Delta=AD-BC$. The characteristic equation is
+$\lambda^2-\tau\lambda+\Delta=0$.
+\begin{itemize}
+\item $\Delta<0$: one positive and one negative eigenvalue, an unstable saddle.
+\item $\Delta>0$, $\tau<0$: negative real parts, local attraction.
+\item $\Delta>0$, $\tau>0$: positive real parts, instability.
+\item $\Delta>0$, $\tau=0$: purely imaginary eigenvalues; no nonlinear
+stability conclusion from the linear test alone.
+\end{itemize}
+For $\Delta>0$, the sign of $\tau^2-4\Delta$ distinguishes two real modes
+from complex conjugate modes. The cases $\Delta=0$ require further analysis.
+
+\subsection{Return to the competition example}
+At $(2,3)$, direct substitution gives
+\begin{align*}
+\dot X&=-2X-2Y-X^2-XY,\\
+\dot Y&=-3X-6Y-XY-2Y^2.
+\end{align*}
+Dropping the quadratic terms gives
+\[
+J=\begin{pmatrix}-2&-2\\-3&-6\end{pmatrix},\qquad
+\lambda^2+8\lambda+6=0,\qquad\lambda=-4\pm\sqrt{10}.
+\]
+Both eigenvalues are negative, so coexistence is locally asymptotically stable.
+For reference, the general Jacobian is
+\[
+J(x,y)=\begin{pmatrix}5-2x-y&-x\\-y&8-x-4y\end{pmatrix}.
+\]
+The other equilibria have eigenvalues $5,8$ at $(0,0)$; $-5,3$ at $(5,0)$;
+and $1,-8$ at $(0,4)$. Thus the origin is repelling and the two nonzero
+axis equilibria are saddles. These extra classifications complete the
+local picture without asserting global attraction for every initial state.
+
+\section{The Lotka--Volterra predator--prey model}
+\textbf{Convention for this section: $x$ is predator population, $y$ is prey.}
+This reverses the labels in the earlier illustrative interaction table.
+With $a,b,c,d>0$,
+\begin{equation}\label{eq:applied-lv}
+\dot x=x(-a+by),\qquad\dot y=y(c-dx).
+\end{equation}
+Predators decline without prey, prey grow without predators, and encounters
+benefit predators while reducing prey. Positive populations stay positive:
+for example $x(t)=x_0\exp\!\left(\int_0^t[-a+by(s)]\,ds\right)$.
+The axes are invariant and are analysed separately from the positive interior.
+
+The nullclines are $x=0$, $y=a/b$ for $\dot x=0$, and $y=0$, $x=c/d$
+for $\dot y=0$. Equilibria are $(0,0)$ and $(c/d,a/b)$.
+Above $y=a/b$ predators grow; to the right of $x=c/d$ prey decrease.
+For this predator-on-horizontal-axis convention, the positive orbits
+run clockwise around coexistence.
+
+\subsection{Harvesting}
+Per-capita harvesting rates $h_1,h_2\geq0$ give
+\[
+\dot x=x(-a-h_1+by),\qquad\dot y=y(c-h_2-dx).
+\]
+If $c>h_2$, the positive equilibrium shifts to
+\[
+\left(\frac{c-h_2}{d},\frac{a+h_1}{b}\right).
+\]
+Thus its predator value falls and prey value rises relative to the original
+coexistence equilibrium. These are equilibrium or cycle-average comparisons,
+not a claim that every instantaneous prey population rises. If $c\leq h_2$,
+there is no positive coexistence equilibrium of this form.
+
+\subsection{Local analysis}
+At the origin, the linearised equations are $\dot X=-aX$, $\dot Y=cY$,
+so the origin is a saddle.
+At coexistence,
+\[
+J=\begin{pmatrix}0&bc/d\\-ad/b&0\end{pmatrix},\qquad
+\lambda^2=-ac,\qquad\lambda=\pm i\sqrt{ac}.
+\]
+Let $\omega=\sqrt{ac}$ and $B=bc/d$. The real linear solution can be written
+\begin{align*}
+X(t)&=A_1\cos(\omega t)+A_2\sin(\omega t),\\
+Y(t)&=\frac\omega B\bigl[-A_1\sin(\omega t)+A_2\cos(\omega t)\bigr].
+\end{align*}
+It oscillates with period $2\pi/\sqrt{ac}$, using two independent constants.
+This is the small-amplitude linearised period, not the exact period of
+every nonlinear orbit. Purely imaginary eigenvalues alone do not prove
+nonlinear stability; we next use a conserved quantity.
+
+\subsection{A first integral and closed trajectories}
+For $x,y>0$ and away from a vertical trajectory tangent, take the ratio:
+\[
+\frac{dy}{dx}=\frac{y(c-dx)}{x(-a+by)}.
+\]
+Separation yields
+\[
+\int\left(-\frac ay+b\right)dy
+=\int\left(\frac cx-d\right)dx,
+\]
+so a trajectory satisfies
+\begin{equation}\label{eq:applied-lv-integral}
+c\log x-dx+a\log y-by=\text{constant}.
+\end{equation}
+Logs require \emph{strictly positive} populations, not merely nonnegative ones.
+Direct differentiation verifies the conserved expression along the whole
+positive trajectory, including points where the ratio $dy/dx$ was unavailable.
+Exponentiating gives
+\[
+F(x)G(y)=H>0,\qquad F(x)=x^ce^{-dx},\quad G(y)=y^ae^{-by}.
+\]
+Each factor tends to zero at both ends of its positive domain. Also
+\[
+F'(x)=x^{c-1}e^{-dx}(c-dx),\qquad
+G'(y)=y^{a-1}e^{-by}(a-by).
+\]
+Thus $F$ has a unique maximum $M_1=(c/d)^ce^{-c}$ at $c/d$;
+$G$ has a unique maximum $M_2=(a/b)^ae^{-a}$ at $a/b$.
+At $H=M_1M_2$, the level set is just the equilibrium. For
+$0<H<M_1M_2$, horizontal and vertical lines through the equilibrium each
+meet the level set twice, and the trajectory is a closed curve surrounding it.
+
+\textit{Supplementary justification.} Equivalently,
+\[
+V(x,y)=dx-c\log x+by-a\log y
+\]
+is strictly convex, tends to $+\infty$ at the boundary and at infinity,
+and has its unique minimum at coexistence. Its non-minimal level sets
+are compact smooth closed curves with no equilibrium on them.
+The nonvanishing vector field follows each such curve periodically.
+It also follows that coexistence is stable in the non-attracting sense:
+nearby level curves remain nearby, but no other one converges to the centre.
+It is therefore a nonlinear \emph{centre}, not an asymptotically stable state
+and not an attracting limit cycle.
+\input{figures/applied-lotka-volterra}
+
+\subsection{Average populations over a cycle}
+For a periodic positive orbit of period $T$,
+\[
+\frac{\dot y}y=c-dx\quad\Longrightarrow\quad
+\frac1T\int_0^T x(t)\,dt
+=\frac cd-\frac{\log y(T)-\log y(0)}{dT}=\frac cd.
+\]
+Similarly, integrating $\dot x/x=-a+by$ gives
+\[
+\overline x=\frac cd,\qquad\overline y=\frac ab.
+\]
+The time averages equal the equilibrium populations although the instantaneous
+values oscillate. For the harvested model with positive coexistence, the
+same calculation uses $a+h_1$ and $c-h_2$.
+
+\section{The SIR epidemic model}
+This is a mathematical compartment model under idealised assumptions,
+not a fitted description of a particular current epidemic.
+Let $S$ denote susceptible individuals, $I$ infectious individuals, and
+$R$ removed individuals (recovered, isolated or dead).
+Assume a closed, well-mixed population, no demographic turnover or return
+to susceptibility, and transitions $S\to I\to R$.
+The model is
+\begin{equation}\label{eq:applied-sir}
+\dot S=-\alpha SI,\qquad
+\dot I=\alpha SI-\beta I,\qquad
+\dot R=\beta I,\qquad\alpha,\beta>0.
+\end{equation}
+With population counts as variables, $\alpha$ has units
+$(\text{population}\times\text{time})^{-1}$ and $\beta$ has units inverse time.
+Some other conventions use an infection term divided by population size;
+we consistently follow the supplied equations without that divisor.
+
+Take $S(0)=S_0>0$, $I(0)=I_0>0$ and $R(0)=0$.
+Adding equations gives $S+I+R=N=S_0+I_0$, a conserved total.
+Thus $R=N-S-I$ and the physical $S$--$I$ phase region is the triangle
+\[
+S\geq0,\qquad I\geq0,\qquad S+I\leq N.
+\]
+The full line $I=0$ consists of equilibria. The $S$-nullclines are $S=0$
+and $I=0$; the $I$-nullclines are $I=0$ and $S=\rho$, where
+\[
+\rho=\frac\beta\alpha.
+\]
+Inside the positive triangle, $\dot S<0$, so every trajectory moves left.
+If $S>\rho$, $\dot I>0$; if $S<\rho$, $\dot I<0$.
+The dimensionless initial growth threshold is $\alpha S_0/\beta=S_0/\rho$.
+
+\subsection{An exact phase-plane relation}
+For $S,I>0$,
+\[
+\frac{dI}{dS}=-1+\frac\rho S.
+\]
+Integrating and applying initial conditions gives
+\begin{equation}\label{eq:applied-sir-phase}
+I(S)=N-S+\rho\log\frac S{S_0}.
+\end{equation}
+This relates the two populations without explicitly solving for time.
+\input{figures/applied-sir-phase}
+
+\subsection{When does the infection peak?}
+If $S_0>\rho$, $I$ initially rises. Its subsequent peak occurs when
+$S=\rho$, giving
+\[
+I_{\max}=N-\rho+\rho\log\frac\rho{S_0}.
+\]
+If $S_0\leq\rho$, the trajectory starts on or to the left of this threshold,
+so its maximum for $t\geq0$ is $I_0$, not the value of an unreachable
+turning point obtained by extending the phase curve backwards.
+The peak formula therefore needs the outbreak condition $S_0>\rho$.
+
+\subsection{Removed population and final size}
+Taking the ratio of the $S$ and $R$ equations gives
+\[
+\frac{dS}{dR}=-\frac S\rho
+\quad\Longrightarrow\quad S(R)=S_0e^{-R/\rho}.
+\]
+Since $0\leq R\leq N$,
+$S(t)\geq S_0e^{-N/\rho}>0$. Susceptibles are not exhausted completely;
+infections stop growing when their reproduction rate falls below removals.
+Substitution into $\dot R=\beta I$ gives the exact scalar equation
+\begin{equation}\label{eq:applied-sir-R}
+\dot R=\beta\bigl[N-R-S_0e^{-R/\rho}\bigr],\qquad R(0)=0.
+\end{equation}
+It is suitable for numerical integration but does not generally have a
+simple elementary explicit solution.
+
+\textit{Supplementary final-size relation.} Since $S$ decreases and $R$
+increases while both remain bounded, they have limits $S_\infty,R_\infty$.
+Then $I=N-S-R$ has a limit too. That limit must be zero, since
+$\dot R=\beta I$ and a positive limiting $I$ would force unbounded $R$.
+Therefore
+\[
+S_\infty=S_0e^{-(N-S_\infty)/\rho},\qquad R_\infty=N-S_\infty.
+\]
+This implicit equation determines the physical final state reached from
+the given initial conditions; it is not an instruction to choose an
+arbitrary algebraic root.
+
+\section{An approximate explicit SIR solution}
+The sources obtain a solvable approximation by assuming $R/\rho\ll1$.
+Expanding the exponential in \eqref{eq:applied-sir-R} gives
+\[
+e^{-R/\rho}=1-\frac R\rho+\frac{R^2}{2\rho^2}
++O\bigl((R/\rho)^3\bigr).
+\]
+With $I_0=N-S_0$, define $q=S_0/\rho-1$ and $a=S_0/(2\rho^2)$.
+The quadratic approximation is
+\begin{equation}\label{eq:applied-sir-approx}
+\dot R_{\mathrm{app}}=\beta(I_0+qR_{\mathrm{app}}-aR_{\mathrm{app}}^2),
+\qquad R_{\mathrm{app}}(0)=0.
+\end{equation}
+Using a separate subscript emphasises that this is a different differential
+equation, approximating the exact model only where the expansion is accurate.
+
+\subsection{Solving the quadratic equation}
+The source marks the detailed integration non-examinable. Retain it as an
+optional worked derivation. Put
+\[
+\kappa=\sqrt{q^2+4aI_0},\qquad
+b=\frac q{2a},\qquad A=\frac\kappa{2a}.
+\]
+Since $I_0>0$, $\kappa>|q|$ and hence $|q/\kappa|<1$.
+Completing the square gives
+\[
+I_0+qR-aR^2=a\bigl[A^2-(R-b)^2\bigr].
+\]
+Let $z=(R-b)/A$. Then
+\[
+\dot z=\frac{\beta\kappa}{2}(1-z^2),\qquad
+\operatorname{artanh}z=\frac{\beta\kappa t}{2}+C.
+\]
+At $t=0$, $z=-q/\kappa$, so set
+$\phi=\operatorname{artanh}(q/\kappa)$ to obtain
+\begin{equation}\label{eq:applied-sir-tanh}
+R_{\mathrm{app}}(t)=\frac{\rho^2}{S_0}
+\left[q+\kappa\tanh\left(\frac{\beta\kappa t}{2}-\phi\right)\right].
+\end{equation}
+Here $\operatorname{artanh}$ is the inverse hyperbolic tangent, not the
+reciprocal of $\tanh$. Differentiating the approximate solution gives
+\[
+\dot R_{\mathrm{app}}(t)=\frac{\beta\kappa^2\rho^2}{2S_0}
+\operatorname{sech}^2\left(\frac{\beta\kappa t}{2}-\phi\right).
+\]
+The initial condition is a useful check: $\tanh(-\phi)=-q/\kappa$, so
+$R_{\mathrm{app}}(0)=0$.
+
+\begin{remark}[Keep the approximation consistent]
+For the exact model, $S=S_0e^{-R/\rho}$ and $I=N-R-S$.
+Inserting $R_{\mathrm{app}}$ into these expressions gives approximate
+reconstructions, not an exact SIR solution. Alternatively
+$I_{\mathrm{app}}=\dot R_{\mathrm{app}}/\beta$ follows from the quadratic
+truncation. These two reconstructions agree only to the retained order:
+they should not be described as identical exact functions.
+A large numerical $\rho$ is not sufficient by itself; the dimensionless
+ratio $R/\rho$ must remain small over the time range of interest.
+\end{remark}
+
+\subsection{What the source's historical illustrations show}
+For the supplied boarding-school illustration, the stated inputs are
+$N=760$, $I_0=1$, $S_0=759$ and a peak near $300$ infections.
+Using the exact phase-plane peak formula gives an equation for $\rho$:
+\[
+760-\rho+\rho\log(\rho/759)=300.
+\]
+On $0<\rho<759$, numerical solution gives roughly $\rho\approx195.0$.
+The source rounds this to about $200$. The peak height determines this
+parameter ratio, but not the time scale: one needs timing information to
+identify $\beta$, then $\alpha=\beta/\rho$.
+
+For the source's rounded choice $\rho=200$, $q\approx2.795$,
+$\kappa\approx2.802$, and $q/\kappa\approx0.998$.
+Thus $\phi$ is around $3.4$, not $\operatorname{artanh}(0.014)$ as printed.
+Also the total number removed can be much larger than $200$, so the
+small-$R/\rho$ approximation cannot be assumed valid over the whole outbreak.
+These are model illustrations from the handout; the underlying data are
+not supplied as a table, and no data fit has been reproduced here.
+
+The Bombay plague illustration similarly compares a curve proportional
+to $\dot R$, rather than cumulative $R$, with deaths per unit time.
+Interpreting deaths as a fixed fraction of removals requires an extra
+observation assumption; the compartment equations alone do not provide
+that conversion. The source's plotted observations and fitted parameters
+are not reconstructed as new evidence.
+
+\section{A second-order equation as a planar system}
+For
+\[
+\ddot x+3\dot x+2\sin x=0,
+\]
+set $y=\dot x$. Then
+\[
+\dot x=y,\qquad\dot y=-3y-2\sin x.
+\]
+The nullclines are $y=0$ and $y=-(2/3)\sin x$, and the equilibria are
+$(n\pi,0)$ for integers $n$. At such a point,
+\[
+J=\begin{pmatrix}0&1\\-2\cos(n\pi)&-3\end{pmatrix},\qquad
+\lambda^2+3\lambda+2\cos(n\pi)=0.
+\]
+For even $n$, the eigenvalues are $-1,-2$, giving local attraction.
+For odd $n$, they are $(-3\pm\sqrt{17})/2$, with opposite signs,
+giving an unstable saddle.
+This conversion lets the same equilibrium and Jacobian methods analyse
+second-order motion, connecting this chapter with mechanics.
+
+\studyguide{For a continuous model: find zero rates, not intersections
+with $y=x$. Use derivative signs in one dimension and Jacobian eigenvalue
+real parts in two dimensions. If the linear test has zero real parts,
+look for nonlinear information such as a first integral. State any domain
+or small-parameter assumptions before using an explicit approximation.}

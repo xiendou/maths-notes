@@ -1,0 +1,307 @@
+% !TeX root = ../applied-mathematics1-companion.tex
+\chapter{Mechanics: Simple Forces}\label{chap:applied-mechanics}
+
+\section{Newton's laws and inertial frames}
+The models in this chapter treat bodies as point particles of constant mass.
+Position, velocity, acceleration and force are vectors; in one-dimensional
+motion we use signed scalar components along a chosen positive axis.
+
+\begin{definition}[Inertial frame]
+An inertial frame is a reference frame in which a force-free particle moves
+with constant velocity. Newton's laws below are used in such a frame.
+\end{definition}
+\begin{enumerate}
+\item \textbf{First law.} An isolated particle moves in a straight line at
+constant velocity. Zero velocity is just one possibility.
+\item \textbf{Second law.} For fixed mass $m$, the net force is
+$\mathbf F_{\mathrm{net}}=m\mathbf a=m\ddot{\mathbf r}$.
+\item \textbf{Third law.} The force on particle 1 due to particle 2 equals
+minus the force on particle 2 due to particle 1:
+$\mathbf F_{1\leftarrow2}=-\mathbf F_{2\leftarrow1}$.
+The strong form used for central interactions also places them along the
+line joining the particles.
+\end{enumerate}
+Third-law force pairs act on different bodies: they do not cancel on a
+free-body diagram of just one body. Multiple forces acting on the same body
+must be summed before applying the second law.
+In an accelerating frame, extra inertial-force terms are needed; one cannot
+simply reuse the same net-force equation unchanged.
+
+\section{Balancing forces}
+Near Earth's surface, weight has magnitude $mg$, directed downwards, with
+$g\approx9.8\ \mathrm{m\,s^{-2}}$. Mass is measured in kilograms, force in
+newtons, and $1\ \mathrm N=1\ \mathrm{kg\,m\,s^{-2}}$.
+Weight depends on the gravitational field; mass does not disappear when
+an object is weightless.
+
+A taut light string exerts a tension along itself, pulling on the body to
+which it is attached. A smooth contact surface exerts a normal reaction
+perpendicular to the surface. For a light string over an ideal smooth
+massless pulley, the tension magnitude is the same on both sides.
+A string cannot push; if a calculation requires negative tension, the taut
+string model must be reconsidered.
+
+Static equilibrium requires zero acceleration and zero initial velocity.
+Zero net force alone gives constant velocity, which need not be rest.
+To balance forces on a particle, resolve the vector equation
+$\sum\mathbf F=\mathbf0$ into convenient perpendicular directions.
+
+\studyguide{Draw a separate free-body diagram for each body or junction.
+Choose axes and mark the angles from those axes. Resolve every force,
+then apply $\sum F=ma$ along each axis. Do not add a body's own third-law
+reaction force to its own diagram.}
+
+\begin{example}[Three supporting cables: source Example 3.1]
+A mass $m$ hangs from a vertical cable, attached at a light junction to two
+inclined cables making angles $\theta_1,\theta_2$ above the horizontal.
+Let the inclined tensions be $T_1,T_2$ and the vertical one $T_3$.
+\input{figures/applied-cable-junction}
+For the mass, equilibrium gives $T_3=mg$.
+For the junction, resolve horizontally and vertically:
+\[
+T_1\cos\theta_1=T_2\cos\theta_2,\qquad
+T_1\sin\theta_1+T_2\sin\theta_2=mg.
+\]
+Eliminating one tension and using the sine addition identity gives
+\[
+T_1=\frac{mg\cos\theta_2}{\sin(\theta_1+\theta_2)},\qquad
+T_2=\frac{mg\cos\theta_1}{\sin(\theta_1+\theta_2)},\qquad T_3=mg.
+\]
+For equal angles $\theta$, both inclined tensions equal $mg/(2\sin\theta)$.
+Nearly horizontal cables need very large tension, consistent with the
+small vertical components of their forces.
+\end{example}
+
+\begin{example}[Blocks on smooth inclines: source Example 3.2]
+Two masses $m_1=1\ \mathrm{kg}$ and $m_2=\sqrt2\ \mathrm{kg}$ are joined
+by a taut light string over an ideal pulley. The smooth inclines have
+angles $\pi/4$ and $\theta$ above horizontal.
+For equilibrium, resolve along each plane:
+\[
+T=m_1g\sin(\pi/4)=\frac g{\sqrt2},\qquad
+T=m_2g\sin\theta=\sqrt2g\sin\theta.
+\]
+Thus $\sin\theta=1/2$; with $0<\theta<\pi/2$, $\theta=\pi/6$.
+Perpendicular resolution gives
+\[
+R_1=m_1g\cos(\pi/4)=\frac g{\sqrt2},\qquad
+R_2=m_2g\cos(\pi/6)=g\sqrt{\frac32}.
+\]
+With masses substituted numerically in kilograms, these force values are
+in newtons. The reaction is not generally $mg$: only the perpendicular
+component of weight is balanced by it.
+\end{example}
+
+\section{Hooke's law and connected springs}
+A spring of natural length $\ell$ and stiffness $k>0$ exerts a restoring
+force proportional to signed extension $e$:
+\[
+\text{spring tension}=ke,\qquad\text{force on a displaced end opposes }e.
+\]
+Stiffness has units $\mathrm{N/m}$. Positive extension means stretching;
+negative extension means compression, when a spring pushes outwards.
+Hooke's law is an approximation within the spring's elastic range.
+An elastic string differs: it supplies tension when extended but goes
+slack when shorter than its natural length.
+
+\begin{example}[Three vertical springs: source Example 3.3]
+Three identical light springs of natural length $\ell$ and stiffness $k$
+connect a ceiling to a floor $3\ell$ below it. A mass $m$ is attached at
+each of the two intermediate junctions.
+Measure distance downwards from the ceiling. Let the mass positions be
+$\ell+x_1$ and $2\ell+x_2$. The signed spring extensions are
+\[
+e_1=x_1,\qquad e_2=x_2-x_1,\qquad e_3=-x_2.
+\]
+For the upper mass, downward forces minus upward forces give
+\[
+mg+k(x_2-x_1)-kx_1=0.
+\]
+For the lower mass, the middle spring force is upward with signed magnitude
+$k(x_2-x_1)$, and the bottom spring contributes downward signed force
+$-kx_2$. Thus
+\[
+mg-k(x_2-x_1)-kx_2=0.
+\]
+The two equations become
+\[
+2x_1-x_2=\frac{mg}{k},\qquad2x_2-x_1=\frac{mg}{k}.
+\]
+Subtracting gives $x_1=x_2$, and hence both equal $mg/k$.
+The mass positions below the ceiling are
+\[
+\ell+\frac{mg}{k},\qquad2\ell+\frac{mg}{k}.
+\]
+The spring lengths are $\ell+mg/k$, $\ell$, and $\ell-mg/k$.
+The bottom spring is compressed and pushes upwards on the lower mass;
+the middle spring has zero extension. The ideal geometry requires
+$mg/k<\ell$, and physical validity also requires staying in the elastic range.
+\end{example}
+
+\section{Equations of one-dimensional motion}
+Choose a signed coordinate $x(t)$ and write
+\[
+v=\dot x,\qquad a=\ddot x=\frac{dv}{dt},\qquad
+m\ddot x=F(t,x,\dot x).
+\]
+Where velocity can be considered locally as a function of position, the
+chain rule gives a third useful acceleration form:
+\[
+a=\frac{dv}{dt}=\frac{dv}{dx}\frac{dx}{dt}=v\frac{dv}{dx}.
+\]
+Use $dv/dt$ for a velocity--time relation and $v\,dv/dx$ for a
+velocity--position relation. Turning points may require treating separate
+branches of $v(x)$; one cannot divide by $v$ indiscriminately at $v=0$.
+
+\section{Constant force and time-dependent force}
+\subsection{Constant acceleration}
+For $\dot v=a$ constant, with $x(0)=x_0$ and $v(0)=u$, integrate twice:
+\[
+v(t)=u+at,\qquad x(t)=x_0+ut+\frac12at^2.
+\]
+Alternatively, integrating $v\,dv/dx=a$ gives
+\[
+v^2=u^2+2a(x-x_0).
+\]
+These formulae require constant acceleration and consistent signed directions.
+
+\begin{example}[A sinusoidal force: source Example 3.4]
+Suppose $F(t)=mA\sin(\omega t)$, with $\omega>0$, $x(0)=0$ and
+$v(0)=v_0$. Here $A$ is an acceleration amplitude, not a force.
+The equation $\ddot x=A\sin(\omega t)$ integrates to
+\begin{align*}
+v(t)&=v_0+\frac A\omega\bigl(1-\cos(\omega t)\bigr),\\
+x(t)&=\left(v_0+\frac A\omega\right)t
+-\frac A{\omega^2}\sin(\omega t).
+\end{align*}
+The sine term stays bounded, while the first term is linear in $t$.
+Consequently $x(t)\to+\infty$ exactly when $v_0>-A/\omega$;
+it tends to $-\infty$ for $v_0<-A/\omega$, and remains bounded at equality.
+Divergence of position to $+\infty$ does not necessarily mean the velocity
+is positive at every sufficiently late instant: bounded oscillations can
+remain on top of the drift.
+\end{example}
+
+\section{Quadratic resistance: direction matters}
+A drag force must oppose velocity. With constant $k>0$, quadratic drag per
+unit mass is represented in one dimension by $-kv|v|$.
+Choose upward displacement $y$ and upward signed velocity $v=\dot y$.
+With gravity, a single signed equation is
+\[
+\dot v=-g-kv|v|.
+\]
+During ascent ($v>0$), it becomes $\dot v=-g-kv^2$.
+During descent ($v<0$), it becomes $\dot v=-g+kv^2$.
+Using $-kv^2$ for both upward and downward velocities would make drag point
+downward in both cases, which is physically wrong.
+Here $k$ has units inverse length.
+
+\begin{example}[Maximum height: source Example 3.5]
+Launch from $y=0$ with $v(0)=u>0$. At the highest point $y=h$, $v=0$.
+For the ascending part use $v\,dv/dy=-g-kv^2$, so
+\begin{align*}
+h&=-\int_u^0\frac{v\,dv}{g+kv^2}\\
+&=\frac1{2k}\log\left(\frac{g+ku^2}{g}\right)
+=\frac1{2k}\log\left(1+\frac{ku^2}{g}\right).
+\end{align*}
+As $k\to0$, $\log(1+z)\sim z$ recovers the drag-free height $u^2/(2g)$.
+Only ascent was used; the drag sign changes after the turning point.
+\end{example}
+
+\begin{example}[Downward terminal speed: source Example 3.6]
+Now choose displacement positive \emph{downwards} and let $v(0)=v_0\geq0$.
+Gravity is positive and drag negative, so
+\[
+\dot v=g-kv^2=k(V^2-v^2),\qquad V=\sqrt{\frac gk}.
+\]
+The equilibrium $v=V$ is the terminal speed. If $v_0=V$, the speed stays
+constant. Otherwise, separation gives
+\[
+\int_{v_0}^{v(t)}\frac{dw}{V^2-w^2}=kt,
+\qquad
+\frac1{V^2-w^2}=\frac1{2V}\left(\frac1{V-w}+\frac1{V+w}\right).
+\]
+Hence
+\[
+\log\left|\frac{V+v}{V-v}\frac{V-v_0}{V+v_0}\right|=2Vkt.
+\]
+A solution cannot cross the equilibrium $V$ by uniqueness, so $V-v$ keeps
+the sign of $V-v_0$. Rearranging gives the expression valid for all
+$v_0\geq0$:
+\begin{equation}\label{eq:applied-quadratic-drag}
+v(t)=V\frac{(V+v_0)e^{2Vkt}-(V-v_0)}
+              {(V+v_0)e^{2Vkt}+(V-v_0)}.
+\end{equation}
+It also includes $v_0=V$ by direct substitution. For $v_0<V$ the speed
+increases towards $V$; for $v_0>V$ it decreases towards $V$.
+Equivalently, when $v_0<V$,
+\[
+v(t)=V\tanh\left(Vkt+\operatorname{artanh}(v_0/V)\right).
+\]
+For $v_0>V$, the corresponding hyperbolic form uses $\coth$, not a real
+$\operatorname{artanh}(v_0/V)$. The exponential fraction avoids this case split.
+\end{example}
+
+\section{Linear resistance and terminal velocity}
+For constant applied force per unit mass $a_0$ and linear drag coefficient
+$\lambda>0$, the signed equation is
+\[
+\dot v=a_0-\lambda v.
+\]
+The drag term $-\lambda v$ automatically reverses with the velocity.
+The terminal velocity is $v_\infty=a_0/\lambda$, which may be positive,
+negative or zero. The coefficient $\lambda$ has units inverse time.
+An integrating factor gives, for every real $v_0$,
+\begin{align*}
+v(t)&=v_\infty+(v_0-v_\infty)e^{-\lambda t},\\
+x(t)&=x_0+v_\infty t+
+\frac{v_0-v_\infty}{\lambda}(1-e^{-\lambda t}).
+\end{align*}
+The difference from terminal velocity preserves its sign and decays
+exponentially. Starting exactly at terminal velocity produces uniform motion.
+
+\begin{example}[A bullet in a block: source Example 3.8]
+A particle enters a resistive block at $x=0$ with speed $u>0$. Resistance
+per unit mass is $kv$, with $k>0$, and gravity is neglected.
+Then $\dot v=-kv$ and
+\[
+v(t)=ue^{-kt},\qquad x(t)=\frac uk(1-e^{-kt}).
+\]
+The limiting penetration is $u/k$. It is approached as $t\to\infty$;
+in this ideal model, the particle does not stop exactly in finite time.
+A block of width at least $u/k$ prevents finite-time escape through the
+far side. To reach half the limiting distance,
+\[
+\frac u{2k}=\frac uk(1-e^{-kT})
+\quad\Longrightarrow\quad T=\frac{\log2}{k}.
+\]
+
+Now two particles enter simultaneously from opposite ends, initially
+separated by $L>0$, with inward speeds $u_1,u_2>0$.
+Their distances into the block at time $t$ are
+\[
+s_1(t)=\frac{u_1}{k}(1-e^{-kt}),\qquad
+s_2(t)=\frac{u_2}{k}(1-e^{-kt}).
+\]
+Finite-time collision requires $s_1+s_2=L$. Since $1-e^{-kt}<1$ for every
+finite $t\geq0$, the necessary and sufficient condition is
+\[
+\boxed{u_1+u_2>kL}.
+\]
+When $u_1+u_2=kL$, the separation tends to zero but is positive at every
+finite time; that is a limiting meeting, not a finite-time collision.
+This corrects the non-strict inequality in both supplied versions.
+For a finite collision,
+\[
+T=\frac1k\log\frac{u_1+u_2}{u_1+u_2-kL},\qquad
+s_1(T)=\frac{u_1L}{u_1+u_2}.
+\]
+The second expression gives the collision position measured from the
+first particle's entry end. As $u_1+u_2$ decreases to $kL$ from above,
+the collision time diverges, confirming the strict threshold.
+\end{example}
+
+\studyguide{For motion: choose the positive direction first; draw forces;
+write the signed net force; choose $dv/dt$ or $v\,dv/dx$ according to the
+relation wanted; include initial conditions and equilibrium velocities;
+check the result's units, signs and limiting behaviour.}

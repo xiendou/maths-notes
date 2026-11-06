@@ -1,0 +1,83 @@
+% !TeX program = xelatex
+% Main file. Edit the chapter files rather than this shared setup.
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,enumitem,microtype}
+\usepackage{xcolor,fancyhdr,needspace}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing}
+\usepackage{hyperref}
+\definecolor{ink}{HTML}{16324F}
+\definecolor{muted}{HTML}{52616B}
+\definecolor{accent}{HTML}{A65332}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=ink,
+ pdftitle={Applied Mathematics 1 - Chapter Notes},bookmarksnumbered=true}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlist{itemsep=3pt,topsep=5pt}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\numberwithin{equation}{chapter}
+\newcommand{\studyguide}[1]{\par\textbf{Method.} #1\par}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Applied Mathematics 1}
+\fancyhead[R]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter}{} }
+\setcounter{tocdepth}{1}
+\title{Applied Mathematics 1\\[0.4em]\large}
+\author{Roger D.}
+\date{2026/27}
+\begin{document}
+\maketitle
+\pagenumbering{roman}
+\chapter*{How to use these notes}
+\addcontentsline{toc}{chapter}{How to use these notes}
+These notes are rewritten from the supplied MATH0008 typeset handouts and
+handwritten lecture pages dated 5 October--6 November 2026. They are a
+student study companion, not an official or verbatim set of lecture notes.
+The original sources remain in \texttt{lecture\_resources/}.
+
+The chapter order follows the handouts: discrete dynamical systems,
+continuous models, then mechanics. Each model is presented through its
+assumptions, equations, method of analysis and interpretation. Algebraic
+steps omitted in the sources are filled in, and important qualifications
+are stated explicitly. Additional explanations are labelled where they
+go beyond the supplied derivation.
+
+Source examples are identified where useful, but numbering in this edition
+is automatic and need not match the originals.
+
+Some typed material is ahead of the supplied handwritten pages: notably
+parts of SIR analysis and the early mechanics examples. It is included as
+handout material, not claimed to have been covered in a particular lecture.
+Any optional or non-examinable label refers only to the supplied source;
+check the current course for assessment scope.
+
+Figures are newly drawn explanatory diagrams, not copies of source scans.
+They are kept separately in \texttt{figures/} to keep the chapter source
+readable. The README records the source inventory and principal corrections.
+
+\textbf{Notation.} In a discrete model, $t=0,1,2,\ldots$ counts generations.
+In a continuous model, $\dot x=dx/dt$ and $\ddot x=d^2x/dt^2$.
+An equilibrium is denoted by a superscript $*$; a subscript $0$ denotes an
+initial value. Populations and compartment sizes must be nonnegative.
+Unless stated otherwise, model parameters described as rates are positive.
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\input{chapters/applied-01-discrete-dynamical-systems}
+\input{chapters/applied-02-continuous-models}
+\input{chapters/applied-03-mechanics-simple-forces}
+\end{document}

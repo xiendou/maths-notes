@@ -1,0 +1,263 @@
+% !TeX root = ../applied-mathematics1-companion.tex
+\chapter{Discrete Dynamical Systems}\label{chap:applied-discrete}
+
+\section{Building a discrete population model}
+A discrete-time model describes a state at successive time steps:
+\[
+x_0,\ x_1,\ x_2,\ldots,\qquad x_{t+1}=f(x_t).
+\]
+It is appropriate, for example, for a population with distinct annual
+breeding seasons. The initial condition $x_0$ must be specified.
+Population values are treated as real expected sizes or large-population
+approximations; the recurrence need not give integer outputs.
+A physically meaningful population must satisfy $N_t\geq0$.
+
+\subsection{Constant reproduction rate}
+Suppose every individual produces on average $r\geq0$ offspring and the
+old generation is replaced completely. Then
+\[
+N_{t+1}=rN_t,\qquad N_t=r^tN_0.
+\]
+Repeated substitution or induction proves the solution. If $N_0>0$:
+\begin{itemize}
+\item $0\leq r<1$: the population tends to zero;
+\item $r=1$: the population stays constant;
+\item $r>1$: it grows without bound.
+\end{itemize}
+For $r>0$, $r^t=e^{t\log r}$, hence the description \emph{exponential}
+growth or decay. Time is still discrete even when the formula uses an
+exponential function.
+
+\subsection{Fixed harvesting}
+If $h\geq0$ individuals are removed after reproduction, the algebraic model is
+\[
+N_{t+1}=rN_t-h.
+\]
+For $r\ne1$, iteration gives
+\begin{align*}
+N_t&=r^tN_0-h(1+r+\cdots+r^{t-1})\\
+&=r^tN_0-h\frac{r^t-1}{r-1}\\
+&=N^*+r^t(N_0-N^*),\qquad N^*=\frac h{r-1}.
+\end{align*}
+For $r=1$, $N_t=N_0-th$.
+
+If $r>1$ and $h>0$, $N^*>0$ is a threshold:
+\begin{itemize}
+\item $N_0>N^*$ produces unbounded growth in this model;
+\item $N_0=N^*$ produces a constant population;
+\item $N_0<N^*$ eventually makes the algebraic formula nonpositive.
+\end{itemize}
+Negative population predictions indicate failure of the unmodified model.
+The 5 October handwritten notes explicitly repair it as
+\[
+N_{t+1}=\max\{rN_t-h,0\}.
+\]
+Under this repaired model, a below-threshold population reaches zero in
+finite time and remains extinct. The equality case $N_0=N^*$ is an
+equilibrium, not extinction. For $h=0$, this reduces to reproduction alone.
+
+\begin{example}[Checking a harvesting threshold]
+As an added illustration, let $r=2$ and $h=10$. Then $N^*=10$.
+Starting at $12$ gives $N_t=10+2^{t+1}$; starting at $10$ keeps it at $10$.
+Starting at $8$ gives $8,6,2,0,0,\ldots$ in the clipped model.
+The unclipped next value after $2$ would be $-6$, which is not a population.
+\end{example}
+
+\section{The logistic map and nondimensionalisation}
+To represent reduced reproduction at high density, take
+\[
+N_{t+1}=rN_t\left(1-\frac{N_t}{K}\right),\qquad K>0.
+\]
+Set $x_t=N_t/K$. Dividing by $K$ gives the \emph{logistic map}
+\begin{equation}\label{eq:applied-logistic-map}
+x_{t+1}=rx_t(1-x_t)=f(x_t).
+\end{equation}
+Both $x_t$ and $r$ are dimensionless. Scaling removes $K$ from the
+recurrence, leaving one parameter controlling the dynamics.
+
+\begin{remark}[What $K$ means here]
+In this discrete model, $K$ is the density scale where the next-generation
+reproduction factor vanishes. The nonzero equilibrium is
+$N^*=K(1-1/r)$, not $K$. This differs from the continuous logistic model,
+whose carrying capacity is itself the positive equilibrium.
+\end{remark}
+For $0\leq x\leq1$, $0\leq x(1-x)\leq1/4$. Consequently, if
+$0\leq r\leq4$, the interval $[0,1]$ is invariant: an initial value there
+stays there. For $0<r<4$ and $0<x_0<1$, subsequent values remain in $(0,1)$.
+For larger $r$, some initial values leave the biologically meaningful range.
+
+\section{Fixed points and cobweb diagrams}
+\begin{definition}[Fixed point]
+A fixed point of $x_{t+1}=f(x_t)$ is a value $x^*$ with $f(x^*)=x^*$.
+Starting exactly at $x^*$ gives a constant sequence. It is also called a
+steady state or an equilibrium of the map.
+\end{definition}
+Fixed points are intersections of $y=f(x)$ with $y=x$.
+For the logistic map, assuming $r>0$,
+\[
+x^*=rx^*(1-x^*)\quad\Longrightarrow\quad
+x^*=0\quad\text{or}\quad x^*=1-\frac1r.
+\]
+The second point is positive only for $r>1$ and coincides with zero at $r=1$.
+
+\studyguide{To construct a cobweb, plot $y=f(x)$ and $y=x$. From $x_0$
+on the horizontal axis, go vertically to the curve: the height is $x_1$.
+Go horizontally to the diagonal: the horizontal coordinate is now $x_1$.
+Repeat vertically to the curve and horizontally to the diagonal.}
+\input{figures/applied-cobweb}
+
+\section{Taylor approximation and local stability}
+For a sufficiently differentiable function near $a$, a finite Taylor expansion
+has the form
+\[
+f(a+h)=f(a)+f'(a)h+\frac12f''(a)h^2+O(h^3).
+\]
+Here $O(h^3)$ denotes an error bounded in magnitude by a constant times
+$|h|^3$ for sufficiently small $h$, under appropriate smoothness assumptions.
+In particular $f(a+h)=f(a)+f'(a)h+o(h)$ for a differentiable $f$.
+The formal infinite Taylor series does not automatically equal every smooth
+function; local approximation is all that is required for linearisation.
+
+\begin{example}[Taylor expansion of $\log x$ near $2$]
+Since $f'(x)=1/x$, $f''(x)=-1/x^2$ and $f'''(x)=2/x^3$,
+\[
+\log x=\log2+\frac{x-2}{2}-\frac{(x-2)^2}{8}
++\frac{(x-2)^3}{24}+O((x-2)^4).
+\]
+For a first-order approximation, keep only $\log2+(x-2)/2$.
+\end{example}
+
+\begin{definition}[Stability and attraction]
+An equilibrium is \emph{stable} if arbitrarily small initial perturbations
+can be kept arbitrarily small for all future times. It is \emph{locally
+asymptotically stable} if it is stable and nearby states also converge to it.
+An unstable equilibrium fails stability. These distinctions also apply to
+continuous-time models.
+\end{definition}
+The sources often use ``stable'' to mean asymptotically stable. Here a
+convergence conclusion is stated explicitly.
+
+Write $x_t=x^*+y_t$. Since $f(x^*)=x^*$,
+\[
+y_{t+1}=f(x^*+y_t)-f(x^*)=f'(x^*)y_t+o(y_t).
+\]
+Discarding the smaller terms gives the \emph{linearised} recurrence
+\[
+y_{t+1}=\mu y_t,\qquad y_t=\mu^t y_0,\qquad \mu=f'(x^*).
+\]
+This explicit expression solves the linear approximation, not in general
+the full nonlinear recurrence.
+
+\begin{proposition}[Derivative test for a map]
+For a continuously differentiable map near $x^*$:
+\begin{itemize}
+\item $|f'(x^*)|<1$ implies local asymptotic stability;
+\item $|f'(x^*)|>1$ implies instability;
+\item $|f'(x^*)|=1$ leaves the linear test inconclusive.
+\end{itemize}
+\end{proposition}
+\begin{proof}[Explanation]
+If $|f'(x^*)|<1$, continuity gives a neighbourhood with $|f'|\leq q<1$.
+The mean value theorem yields $|f(x)-x^*|\leq q|x-x^*|$, so sufficiently
+nearby iterates remain in the neighbourhood and converge geometrically.
+If $|f'(x^*)|>1$, the same argument gives a local expansion factor greater
+than one, so a nonzero perturbation eventually leaves a fixed small
+neighbourhood. At equality, higher-order terms may decide the behaviour.
+\end{proof}
+For $0<\mu<1$, the linearised approach keeps the perturbation's sign.
+For $-1<\mu<0$, it alternates sides while shrinking. At $\mu=0$,
+higher-order terms determine the detailed approach, but the equilibrium
+is still locally asymptotically stable.
+
+\begin{example}[Logistic fixed-point stability]
+Here $f'(x)=r(1-2x)$. At zero, $\mu=r$, so zero attracts for $0<r<1$
+and is unstable for $r>1$. At $x^*=1-1/r$,
+\[
+\mu=r\left(1-2+\frac2r\right)=2-r.
+\]
+Thus the positive equilibrium attracts when $1<r<3$, and is unstable for
+$r>3$. The approach is direct for $1<r<2$ and alternating for $2<r<3$.
+The linear test alone does not settle $r=1$ or $r=3$.
+\end{example}
+
+\section{Parameters and bifurcations}
+\begin{definition}[Bifurcation]
+A bifurcation is a qualitative change in the dynamics as a parameter varies,
+for example creation of equilibria or a change in their stability.
+A bifurcation diagram plots equilibria or periodic states against a parameter;
+solid and dashed lines often indicate attracting and unstable branches.
+\end{definition}
+
+\begin{example}[A parameter-dependent quadratic map]
+For $x_{t+1}=x_t^2+x_t-a$, fixed points satisfy $(x^*)^2=a$.
+For $a<0$ there are none; for $a=0$ there is one; for $a>0$ there are two:
+$x^*=\pm\sqrt a$. Since $f'(x)=1+2x$,
+\[
+f'(\sqrt a)=1+2\sqrt a>1,\qquad
+f'(-\sqrt a)=1-2\sqrt a.
+\]
+The positive branch is unstable for every $a>0$. The negative branch
+attracts precisely in the range given by the strict derivative test,
+$|1-2\sqrt a|<1$, that is $0<a<1$. It is unstable for $a>1$.
+At $a=0$ and $a=1$, the multiplier equals $1$ or $-1$ respectively,
+so that test is inconclusive at the parameter value itself.
+These are the bifurcation values discussed in the sources.
+\end{example}
+
+\section{Period-two cycles and the route to chaos}
+\begin{definition}[Period-two cycle]
+Two distinct values $x_-,x_+$ form a period-two cycle if
+$f(x_-)=x_+$ and $f(x_+)=x_-$. They satisfy
+$f^{\circ2}(x)=x$, where $f^{\circ2}=f\circ f$ denotes composition, not
+squaring the value $f(x)$.
+\end{definition}
+A fixed point of $f$ is also fixed by $f^{\circ2}$, so those old solutions
+must be removed when looking for a genuine period-two cycle.
+
+For the logistic map,
+\[
+f^{\circ2}(x)=r^2x(1-x)\bigl(1-rx(1-x)\bigr).
+\]
+Factoring $f^{\circ2}(x)-x=0$ gives the known roots $0,1-1/r$ and the
+additional quadratic
+\[
+x^2-\left(1+\frac1r\right)x+\frac1r+\frac1{r^2}=0.
+\]
+Its two roots are
+\begin{equation}\label{eq:applied-two-cycle}
+x_\pm=\frac{r+1\pm\sqrt{r^2-2r-3}}{2r}.
+\end{equation}
+For $r>0$, they form a genuine distinct positive two-cycle when $r>3$.
+At $r=3$ they merge with the fixed point; for the population interval,
+we restrict attention to $r\leq4$.
+
+\subsection{Stability of a cycle}
+Let $g=f^{\circ2}$. By the chain rule, both cycle points have multiplier
+\[
+g'(x_-)=f'(x_+)f'(x_-)=g'(x_+).
+\]
+Using the sum and product of the two roots,
+\begin{align*}
+g'(x_\pm)
+&=r^2(1-2x_-)(1-2x_+)\\
+&=r^2\left[1-2\left(1+\frac1r\right)
++4\left(\frac1r+\frac1{r^2}\right)\right]\\
+&=5-(r-1)^2.
+\end{align*}
+Hence the cycle attracts for
+\[
+|5-(r-1)^2|<1\quad\Longleftrightarrow\quad3<r<1+\sqrt6.
+\]
+A cycle can be attracting even though neither point is a fixed point of $f$:
+we test the product of derivatives over a full cycle.
+
+\subsection{Period doubling and chaotic behaviour}
+At $r=3$, the fixed point loses attraction and the attracting two-cycle
+appears. At $r=1+\sqrt6\approx3.44949$, the cycle multiplier reaches $-1$
+and a four-cycle subsequently attracts. Further doublings give periods
+$8,16,\ldots$, accumulating near $r\approx3.56995$.
+
+Some larger parameters give bounded, aperiodic trajectories sensitive to
+initial conditions: the source's introductory description of chaos.
+Periodic windows also occur, including period three near
+$1+\sqrt8\approx3.82843$; not every parameter beyond accumulation is chaotic.

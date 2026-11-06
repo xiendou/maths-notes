@@ -1,0 +1,415 @@
+% !TeX root = ../algebra-1.tex
+\chapter{Matrices and Linear Systems}\label{chap:algebra-matrices}
+
+\section{Matrices, vectors and entrywise operations}
+\begin{definition}
+An $m\times n$ matrix over $F$ is a rectangular array with $m$ rows and
+$n$ columns. Write $A=(a_{ij})$, where $a_{ij}$ is the entry in row $i$,
+column $j$. A row vector has one row; a column vector has one column.
+The set $F^n$ consists of column vectors of height $n$.
+\end{definition}
+For example,
+\[
+A=\begin{pmatrix}a&b&c\\d&e&f\end{pmatrix}
+\]
+is $2\times3$, its second row is $(d\ e\ f)$ and its third column is
+$(c\ f)^{\mathsf T}$. The order of dimensions is always rows, then columns.
+Two matrices are equal exactly when their sizes and corresponding entries agree.
+
+Matrices of the same size add entry by entry, and scalar multiplication
+multiplies every entry:
+\[
+(A+B)_{ij}=a_{ij}+b_{ij},\qquad(\lambda A)_{ij}=\lambda a_{ij}.
+\]
+For example,
+\[
+\begin{pmatrix}1&2\\4&5\end{pmatrix}
++\begin{pmatrix}0&1\\2&3\end{pmatrix}
+=\begin{pmatrix}1&3\\6&8\end{pmatrix},\qquad
+2\begin{pmatrix}1&-3\\0&1\end{pmatrix}
+=\begin{pmatrix}2&-6\\0&2\end{pmatrix}.
+\]
+Addition is commutative and associative. For same-sized matrices,
+\begin{align*}
+(\alpha+\beta)A&=\alpha A+\beta A,&
+\alpha(A+B)&=\alpha A+\alpha B,\\
+\alpha(\beta A)&=(\alpha\beta)A.
+\end{align*}
+These identities follow entrywise from arithmetic in $F$.
+
+\section{Matrix multiplication and linear combinations}
+\begin{definition}[Matrix product]
+If $A$ is $m\times n$ and $B$ is $n\times p$, their product is the
+$m\times p$ matrix with
+\[
+(AB)_{ij}=\sum_{k=1}^n a_{ik}b_{kj}.
+\]
+The inner dimensions must agree. Each output entry is a row of $A$
+multiplied into a column of $B$.
+\end{definition}
+\begin{example}[Sizes before arithmetic]
+\[
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\begin{pmatrix}e&f\\g&h\end{pmatrix}
+=\begin{pmatrix}ae+bg&af+bh\\ce+dg&cf+dh\end{pmatrix}.
+\]
+A $2\times3$ matrix cannot multiply a $2\times1$ vector on its right.
+But a $2\times3$ matrix can multiply a $3\times2$ matrix, with result
+$2\times2$; for instance,
+\[
+\begin{pmatrix}1&2&3\\4&5&6\end{pmatrix}
+\begin{pmatrix}1&2\\1&2\\1&2\end{pmatrix}
+=\begin{pmatrix}6&12\\15&30\end{pmatrix}.
+\]
+\end{example}
+
+\begin{definition}[Linear combination]
+For same-sized matrices or vectors $v_1,\ldots,v_k$, an expression
+$\sum_{j=1}^k\alpha_jv_j$, with coefficients $\alpha_j\in F$, is a linear
+combination. Linear algebra studies which vectors can be produced this way
+and whether their coefficients are uniquely determined.
+\end{definition}
+
+\begin{lemma}[Matrix times column; source Lemma 1.11]\label{lem:algebra-columns}
+If $c_1,\ldots,c_n$ are the columns of an $m\times n$ matrix $A$ and
+$x=(x_1,\ldots,x_n)^{\mathsf T}$, then
+\[
+Ax=x_1c_1+\cdots+x_nc_n.
+\]
+In particular, $Ae_j=c_j$, where $e_j$ is the standard vector with a single
+$1$ in position $j$.
+\end{lemma}
+\begin{proof}
+The $i$th entry of either side is $\sum_{j=1}^n a_{ij}x_j$.
+For $x=e_j$, every coefficient except the $j$th is zero.
+\end{proof}
+\begin{example}
+For $A=\begin{pmatrix}1&2\\3&4\end{pmatrix}$ and
+$x=(1,-1)^{\mathsf T}$,
+\[
+Ax=\begin{pmatrix}1\\3\end{pmatrix}-\begin{pmatrix}2\\4\end{pmatrix}
+=\begin{pmatrix}-1\\-1\end{pmatrix}.
+\]
+For the matrix with rows $(1,2,3),(4,5,6),(7,8,9)$, multiplication by
+$e_2=(0,1,0)^{\mathsf T}$ selects its second column $(2,5,8)^{\mathsf T}$.
+\end{example}
+
+\begin{lemma}[Rowwise and columnwise multiplication]
+If $B=[b_1\ \cdots\ b_p]$, then
+$AB=[Ab_1\ \cdots\ Ab_p]$.
+If $r_i$ is row $i$ of $A$, row $i$ of $AB$ is $r_iB$.
+For a row $s=(s_1,\ldots,s_m)$ and rows $r_1,\ldots,r_m$ of $B$,
+$sB=\sum_{i=1}^m s_ir_i$.
+\end{lemma}
+\begin{proof}
+In each case, compare the $i,j$ entry using the product definition.
+This supplies the rowwise/columnwise argument assigned as a problem in the source.
+\end{proof}
+
+\begin{example}[Multiplication encodes row and column changes]
+Writing $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$,
+\[
+A\begin{pmatrix}0&1\\1&0\end{pmatrix}
+=\begin{pmatrix}b&a\\d&c\end{pmatrix},\qquad
+\begin{pmatrix}0&1\\1&1\end{pmatrix}A
+=\begin{pmatrix}c&d\\a+c&b+d\end{pmatrix}.
+\]
+Right multiplication selects or combines columns; left multiplication
+selects or combines rows.
+\end{example}
+
+\begin{proposition}[Algebra of products]
+For compatible matrix sizes,
+\begin{align*}
+A(B+C)&=AB+AC,&(A+B)C&=AC+BC,\\
+(\alpha A)B&=\alpha(AB)=A(\alpha B),&
+A(BC)&=(AB)C.
+\end{align*}
+\end{proposition}
+\begin{proof}
+Distributivity and scalar compatibility follow entrywise. For associativity,
+if $A$ is $m\times n$, $B$ is $n\times p$, and $C$ is $p\times q$,
+\[
+((AB)C)_{ij}=\sum_{\ell=1}^p\sum_{k=1}^n a_{ik}b_{k\ell}c_{\ell j}
+=\sum_{k=1}^n\sum_{\ell=1}^p a_{ik}b_{k\ell}c_{\ell j}
+=(A(BC))_{ij}.
+\]
+The finite double sums contain the same terms.
+\end{proof}
+Associativity allows unambiguous notation $ABC$. Commutativity generally fails:
+\[
+\begin{pmatrix}1&2\\3&4\end{pmatrix}
+\begin{pmatrix}1&1\\1&1\end{pmatrix}
+=\begin{pmatrix}3&3\\7&7\end{pmatrix},\qquad
+\begin{pmatrix}1&1\\1&1\end{pmatrix}
+\begin{pmatrix}1&2\\3&4\end{pmatrix}
+=\begin{pmatrix}4&6\\4&6\end{pmatrix}.
+\]
+
+\section{Transpose, identity and zero matrices}
+\begin{definition}[Transpose]
+For $A=(a_{ij})$, its transpose $A^{\mathsf T}$ satisfies
+$(A^{\mathsf T})_{ij}=a_{ji}$. It exchanges rows and columns and changes
+size $m\times n$ to $n\times m$.
+\end{definition}
+\[
+\begin{pmatrix}1&2&3\\4&5&6\end{pmatrix}^{\mathsf T}
+=\begin{pmatrix}1&4\\2&5\\3&6\end{pmatrix}.
+\]
+The basic identities are
+\begin{align*}
+(A^{\mathsf T})^{\mathsf T}&=A,&
+(A+B)^{\mathsf T}&=A^{\mathsf T}+B^{\mathsf T},\\
+(\alpha A)^{\mathsf T}&=\alpha A^{\mathsf T},&
+(AB)^{\mathsf T}&=B^{\mathsf T}A^{\mathsf T}.
+\end{align*}
+For the last identity, the $i,j$ entry of the left side is
+$\sum_k a_{jk}b_{ki}$, equal to the $i,j$ entry of the right side.
+The order reverses. Transpose alone does not conjugate complex entries.
+
+\begin{definition}[Zero and identity]
+The zero matrix $0_{m\times n}$ has every entry zero. The zero vector in
+$F^n$ is $0_n$. The identity $I_n$ is $n\times n$ with $1$ on the diagonal
+and $0$ elsewhere.
+\end{definition}
+For an $m\times n$ matrix $A$,
+\[
+A+0_{m\times n}=A,\qquad A I_n=A=I_mA.
+\]
+For square $A$, define $A^0=I_n$ and $A^k$ as the product of $k$ copies of
+$A$ for $k\geq1$. Products involving zero matrices are zero with the
+appropriate output size; similarly $A0_n=0_m$.
+
+\section{Linear systems and augmented matrices}
+A system of $m$ linear equations in $n$ variables has the form
+\[
+\sum_{j=1}^n a_{ij}x_j=b_i\quad(1\leq i\leq m).
+\]
+Put the coefficients into $A$, unknowns into $x$, and right sides into $b$.
+The system is exactly $Ax=b$. For example,
+\[
+\begin{cases}2x+3y+4z=5,\\x+5z=0\end{cases}
+\quad\Longleftrightarrow\quad
+\begin{pmatrix}2&3&4\\1&0&5\end{pmatrix}
+\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}5\\0\end{pmatrix}.
+\]
+The augmented matrix $[A\mid b]$ records coefficients and right sides together.
+A solution is a vector $x$ satisfying every equation simultaneously.
+
+\begin{definition}[Elementary row operations]
+The allowed row operations are:
+\begin{enumerate}
+\item $R_j\leftarrow R_j+\lambda R_i$, where $i\ne j$;
+\item $R_i\leftarrow\lambda R_i$, where $\lambda\ne0$;
+\item $R_i\leftrightarrow R_j$.
+\end{enumerate}
+Their inverses subtract the same multiple, scale by $\lambda^{-1}$, and
+swap the same rows, respectively.
+\end{definition}
+Apply operations to the \emph{entire} augmented matrix. Applying them only
+to $A$ and leaving $b$ unchanged usually changes the system.
+
+\begin{example}[Elimination with an augmented matrix]
+For $3x+4y=6$, $x+2y=5$,
+\begin{align*}
+\left[\begin{array}{cc|c}3&4&6\\1&2&5\end{array}\right]
+&\xrightarrow{R_1\leftarrow R_1-3R_2}
+\left[\begin{array}{cc|c}0&-2&-9\\1&2&5\end{array}\right]\\
+&\xrightarrow{R_1\leftarrow-\frac12R_1}
+\left[\begin{array}{cc|c}0&1&9/2\\1&2&5\end{array}\right]\\
+&\xrightarrow{R_2\leftarrow R_2-2R_1}
+\left[\begin{array}{cc|c}0&1&9/2\\1&0&-4\end{array}\right]
+\xrightarrow{R_1\leftrightarrow R_2}
+\left[\begin{array}{cc|c}1&0&-4\\0&1&9/2\end{array}\right].
+\end{align*}
+Thus $x=-4$, $y=9/2$.
+\end{example}
+
+\section{Reduced row echelon form}
+\begin{definition}[RREF]
+The leading entry of a nonzero row is its leftmost nonzero entry.
+A matrix is in reduced row echelon form (RREF) if:
+\begin{enumerate}
+\item every leading entry is $1$;
+\item all zero rows are at the bottom;
+\item a leading $1$ is the only nonzero entry in its column;
+\item leading entries move strictly rightwards as one goes down nonzero rows.
+\end{enumerate}
+Columns containing leading entries are pivot columns.
+\end{definition}
+The zero matrix is in RREF. The matrix
+$\begin{pmatrix}1&a&b&3\\0&0&1&-2\end{pmatrix}$ is in RREF precisely when
+$b=0$. A row-echelon matrix need not have zeros \emph{above} its pivots;
+RREF does.
+
+\begin{theorem}[Existence and uniqueness of RREF]
+Every matrix can be transformed by row operations into a unique RREF matrix.
+\end{theorem}
+\begin{proof}[Existence: elimination argument]
+Scan columns from left to right. In the first available column with a nonzero
+entry at or below the current pivot row, swap a nonzero entry into that row,
+scale it to $1$, and eliminate all other entries in its column. Continue
+below that pivot and to its right. New pivot rows have zeros in previous
+pivot columns, so these operations preserve the earlier pivots.
+Only finitely many rows and columns exist, and the final matrix satisfies
+the RREF conditions. The source proves existence by an equivalent induction
+on the number of columns. As in the source, uniqueness is stated without proof.
+\end{proof}
+
+\begin{example}[Source Example 1.34]\label{ex:algebra-rref}
+Let
+\[
+A=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}.
+\]
+Subtract $4R_1$ from $R_2$ and $7R_1$ from $R_3$, then scale $R_2$ by
+$-1/3$:
+\[
+A\sim\begin{pmatrix}1&2&3\\0&-3&-6\\0&-6&-12\end{pmatrix}
+\sim\begin{pmatrix}1&2&3\\0&1&2\\0&-6&-12\end{pmatrix}
+\sim\begin{pmatrix}1&0&-1\\0&1&2\\0&0&0\end{pmatrix}.
+\]
+The last step uses $R_1\leftarrow R_1-2R_2$ and $R_3\leftarrow R_3+6R_2$.
+The pivot columns are $1$ and $2$. The symbol $\sim$ here means
+row-equivalent, not equal.
+\end{example}
+
+\section{Reading the general solution}
+In an augmented RREF matrix, a pivot in the last column represents an
+impossible equation $0=1$. The system is then inconsistent.
+Otherwise variables in coefficient pivot columns are \emph{pivot variables};
+all remaining variables are \emph{free variables}.
+
+\begin{theorem}[Free variables parameterise all solutions]
+For a consistent RREF system, every assignment of scalars to the free
+variables determines exactly one solution. Each nonzero row expresses its
+pivot variable in terms of those free variables.
+\end{theorem}
+\begin{proof}
+The pivot columns contain a single $1$ each. Hence each nonzero equation
+has the form ``one pivot variable plus a linear combination of free variables
+equals the right side''. No other equation contains that pivot variable.
+Thus all pivots are uniquely determined, with no further restriction on the
+free variables. Zero rows give only $0=0$.
+\end{proof}
+
+\begin{example}[Source Example 1.37]
+For unknowns $(x,y,z,w)$, the augmented matrix
+\[
+\left[\begin{array}{cccc|c}
+1&0&2&0&2\\0&1&4&0&3\\0&0&0&1&4\\0&0&0&0&0
+\end{array}\right]
+\]
+gives $x+2z=2$, $y+4z=3$, $w=4$. Let $z=t$. Every solution is
+\[
+\begin{pmatrix}x\\y\\z\\w\end{pmatrix}
+=\begin{pmatrix}2\\3\\0\\4\end{pmatrix}
++t\begin{pmatrix}-2\\-4\\1\\0\end{pmatrix},\qquad t\in F.
+\]
+Replacing the last augmented entry by $1$ produces a row $0=1$ and no solution.
+\end{example}
+
+\begin{example}[Source Example 1.39]
+The system
+\begin{align*}
+2x_1+x_2+x_3-2x_4&=3,&x_1+x_3-2x_4&=2,\\
+x_1+2x_3-4x_4&=1,&3x_1+x_2+3x_3-6x_4&=4
+\end{align*}
+reduces to $x_1=3$, $x_2=-2$, $x_3-2x_4=-1$. Its general solution is
+\[
+x=\begin{pmatrix}3\\-2\\-1\\0\end{pmatrix}
++t\begin{pmatrix}0\\0\\2\\1\end{pmatrix},\quad t\in F.
+\]
+Substitution into all four original equations is a useful check.
+\end{example}
+
+\begin{theorem}[More variables than equations; source Theorem 1.40]
+If $A$ is $m\times n$ and $n>m$, then $Ax=0_m$ has a nonzero solution.
+\end{theorem}
+\begin{proof}
+There are at most $m$ pivots, hence at least one free variable among the
+$n$ unknowns. Give that free variable value $1$ and the other free variables
+value $0$. The resulting solution is not the zero vector.
+\end{proof}
+
+\section{Inverses and elementary matrices}
+\begin{definition}[Inverse]
+An $n\times n$ matrix $A$ is invertible if a matrix $B$ satisfies
+$AB=BA=I_n$. It is denoted $A^{-1}$ and is unique.
+\end{definition}
+Indeed, if $AB=I_n$ and $CA=I_n$, then
+$B=(CA)B=C(AB)=C$. If $A$ is invertible, $Ax=b$ has the unique solution
+$x=A^{-1}b$. The zero square matrix is not invertible, whereas $I_n$ is.
+For compatible invertible square matrices,
+\[
+(AB)^{-1}=B^{-1}A^{-1},\qquad
+(A^{\mathsf T})^{-1}=(A^{-1})^{\mathsf T}.
+\]
+These are checked by multiplication; inverse order reverses.
+
+\begin{definition}[Elementary matrix]
+An elementary matrix is obtained by applying one row operation to an identity
+matrix. If the operation is $r$, its elementary matrix is $r(I_m)$.
+\end{definition}
+\begin{lemma}
+For every $m\times n$ matrix $A$, performing $r$ is equivalent to left
+multiplication by its elementary matrix: $r(A)=r(I_m)A$.
+Elementary matrices are invertible, with inverses corresponding to the inverse
+row operations. Consequently any row reduction has the form $R=EA$, where
+$E$ is invertible.
+\end{lemma}
+\begin{proof}
+Rows of $r(I_m)$ record exactly which linear combinations of the old rows
+produce the new rows, so the rowwise multiplication lemma proves the identity.
+Doing an inverse row operation undoes multiplication by $r(I_m)$.
+For successive operations with elementary matrices $E_1,\ldots,E_k$,
+$R=E_k\cdots E_1A$; the inverse product is $E_1^{-1}\cdots E_k^{-1}$.
+\end{proof}
+For example, $R_1\leftarrow R_1+2R_2$ for a three-row matrix is left
+multiplication by
+$\begin{pmatrix}1&2&0\\0&1&0\\0&0&1\end{pmatrix}$.
+
+\begin{theorem}[Row operations preserve solutions]
+If $[A'\mid b']=E[A\mid b]$ with $E$ invertible, then $Ax=b$ and
+$A'x=b'$ have exactly the same solutions.
+\end{theorem}
+\begin{proof}
+Here $A'=EA$ and $b'=Eb$. One equation follows from the other by
+multiplying by $E$ or $E^{-1}$.
+\end{proof}
+
+\begin{theorem}[Little invertibility theorem; source Theorem 1.50]
+For $A\in F^{n\times n}$, the following are equivalent:
+$A$ is invertible; $Ax=0$ has only $x=0$; the RREF of $A$ is $I_n$.
+\end{theorem}
+\begin{proof}
+An inverse makes $Ax=0$ imply $x=0$. If the kernel is zero, row reduction
+can have no free variable, so each of the $n$ columns has a pivot and the
+RREF is $I_n$. If $EA=I_n$ with $E$ invertible, then $A=E^{-1}$, so $A$
+is invertible.
+\end{proof}
+
+\method{To compute an inverse, reduce $[A\mid I_n]$. If the left block can
+be made $I_n$, the result is $[I_n\mid A^{-1}]$. If the left block has fewer
+than $n$ pivots, $A$ is singular.}
+The method works because $E[A\mid I_n]=[EA\mid E]$; when $EA=I_n$,
+$E=A^{-1}$.
+
+\begin{example}[Inverse by row reduction: source Example 1.52]
+\begin{align*}
+\left[\begin{array}{cc|cc}1&2&1&0\\3&4&0&1\end{array}\right]
+&\sim\left[\begin{array}{cc|cc}1&2&1&0\\0&-2&-3&1\end{array}\right]\\
+&\sim\left[\begin{array}{cc|cc}1&2&1&0\\0&1&3/2&-1/2\end{array}\right]
+\sim\left[\begin{array}{cc|cc}1&0&-2&1\\0&1&3/2&-1/2\end{array}\right].
+\end{align*}
+Thus $\begin{pmatrix}1&2\\3&4\end{pmatrix}^{-1}
+=\begin{pmatrix}-2&1\\3/2&-1/2\end{pmatrix}$.
+For a general $2\times2$ matrix,
+\[
+\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}
+=\frac1{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}
+\quad\text{when }ad-bc\ne0.
+\]
+For larger matrices, elimination is usually more practical than an expanded
+inverse formula. The determinant and cofactor formula appear in
+Chapter~\ref{chap:algebra-eigenvalues}.
+\end{example}

@@ -1,0 +1,20 @@
+% !TeX root = ../applied-mathematics1-companion.tex
+% Illustrative attracting affine map; the chapter explains general maps.
+\begin{center}
+\begin{tikzpicture}[scale=3.7,>=Stealth]
+\draw[->] (0,0)--(1.2,0) node[right] {$x$};
+\draw[->] (0,0)--(0,1.2) node[above] {$y$};
+\draw[muted] (0,0)--(1.1,1.1) node[right] {$y=x$};
+\draw[thick,ink] (0,.4)--(1.1,.95) node[right] {$y=f(x)=\tfrac12x+\tfrac25$};
+\draw[thick,accent,->] (.1,0)--(.1,.45);
+\draw[thick,accent,->] (.1,.45)--(.45,.45);
+\draw[thick,accent,->] (.45,.45)--(.45,.625);
+\draw[thick,accent,->] (.45,.625)--(.625,.625);
+\draw[thick,accent] (.625,.625)--(.625,.7125)--(.7125,.7125)
+ --(.7125,.75625)--(.75625,.75625)--(.75625,.778125)--(.778125,.778125);
+\fill[ink] (.8,.8) circle (.012) node[above left] {$x^*=4/5$};
+\node[below] at (.1,0) {$x_0$};
+\end{tikzpicture}
+
+{\small Cobweb steps: vertical to the map, horizontal to the diagonal.}
+\end{center}

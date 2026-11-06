@@ -1,0 +1,490 @@
+% !TeX root = ../algebra-1.tex
+\chapter{Subspaces and dimension}\label{chap:algebra-subspaces}
+
+\section{Subspaces, kernels and column spaces}
+
+\begin{definition}
+A subset $U\subseteq F^n$ is a \emph{subspace} if it is nonempty and is
+closed under addition and scalar multiplication:
+\[
+ u,v\in U,\ a\in F \quad\Longrightarrow\quad u+v\in U,\ au\in U.
+\]
+We write $U\leq F^n$. More generally, $U\leq V$ means that $U$ is a
+subspace contained in the subspace $V$. It is \emph{proper} if $U\ne V$.
+\end{definition}
+
+Equivalently, a nonempty subset is a subspace if $au+bv$ belongs to it
+whenever $u,v$ do and $a,b\in F$.
+The scalar field matters: closure must hold for every scalar in the stated
+field, including negative scalars and, over $\mathbb C$, complex scalars.
+
+\begin{proposition}
+Every subspace contains the zero vector.
+\end{proposition}
+\begin{proof}
+Choose $u\in U$, using nonemptiness. Closure under multiplication by $0$
+gives $0u=0_n\in U$.
+\end{proof}
+
+\begin{example}
+The sets $\{0_n\}$ and $F^n$ are subspaces. In $\mathbb R^2$, a line
+through the origin, such as $\{(t,2t)^{\mathsf T}:t\in\mathbb R\}$, is a
+subspace. The half-line with $t\geq0$ is not: multiplication by $-1$
+takes its nonzero vectors outside the set.
+A line not through the origin fails the zero-vector condition.
+\end{example}
+
+\begin{remark}
+Containing zero is necessary, but does not by itself prove that a set is a
+subspace. For instance, the union of the two coordinate axes contains
+zero but does not contain $(1,0)^{\mathsf T}+(0,1)^{\mathsf T}$.
+\end{remark}
+
+\begin{definition}
+For an $m\times n$ matrix $A$, its \emph{kernel} and \emph{column space} are
+\[
+ N(A)=\{v\in F^n:Av=0_m\},\qquad
+ C(A)=\{Av:v\in F^n\}\subseteq F^m.
+\]
+The kernel describes inputs mapped to zero; the column space describes
+all possible outputs.
+\end{definition}
+
+\begin{lemma}[Kernels and column spaces are subspaces]
+$N(A)\leq F^n$ and $C(A)\leq F^m$.
+\end{lemma}
+\begin{proof}
+Since $A0_n=0_m$, both sets are nonempty.
+If $u,v\in N(A)$ and $a,b\in F$, then
+\[
+ A(au+bv)=aAu+bAv=a0_m+b0_m=0_m,
+\]
+so $au+bv\in N(A)$. If $y=Au$ and $z=Av$ belong to $C(A)$, then
+\[
+ ay+bz=aAu+bAv=A(au+bv)\in C(A).
+\]
+Thus each set has the required closure properties.
+\end{proof}
+
+\section{Spanning sequences and linear independence}
+
+\begin{definition}
+The \emph{span} of vectors $v_1,\ldots,v_k$ is
+\[
+ \spanop(v_1,\ldots,v_k)
+ =\{a_1v_1+\cdots+a_kv_k:a_1,\ldots,a_k\in F\}.
+\]
+They \emph{span} $U$ if this set equals $U$. The span of the empty
+sequence is defined to be $\{0_n\}$.
+\end{definition}
+
+\begin{proposition}
+The span is a subspace and is the smallest subspace containing all the
+listed vectors. The column space of $A=[\,c_1\ \cdots\ c_n\,]$ is
+$\spanop(c_1,\ldots,c_n)$.
+\end{proposition}
+\begin{proof}
+Zero is a linear combination with all coefficients zero. Sums and scalar
+multiples of linear combinations are again linear combinations.
+Any subspace containing the listed vectors contains all their linear
+combinations, which proves minimality. Finally,
+$Ax=x_1c_1+\cdots+x_nc_n$, so the possible outputs are exactly their span.
+\end{proof}
+
+\begin{example}
+The $xy$-plane in $\mathbb R^3$ is spanned by $e_1,e_2$, and also by
+$(1,1,0)^{\mathsf T},(1,-1,0)^{\mathsf T}$, since
+\[
+ (a,b,0)^{\mathsf T}
+ =\frac{a+b}{2}(1,1,0)^{\mathsf T}
+  +\frac{a-b}{2}(1,-1,0)^{\mathsf T}.
+\]
+The sequence $e_1,e_2,e_3$ spans all of $\mathbb R^3$, so it does not
+span this plane: its span is too large.
+\end{example}
+
+\begin{example}[Testing a span by solving a system]
+Let
+\[
+ u=\begin{pmatrix}1\\2\\3\end{pmatrix},\quad
+ v=\begin{pmatrix}4\\5\\6\end{pmatrix},\quad
+ w=\begin{pmatrix}7\\8\\9\end{pmatrix}.
+\]
+To decide whether $(a,b,c)^{\mathsf T}$ belongs to their span, solve the
+system with coefficient matrix $[\,u\ v\ w\,]$. Row reduction gives
+\[
+ \left[\begin{array}{ccc|c}
+ 1&4&7&a\\2&5&8&b\\3&6&9&c
+ \end{array}\right]
+ \ \longrightarrow\
+ \left[\begin{array}{ccc|c}
+ 1&0&-1&(4b-5a)/3\\
+ 0&1&2&(2a-b)/3\\
+ 0&0&0&a-2b+c
+ \end{array}\right].
+\]
+Consequently,
+\[
+ \spanop(u,v,w)
+ =\{(a,b,c)^{\mathsf T}:a-2b+c=0\}.
+\]
+This is a plane, not all of $\mathbb R^3$.
+\end{example}
+
+\begin{definition}
+A sequence $v_1,\ldots,v_k$ is \emph{linearly independent} if
+\[
+ a_1v_1+\cdots+a_kv_k=0_n
+ \quad\Longrightarrow\quad a_1=\cdots=a_k=0.
+\]
+Otherwise it is \emph{linearly dependent}. The empty sequence is independent.
+\end{definition}
+
+A sequence containing zero is dependent. A sequence with a repeated vector
+is dependent. More generally, dependence means that at least one listed
+vector can be expressed as a linear combination of the others.
+
+\begin{example}
+The vectors $(1,0)^{\mathsf T},(0,1)^{\mathsf T},(1,1)^{\mathsf T}$
+are dependent because the first two minus the third give zero.
+By contrast, $(1,1)^{\mathsf T},(1,-1)^{\mathsf T}$ are independent:
+\[
+ a(1,1)^{\mathsf T}+b(1,-1)^{\mathsf T}=0
+ \quad\Longrightarrow\quad a+b=a-b=0
+ \quad\Longrightarrow\quad a=b=0.
+\]
+For the preceding three-dimensional example, $u-2v+w=0$, so $u,v,w$
+are dependent.
+\end{example}
+
+\method{Put the vectors in the columns of a matrix $A$. They are
+independent exactly when $Ax=0$ has only the zero solution.
+To test whether they span $F^m$, ask whether $Ax=b$ is solvable for
+every $b\in F^m$. These are different questions.}
+
+\section{Bases and dimension}
+
+\begin{definition}
+A \emph{basis} of $U$ is an ordered sequence of vectors that is both
+linearly independent and spans $U$.
+\end{definition}
+
+Spanning ensures that every vector has a representation in the basis.
+Independence ensures that this representation is unique: subtract two
+representations and apply the definition of independence.
+The standard basis of $F^n$ is $e_1,\ldots,e_n$.
+
+\begin{lemma}[Steinitz length bound; source Lemma 2.15]
+Suppose $s_1,\ldots,s_m$ span $U$. Any sequence of more than $m$ vectors
+in $U$ is linearly dependent.
+\end{lemma}
+\begin{proof}
+Let $v_1,\ldots,v_k\in U$ with $k>m$. Write
+$v_j=\sum_{i=1}^m a_{ij}s_i$, and form the $m\times k$ matrix
+$A=(a_{ij})$. The homogeneous system $Ax=0$ has more unknowns than
+equations, so it has a nonzero solution $x$. Then
+\[
+ \sum_{j=1}^k x_jv_j
+ =\sum_{i=1}^m\left(\sum_{j=1}^k a_{ij}x_j\right)s_i=0.
+\]
+Since some $x_j$ is nonzero, this is a nontrivial dependence.
+The case $m=0$ simply says that every vector of $U=\{0\}$ is zero.
+\end{proof}
+
+\begin{corollary}
+Any $n+1$ vectors in $F^n$ are dependent.
+\end{corollary}
+\begin{proof}
+Apply the lemma to the $n$ standard basis vectors.
+\end{proof}
+
+\begin{theorem}[Size of a basis; source Theorem 2.17]
+Any two bases of a subspace have the same number of vectors.
+\end{theorem}
+\begin{proof}
+Let one basis have $r$ vectors and the other $s$.
+The first spans the subspace and the second is independent, so the
+Steinitz bound gives $s\leq r$. Reversing the roles gives $r\leq s$.
+Thus $r=s$.
+\end{proof}
+
+\begin{lemma}[Extending an independent sequence]
+If $u_1,\ldots,u_k$ are independent and
+$v\notin\spanop(u_1,\ldots,u_k)$, then $u_1,\ldots,u_k,v$ are independent.
+\end{lemma}
+\begin{proof}
+If $\sum_i a_i u_i+bv=0$ and $b\ne0$, then
+$v=-b^{-1}\sum_i a_i u_i$, contrary to the assumption.
+Thus $b=0$, after which independence of the $u_i$ gives all $a_i=0$.
+\end{proof}
+
+\begin{theorem}[Basis extension]
+Every independent sequence in a subspace $U\leq F^n$ can be extended to
+a basis of $U$. In particular, every subspace has a basis.
+\end{theorem}
+\begin{proof}
+If the current sequence does not span $U$, choose a vector of $U$ outside
+its span and append it. The lemma preserves independence.
+This process cannot produce more than $n$ independent vectors, so it
+must stop at a spanning sequence. Starting with the empty sequence gives
+existence, including the empty basis of $\{0_n\}$.
+\end{proof}
+
+\begin{definition}
+The \emph{dimension} of $U$, written $\dim U$, is the number of vectors
+in any basis of $U$. The size theorem makes this well-defined.
+\end{definition}
+
+\begin{example}
+$\dim F^n=n$ and $\dim\{0_n\}=0$.
+The plane $a+b+c=0$ has basis
+$(1,0,-1)^{\mathsf T},(0,1,-1)^{\mathsf T}$, because
+$(a,b,c)^{\mathsf T}=a(1,0,-1)^{\mathsf T}
++b(0,1,-1)^{\mathsf T}$ whenever $c=-a-b$.
+Its dimension is two.
+\end{example}
+
+\begin{proposition}
+If $U\leq V\leq F^n$, then $\dim U\leq\dim V$.
+Equality holds if and only if $U=V$.
+\end{proposition}
+\begin{proof}
+Extend a basis of $U$ to a basis of $V$. This can only increase its
+length. If the dimensions are equal, no extra vectors are needed, so
+the original basis already spans $V$ and $U=V$.
+\end{proof}
+
+\begin{corollary}
+In a $d$-dimensional subspace, any $d$ independent vectors form a basis.
+Also, any $d$ vectors that span it form a basis.
+\end{corollary}
+\begin{proof}
+For the first assertion, basis extension leaves no room for extra vectors.
+For the second, if a spanning sequence is dependent, delete a vector
+expressible using the others. Repeating gives a basis of length less
+than $d$, a contradiction.
+\end{proof}
+
+\section{Sums and intersections}
+
+\begin{definition}
+For subspaces $S,T\leq F^n$, define
+\[
+ S\cap T=\{v:v\in S\text{ and }v\in T\},\qquad
+ S+T=\{s+t:s\in S,\ t\in T\}.
+\]
+\end{definition}
+
+Both are subspaces. For the intersection, a linear combination stays in
+each of the two sets. For the sum,
+$a(s_1+t_1)+b(s_2+t_2)=(as_1+bs_2)+(at_1+bt_2)\in S+T$.
+Both sets contain zero.
+The sum is the span of the combined spanning sequences of $S$ and $T$.
+It usually differs from the union $S\cup T$.
+
+\begin{example}
+Let $S=\spanop((2,-1,0)^{\mathsf T})$ and
+$T=\spanop((2,-1,2)^{\mathsf T})$ in $\mathbb R^3$.
+The two generating vectors are independent, so their sum is a plane.
+If $a(2,-1,0)^{\mathsf T}=b(2,-1,2)^{\mathsf T}$, the third coordinate
+gives $b=0$, and then $a=0$. Thus $S\cap T=\{0_3\}$.
+\end{example}
+
+\begin{theorem}[Dimension formula; source Theorem 2.28]
+\[
+ \boxed{\dim(S+T)=\dim S+\dim T-\dim(S\cap T).}
+\]
+\end{theorem}
+\begin{proof}
+Choose a basis $v_1,\ldots,v_k$ of $S\cap T$.
+Extend it to a basis $v_1,\ldots,v_k,s_1,\ldots,s_r$ of $S$, and
+to a basis $v_1,\ldots,v_k,t_1,\ldots,t_q$ of $T$.
+The combined sequence $v_1,\ldots,v_k,s_1,\ldots,s_r,t_1,\ldots,t_q$
+spans $S+T$.
+
+For independence, suppose
+$\sum_i a_iv_i+\sum_j b_js_j+\sum_\ell c_\ell t_\ell=0$.
+Then $\sum_\ell c_\ell t_\ell\in S\cap T$, so it is some
+$\sum_i d_iv_i$. Independence of the chosen basis of $T$ forces
+all $c_\ell$ and $d_i$ to be zero.
+Independence of the basis of $S$ then gives all $a_i=b_j=0$.
+Thus the combined sequence is a basis of length $k+r+q$, which equals
+$(k+r)+(k+q)-k$.
+\end{proof}
+
+For example, two distinct planes through the origin in $\mathbb R^3$
+intersect in a line and have sum $\mathbb R^3$.
+If $S\cap T=\{0\}$, the sum is called a \emph{direct sum}, written
+$S\oplus T$; the representation $s+t$ is then unique.
+
+\section{Computing bases from a matrix}
+
+\subsection{A basis for the kernel}
+
+For an RREF matrix, assign each free variable a parameter.
+Set one free variable to $1$ and the others to $0$, then solve for the
+pivot variables. The resulting vectors are the \emph{fundamental solutions}.
+
+\begin{example}[Source Example 2.30]
+Suppose $A$ has reduced row echelon form
+\[
+ R=\begin{pmatrix}0&1&2&0&3\\0&0&0&1&4\\0&0&0&0&0\end{pmatrix}.
+\]
+The equations are $x_2=-2x_3-3x_5$ and $x_4=-4x_5$.
+Variables $x_1,x_3,x_5$ are free, so
+\[
+ N(A)=N(R)=\spanop\left(
+ \begin{pmatrix}1\\0\\0\\0\\0\end{pmatrix},
+ \begin{pmatrix}0\\-2\\1\\0\\0\end{pmatrix},
+ \begin{pmatrix}0\\-3\\0\\-4\\1\end{pmatrix}\right).
+\]
+These vectors are independent: their first, third and fifth coordinates
+recover their coefficients. They therefore form a basis, and $\dim N(A)=3$.
+\end{example}
+
+\begin{proposition}
+The fundamental solutions form a basis of $N(A)$. Hence $\dim N(A)$
+is the number of free variables.
+\end{proposition}
+\begin{proof}
+Every solution is the linear combination whose coefficients are its
+free-variable values, so the fundamental solutions span.
+At the free-variable positions they have the columns of an identity
+matrix, so a zero linear combination must have every coefficient zero.
+\end{proof}
+
+\subsection{A basis for the column space}
+
+\begin{definition}
+The \emph{column rank}, or simply \emph{rank}, is
+$\rank A=\dim C(A)$.
+\end{definition}
+
+\begin{theorem}
+If the pivot columns of the RREF of $A$ have indices
+$j_1,\ldots,j_r$, then columns $j_1,\ldots,j_r$ of the
+\textbf{original matrix $A$} form a basis of $C(A)$.
+\end{theorem}
+\begin{proof}
+Write $R=EA$, where $E$ is the invertible product of the elementary
+matrices used in row reduction. For every coefficient vector $x$,
+$Ax=0$ if and only if $Rx=0$. Thus the columns of $A$ and $R$ have
+exactly the same linear relations.
+
+In $R$, the pivot columns are the first $r$ standard coordinate vectors.
+Every other column is their linear combination.
+The identical relations hold in $A$, so its corresponding columns span
+$C(A)$. Any dependence among these columns would give a dependence among
+the pivot columns of $R$, which are independent.
+\end{proof}
+
+\begin{remark}
+Row operations preserve the kernel and the relations between columns,
+but can change the column space itself. For example,
+\[
+ A=\begin{pmatrix}1&0\\1&0\end{pmatrix}
+ \longrightarrow R=\begin{pmatrix}1&0\\0&0\end{pmatrix}.
+\]
+Here $C(A)=\spanop((1,1)^{\mathsf T})$ and
+$C(R)=\spanop((1,0)^{\mathsf T})$ are different.
+\end{remark}
+
+\begin{example}
+The matrix in Example~\ref{ex:algebra-rref} has pivots in columns one and
+two. Therefore a column-space basis is
+$(1,4,7)^{\mathsf T},(2,5,8)^{\mathsf T}$, and its rank is two.
+\end{example}
+
+\begin{theorem}[Rank--nullity; source Theorem 2.39]
+For every $m\times n$ matrix $A$,
+\[
+ \boxed{\dim N(A)+\rank A=n.}
+\]
+\end{theorem}
+\begin{proof}
+There are $n$ columns. Each is either a pivot column or a free-variable
+column. The two numbers are $\rank A$ and $\dim N(A)$ respectively.
+\end{proof}
+
+\subsection{A basis for the row space}
+
+Representing rows as column vectors, the \emph{row space} of $A$ is
+$C(A^{\mathsf T})\leq F^n$.
+
+\begin{lemma}
+If $F_0$ is an invertible $n\times n$ matrix, then $C(AF_0)=C(A)$.
+\end{lemma}
+\begin{proof}
+Every $AF_0x$ is in $C(A)$. Conversely, every $Ay$ equals
+$AF_0(F_0^{-1}y)$, so it lies in $C(AF_0)$.
+\end{proof}
+
+Consequently, row operations preserve row space:
+if $R=EA$, then $R^{\mathsf T}=A^{\mathsf T}E^{\mathsf T}$ and the
+lemma applies. The nonzero rows of $R$, transposed, form a row-space
+basis. They span by definition, and their pivot positions prove
+independence.
+
+\begin{theorem}[Equality of row and column rank]
+\[
+ \dim C(A^{\mathsf T})=\dim C(A)=\rank A.
+\]
+\end{theorem}
+\begin{proof}
+Both dimensions equal the number of pivots in an echelon form.
+\end{proof}
+
+Equal dimensions do not mean equal spaces. For
+$A=\begin{pmatrix}1&1\\2&2\end{pmatrix}$, the column space is
+$\spanop((1,2)^{\mathsf T})$, while the row space is
+$\spanop((1,1)^{\mathsf T})$.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Space & Ambient space & Basis obtained from RREF $R$\\
+\midrule
+$N(A)$ & $F^n$ & Fundamental solutions of $Rx=0$\\
+$C(A)$ & $F^m$ & Original columns at pivot indices\\
+$C(A^{\mathsf T})$ & $F^n$ & Nonzero rows of $R$, transposed\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Equivalent tests for invertibility}
+
+\begin{theorem}[Big invertibility theorem; source Theorem 2.40]
+For a square $n\times n$ matrix $A$, the following are equivalent:
+\begin{enumerate}
+\item $A$ is invertible.
+\item $A^{\mathsf T}$ is invertible.
+\item The RREF of $A$ is $I_n$.
+\item $N(A)=\{0_n\}$.
+\item The columns of $A$ are independent.
+\item $\rank A=n$.
+\item The columns of $A$ form a basis of $F^n$.
+\item $C(A)=F^n$.
+\item For every $b\in F^n$, the equation $Ax=b$ has a unique solution.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+The inverse criterion from Chapter~\ref{chap:algebra-matrices} equates
+invertibility with RREF $I_n$.
+For a square matrix, this means there are $n$ pivots, equivalently no
+free variables, equivalently a trivial kernel.
+A trivial kernel is precisely independence of the columns.
+The column-space basis theorem gives rank equal to the number of pivots.
+In dimension $n$, $n$ independent columns form a basis, equivalently they
+span $F^n$. In that basis, every $b$ has a unique coefficient vector
+$x$, which is the unique solution of $Ax=b$.
+Conversely, unique solvability at $b=0$ gives a trivial kernel.
+Finally, if $A$ is invertible, then
+$(A^{\mathsf T})^{-1}=(A^{-1})^{\mathsf T}$; applying the same argument
+to $A^{\mathsf T}$ gives the reverse implication.
+\end{proof}
+
+The determinant criterion $\det A\ne0$ will be added in
+Chapter~\ref{chap:algebra-eigenvalues}.
+For a rectangular matrix, keep the distinctions:
+independent columns mean rank $n$, whereas spanning the codomain $F^m$
+means rank $m$. They coincide only when $m=n$.

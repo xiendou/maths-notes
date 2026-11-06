@@ -1,0 +1,352 @@
+% !TeX root = ../analysis1.tex
+\chapter{Differentiation}\label{chap:analysis-differentiation}
+
+\section{Derivatives and linear approximation}
+For the line $y=ax+b$, the slope is $(y_2-y_1)/(x_2-x_1)=a$.
+For a general graph, consider the secant through $(c,f(c))$ and
+$(c+h,f(c+h))$. Its slope is $[f(c+h)-f(c)]/h$.
+The derivative is the limiting slope as the second point approaches the first.
+
+\begin{definition}[Derivative]
+Let $f$ be defined on an open interval containing $c$. It is differentiable
+at $c$ if the finite limit
+\[
+f'(c)=\lim_{h\to0}\frac{f(c+h)-f(c)}h
+=\lim_{x\to c}\frac{f(x)-f(c)}{x-c}
+\]
+exists. Differentiability on an open interval means differentiability at
+every point there. Another notation is $\left.\frac{df}{dx}\right|_{x=c}$.
+\end{definition}
+
+\begin{example}[Derivatives from the definition]
+For $f(x)=p$ constant, the difference quotient is zero, so $f'=0$.
+For $f(x)=x$, it equals $1$, so $f'=1$.
+As an additional example, for $f(x)=x^2$ it equals
+\[
+\frac{(c+h)^2-c^2}{h}=2c+h\longrightarrow2c.
+\]
+The quadratic calculation replaces the source's incomplete third example.
+\end{example}
+
+\begin{theorem}[Linear approximation]\label{thm:analysis-linear}
+The function $f$ is differentiable at $c$ if and only if some $\mu\in\mathbb R$
+and remainder $R(h)$ satisfy, for sufficiently small $h$,
+\[
+f(c+h)=f(c)+\mu h+hR(h),\qquad R(h)\longrightarrow0\quad(h\to0).
+\]
+In that case $\mu=f'(c)$.
+\end{theorem}
+\begin{proof}
+If $f'(c)$ exists, put $\mu=f'(c)$ and
+$R(h)=[f(c+h)-f(c)]/h-\mu$ for $h\ne0$, with $R(0)=0$.
+Then the identity holds and $R(h)\to0$.
+Conversely, subtract $f(c)$ and divide by $h\ne0$ in the asserted identity.
+The quotient is $\mu+R(h)\to\mu$, proving differentiability.
+\end{proof}
+The affine expression $f(c)+f'(c)h$ is the linear approximation. Its error
+$hR(h)$ is smaller than $h$ in the precise sense that the ratio tends to
+zero. The condition $R(h)\to0$ is essential.
+
+\begin{theorem}[Differentiability implies continuity]
+If $f$ is differentiable at $c$, it is continuous at $c$.
+\end{theorem}
+\begin{proof}
+Linear approximation gives $f(c+h)-f(c)=h(f'(c)+R(h))\to0$.
+\end{proof}
+The converse fails: $|x|$ is continuous at $0$, but its left and right
+difference quotients are $-1$ and $1$.
+
+\section{Rules for differentiation}
+\begin{theorem}[Sum, constant multiple and product rules]
+If $f,g$ are differentiable at $c$ and $a\in\mathbb R$, then
+\begin{align*}
+(f+g)'(c)&=f'(c)+g'(c),\\
+(af)'(c)&=af'(c),\\
+(fg)'(c)&=f'(c)g(c)+f(c)g'(c).
+\end{align*}
+\end{theorem}
+\begin{proof}
+For sums and constant multiples, expand the difference quotients and use
+the algebra of limits. For products, add and subtract $f(c)g(c+h)$:
+\begin{align*}
+\frac{f(c+h)g(c+h)-f(c)g(c)}h
+&=\frac{f(c+h)-f(c)}h\,g(c+h)\\
+&\quad+f(c)\frac{g(c+h)-g(c)}h.
+\end{align*}
+Continuity gives $g(c+h)\to g(c)$, so passing to limits gives the product
+rule. This shortens the source's equivalent remainder expansion.
+\end{proof}
+
+\begin{theorem}[Sandwich theorem for derivatives]
+Suppose $f,q$ are differentiable at $c$, $f(c)=q(c)=L$, and
+$f'(c)=q'(c)=m$. If $f(x)\leq g(x)\leq q(x)$ near $c$, including at $c$,
+then $g$ is differentiable at $c$ and $g'(c)=m$.
+\end{theorem}
+\begin{proof}
+First $g(c)=L$. For $h>0$, subtract $L$ and divide by $h$ to sandwich the
+difference quotient for $g$ between those for $f$ and $q$. Both tend to $m$.
+For $h<0$, the inequalities reverse, but both outer limits are still $m$.
+Thus both one-sided limits of the middle quotient equal $m$.
+\end{proof}
+
+\begin{theorem}[Chain rule]
+If $g$ is differentiable at $c$ and $f$ is differentiable at $g(c)$,
+with the composition defined near $c$, then
+\[
+(f\circ g)'(c)=f'(g(c))g'(c).
+\]
+\end{theorem}
+\begin{proof}
+By linear approximation,
+\[
+g(c+h)-g(c)=h(g'(c)+R_g(h))=:k(h),\qquad R_g(h)\to0.
+\]
+Hence $k(h)\to0$. Also
+\[
+f(g(c)+k)=f(g(c))+f'(g(c))k+kR_f(k),\qquad R_f(k)\to0.
+\]
+Set $R_f(0)=0$ so substitution remains valid even when $k(h)=0$.
+For $h\ne0$, the composite difference quotient becomes
+\[
+\frac{f(g(c+h))-f(g(c))}h
+=(g'(c)+R_g(h))\bigl(f'(g(c))+R_f(k(h))\bigr).
+\]
+Passing to the limit proves the formula without dividing by $k(h)$.
+\end{proof}
+
+\section{Powers, exponentials and inverse functions}
+\begin{example}[Integer powers]
+Induction and the product rule give $(x^n)'=nx^{n-1}$ for $n\in\mathbb N$.
+The base case is $(x)'=1$. If it holds for $n$, then
+\[
+(x^{n+1})'=(xx^n)'=x^n+x(nx^{n-1})=(n+1)x^n.
+\]
+For $x\ne0$, the reciprocal has difference quotient
+\[
+\frac{1/(x+h)-1/x}{h}=-\frac1{x(x+h)}\longrightarrow-\frac1{x^2}.
+\]
+The chain rule applied to $1/x^{-n}$ gives the same power rule for negative
+integer $n$, on $x\ne0$. The derivative of $x^0=1$ is zero.
+\end{example}
+
+\begin{proposition}[Derivative of the exponential]
+For every $x\in\mathbb R$, $(\exp x)'=\exp x$.
+\end{proposition}
+\begin{proof}
+For $|h|<1$, Lemma~\ref{lem:analysis-exp-bounds} gives
+$1+h\leq\exp(h)\leq1/(1-h)$. Both bounding functions equal $1$ at $0$
+and have derivative $1$ there. The derivative sandwich theorem gives
+$\exp'(0)=1$. At arbitrary $x$, the addition law yields
+\[
+\frac{\exp(x+h)-\exp(x)}h
+=\exp(x)\frac{\exp(h)-1}h\longrightarrow\exp(x).
+\]
+\end{proof}
+\begin{corollary}
+For $a>0$, $\frac d{dx}a^x=a^x\log a$.
+\end{corollary}
+\begin{proof}
+Use $a^x=\exp(x\log a)$ and the chain rule.
+\end{proof}
+
+\begin{proposition}[Derivative of an inverse: conditional formula]
+If $f$ is bijective and differentiable at $c$, and $f^{-1}$ is differentiable
+at $f(c)$, then $f'(c)\ne0$ and
+\[
+(f^{-1})'(f(c))=\frac1{f'(c)}.
+\]
+\end{proposition}
+\begin{proof}
+Differentiate $f^{-1}(f(x))=x$ at $c$. The chain rule gives
+$(f^{-1})'(f(c))f'(c)=1$.
+\end{proof}
+This calculation assumes differentiability of the inverse. The inverse
+function theorem at the end of the chapter supplies sufficient conditions.
+
+\begin{example}[Logarithms and real powers]
+Applying the inverse function theorem to $\exp$, whose derivative is
+positive, justifies differentiability of $\log$. Consequently, for $x>0$,
+\[
+\frac d{dx}\log x=\frac1{\exp(\log x)}=\frac1x.
+\]
+For $\alpha\in\mathbb R$, $x^\alpha=\exp(\alpha\log x)$ on $x>0$, so
+\[
+\frac d{dx}x^\alpha=x^\alpha\frac\alpha x=\alpha x^{\alpha-1}.
+\]
+For arbitrary real $\alpha$, the restriction $x>0$ matters. For instance,
+$\sqrt x$ has no finite right derivative at $0$ because
+$\sqrt h/h=1/\sqrt h\to+\infty$ as $h\to0^+$.
+\end{example}
+
+\section{Extrema and stationary points}
+\begin{definition}[Global and local extrema]
+A global maximum of $f:S\to\mathbb R$ at $c\in S$ means that $f(x)\leq f(c)$
+for all $x\in S$. A global minimum reverses the inequality.
+A local maximum means that the inequality holds for all domain points
+with $|x-c|<\delta$, for some $\delta>0$. A local minimum is analogous.
+An extremum is a maximum or a minimum.
+\end{definition}
+For two-sided derivative tests, $c$ must be an interior point of the domain.
+A stationary point is one where $f'(c)=0$, called a critical point in the
+source. Some texts use ``critical point'' more broadly to include points
+where the derivative is undefined.
+
+\begin{theorem}[Fermat's stationary-point theorem]
+If $f$ is differentiable at an interior point $c$ where it has a local
+extremum, then $f'(c)=0$.
+\end{theorem}
+\begin{proof}
+At a local maximum, $f(c+h)-f(c)\leq0$ for small $h$.
+For $h>0$, division and the limit give $f'(c)\leq0$.
+For $h<0$, they give $f'(c)\geq0$. Hence $f'(c)=0$.
+Apply the result to $-f$ for a minimum.
+\end{proof}
+The converse fails: $x^3$ has derivative zero at $0$ but no extremum there.
+Endpoint extrema need not have derivative zero: $f(x)=x$ on $[-1,1]$ has
+its minimum at $-1$ and maximum at $1$. To find extrema on a closed interval,
+compare interior candidates with endpoint values.
+
+\section{Rolle's theorem and the mean value theorem}
+\begin{theorem}[Rolle's theorem]
+If $f:[a,b]\to\mathbb R$ is continuous on $[a,b]$, differentiable on
+$(a,b)$, and $f(a)=f(b)$, with $a<b$, then some $c\in(a,b)$ has $f'(c)=0$.
+\end{theorem}
+\begin{proof}
+By the extreme value theorem, $f$ attains a maximum and minimum.
+If the values agree, $f$ is constant. Otherwise at least one extreme
+value differs from the common endpoint value, so is attained at an
+interior point. Its derivative is zero by Fermat's theorem.
+\end{proof}
+
+\begin{theorem}[Mean value theorem]\label{thm:analysis-mvt}
+If $f:[a,b]\to\mathbb R$ is continuous on $[a,b]$ and differentiable on
+$(a,b)$, some $c\in(a,b)$ satisfies
+\[
+f'(c)=\frac{f(b)-f(a)}{b-a}.
+\]
+\end{theorem}
+\begin{proof}
+Put $m=[f(b)-f(a)]/(b-a)$ and $g(x)=f(x)-mx$.
+Then $g(a)=g(b)$, so Rolle's theorem gives $g'(c)=0$ for some $c\in(a,b)$.
+Since $g'=f'-m$, the result follows.
+\end{proof}
+
+\begin{corollary}[Derivative sign and monotonicity]
+Under the mean value theorem hypotheses, $f'>0$ throughout $(a,b)$ implies
+$f$ is strictly increasing on $[a,b]$, and $f'<0$ implies it is strictly
+decreasing. If $f'=0$ throughout $(a,b)$, $f$ is constant.
+Non-strict derivative inequalities give non-strict monotonicity.
+\end{corollary}
+\begin{proof}
+For $a\leq x<y\leq b$, apply the theorem on $[x,y]$ to get
+$f(y)-f(x)=f'(c)(y-x)$. The positive factor $y-x$ preserves the relevant sign.
+\end{proof}
+
+\section{First, second and higher derivative tests}
+\begin{theorem}[First derivative test]
+Let $f$ be continuous near $c$ and differentiable on each side.
+If for some $\delta>0$,
+\[
+f'(x)>0\ (c-\delta<x<c),\qquad f'(x)<0\ (c<x<c+\delta),
+\]
+then $c$ is a strict local maximum. Reversing the two signs gives a
+strict local minimum.
+\end{theorem}
+\begin{proof}
+The mean value theorem on $[x,c]$ for $x<c$ gives $f(c)>f(x)$;
+on $[c,x]$ for $x>c$ it gives $f(x)<f(c)$. Thus $c$ is a strict maximum.
+Apply this to $-f$ for the minimum case.
+\end{proof}
+
+\begin{theorem}[Second derivative test]
+Let $f$ be twice continuously differentiable near $c$, with $f'(c)=0$.
+If $f''(c)>0$, then $c$ is a strict local minimum. If $f''(c)<0$, then
+$c$ is a strict local maximum. If $f''(c)=0$, the test is inconclusive.
+\end{theorem}
+\begin{proof}
+If $f''(c)>0$, continuity keeps $f''$ positive near $c$. Thus $f'$ is
+strictly increasing there and, since $f'(c)=0$, is negative on the left
+and positive on the right. Use the first derivative test.
+Apply this to $-f$ when $f''(c)<0$.
+\end{proof}
+
+\begin{theorem}[Higher derivative test]
+Suppose $f$ is $n$ times continuously differentiable near $c$, $n\geq2$,
+with $f'(c)=\cdots=f^{(n-1)}(c)=0$ and $f^{(n)}(c)\ne0$.
+For odd $n$, $c$ is not a local extremum.
+For even $n$, $c$ is a strict local minimum if $f^{(n)}(c)>0$ and a
+strict local maximum if $f^{(n)}(c)<0$.
+\end{theorem}
+\begin{proof}[Supplementary proof]
+Assume $f^{(n)}(c)>0$. It stays positive near $c$.
+Repeated applications of the mean value theorem, using the vanishing
+lower derivatives at $c$, show that to the right of $c$ all lower
+positive-order derivatives are positive and $f(x)-f(c)>0$.
+To the left, the signs alternate: $f^{(n-1)}(x)<0$,
+$f^{(n-2)}(x)>0$, and ultimately $f(x)-f(c)$ has sign $(-1)^n$.
+For even $n$, both sides are above $f(c)$; for odd $n$ they are on opposite
+sides. The negative case follows by applying this reasoning to $-f$.
+\end{proof}
+The source marks this result non-examinable for its 2024--25 course and
+omits the proof.
+
+\begin{example}[Vanishing derivatives]
+For $f(x)=x^3$, $f'(0)=f''(0)=0$ and $f'''(0)=6$: there is no extremum at
+$0$. By contrast, $x^4$ has a strict minimum there, and $-x^4$ has a strict
+maximum. Thus $f''(c)=0$ does not decide the issue.
+
+The flat function
+\[
+F(x)=\begin{cases}e^{-1/x^2},&x\ne0,\\0,&x=0\end{cases}
+\]
+has $F^{(k)}(0)=0$ for every $k\geq0$, yet $F(x)>0$ for $x\ne0$.
+It has a strict minimum although no first nonzero derivative exists.
+
+\textit{Supplementary explanation.} For every integer $m\geq0$,
+$|x|^{-m}e^{-1/x^2}\to0$: put $t=1/x^2$ and use $e^t\geq t^j/j!$ for
+an integer $j>m/2$. Repeated differentiation away from zero produces
+$P_k(1/x)e^{-1/x^2}$ for some polynomial $P_k$. These expressions and their
+difference quotients at zero tend to zero by that estimate. Induction
+proves smoothness and all stated derivatives. The one-sided flat function
+from Chapter~\ref{chap:analysis-foundations} has the same property at zero.
+\end{example}
+
+\section{The inverse function theorem}
+This theorem gives a sufficient condition for a differentiable local
+inverse. A zero derivative does not preclude invertibility: $x^3$ is
+bijective on $\mathbb R$, although its derivative at zero is zero.
+Its inverse $x^{1/3}$ has no finite derivative there.
+
+\begin{theorem}[One-dimensional inverse function theorem]
+Let $f$ be continuously differentiable on an open interval about $x_0$,
+with $f'(x_0)\ne0$. Some open interval $J$ about $x_0$ is mapped bijectively
+onto an open interval $I$ about $f(x_0)$. The inverse is differentiable,
+and for all $y\in I$,
+\[
+(f^{-1})'(y)=\frac1{f'(f^{-1}(y))}.
+\]
+In particular, $(f^{-1})'(f(x_0))=1/f'(x_0)$.
+\end{theorem}
+\begin{proof}[Supplementary proof]
+Suppose $f'(x_0)>0$; otherwise apply the argument to $-f$.
+Continuity gives a neighbourhood where $f'>0$. Choose $u<x_0<v$ so that
+$[u,v]$ lies in that neighbourhood. The mean value theorem makes $f$
+strictly increasing there. By the intermediate value theorem it maps
+$J=(u,v)$ bijectively onto $I=(f(u),f(v))$.
+
+Let $g=f^{-1}$. To prove its continuity at $y\in I$, set $x=g(y)$.
+For every sufficiently small $\varepsilon>0$, strict increase gives
+$f(x-\varepsilon)<y<f(x+\varepsilon)$. All $z\in I$ sufficiently close
+to $y$ lie between those two values, so
+$x-\varepsilon<g(z)<x+\varepsilon$. Hence $g(z)\to g(y)$.
+For $z\ne y$, put $x'=g(z)\ne x$. Then $x'\to x$ and
+\[
+\frac{g(z)-g(y)}{z-y}
+=\left(\frac{f(x')-f(x)}{x'-x}\right)^{-1}
+\longrightarrow\frac1{f'(x)}.
+\]
+This proves the claimed differentiability and formula.
+\end{proof}
+The source marks this material non-examinable for its 2024--25 course
+and leaves its proof incomplete. The added proof avoids assuming the
+inverse differentiable before that fact is established.

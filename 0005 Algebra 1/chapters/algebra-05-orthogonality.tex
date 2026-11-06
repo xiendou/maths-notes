@@ -1,0 +1,414 @@
+% !TeX root = ../algebra-1.tex
+\chapter{Orthogonality}\label{chap:algebra-orthogonality}
+
+\section{Conjugation, inner products and norms}
+
+Complex conjugation is applied entry by entry to vectors and matrices:
+\[
+ \overline{A+B}=\overline A+\overline B,\qquad
+ \overline{AB}=\overline A\,\overline B,\qquad
+ \overline{A^{\mathsf T}}=(\overline A)^{\mathsf T}.
+\]
+The \emph{conjugate transpose}, or adjoint, is $A^*=\overline A^{\mathsf T}$.
+Transposition reverses products, so $(AB)^*=B^*A^*$.
+For real matrices, $A^*=A^{\mathsf T}$.
+
+\begin{definition}[The source's inner product convention]
+For $u,v\in F^n$, define
+\[
+ \boxed{u\cdot v=u^{\mathsf T}\overline v
+       =\sum_{j=1}^n u_j\overline{v_j}.}
+\]
+The \emph{norm}, or length, is
+\[
+ \|u\|=\sqrt{u\cdot u}=\sqrt{|u_1|^2+\cdots+|u_n|^2}.
+\]
+\end{definition}
+
+For $z=x+iy$, $|z|^2=z\overline z=x^2+y^2$, whereas
+$|z|=\sqrt{x^2+y^2}$.
+Thus $u\cdot u$ is nonnegative real, and is zero exactly when $u=0_n$.
+For real vectors the inner product is the usual dot product.
+
+\begin{proposition}[Inner product rules]
+For compatible vectors and matrices,
+\begin{align*}
+ u\cdot v&=\overline{v\cdot u},\\
+ (au+bw)\cdot v&=a(u\cdot v)+b(w\cdot v),\\
+ u\cdot(av+bw)&=\overline a(u\cdot v)+\overline b(u\cdot w),\\
+ (Au)\cdot v&=u\cdot(A^*v).
+\end{align*}
+\end{proposition}
+\begin{proof}
+The first three follow by expanding the coordinate sums. For the last,
+\[
+ (Au)\cdot v=u^{\mathsf T}A^{\mathsf T}\overline v
+ =u^{\mathsf T}\overline{A^*v}=u\cdot(A^*v).
+\]
+\end{proof}
+
+\begin{remark}
+The inner product is linear in the \textbf{first} argument and
+conjugate-linear in the second: a scalar leaving the second argument
+must be conjugated. Other books may use the opposite convention.
+All projection and Gram--Schmidt coefficients below follow our convention.
+\end{remark}
+
+\begin{example}[Checking the complex arithmetic]
+Let $u=(2+i,-1-i)^{\mathsf T}$, $v=(1,1)^{\mathsf T}$ and
+$w=(-1,2)^{\mathsf T}$. Then
+\begin{align*}
+ u\cdot u&=|2+i|^2+|-1-i|^2=5+2=7,\\
+ u\cdot v&=(2+i)+(-1-i)=1,\\
+ v\cdot w&=-1+2=1.
+\end{align*}
+Thus $\|u\|=\sqrt7$. The value of $u\cdot v$ corrects the source's arithmetic.
+\end{example}
+
+\section{Orthogonality, Cauchy--Schwarz and angles}
+
+\begin{definition}
+Vectors $u,v$ are \emph{orthogonal} if $u\cdot v=0$.
+A sequence is orthogonal if each pair of distinct vectors is orthogonal.
+\end{definition}
+
+Conjugate symmetry makes the relation symmetric.
+For orthogonal $u,v$, expansion gives Pythagoras's identity:
+\[
+ \|u+v\|^2=(u+v)\cdot(u+v)=\|u\|^2+\|v\|^2.
+\]
+
+\begin{theorem}[Cauchy--Schwarz inequality]
+For $u,v\in F^n$,
+\[
+ \boxed{|u\cdot v|\leq\|u\|\,\|v\|.}
+\]
+Equality holds if and only if $u,v$ are linearly dependent.
+\end{theorem}
+\begin{proof}
+If $v=0_n$, both sides are zero and the pair is dependent.
+Otherwise put $c=(u\cdot v)/(v\cdot v)$ and $w=u-cv$.
+Then $w\cdot v=0$, so Pythagoras applied to $u=cv+w$ gives
+\[
+ \|u\|^2=|c|^2\|v\|^2+\|w\|^2
+ \geq\frac{|u\cdot v|^2}{\|v\|^2}.
+\]
+Multiply by $\|v\|^2$ and take square roots.
+Equality holds exactly when $w=0$, that is, $u=cv$.
+\end{proof}
+
+\begin{definition}[Angles between real vectors]
+For nonzero $u,v\in\mathbb R^n$, their angle $\theta\in[0,\pi]$ satisfies
+\[
+ \cos\theta=\frac{u\cdot v}{\|u\|\,\|v\|}.
+\]
+\end{definition}
+
+Cauchy--Schwarz ensures the quotient is in $[-1,1]$.
+Real nonzero vectors are orthogonal exactly when their angle is $\pi/2$.
+For complex vectors the quotient may be nonreal, so this ordinary
+real-angle definition cannot simply be used unchanged.
+Orthogonality itself remains well-defined over $\mathbb C$.
+
+\begin{proposition}
+An orthogonal sequence of nonzero vectors is linearly independent.
+\end{proposition}
+\begin{proof}
+If $\sum_j a_jv_j=0$, take the inner product with $v_k$ on the right.
+This gives $a_k\|v_k\|^2=0$. Since $\|v_k\|^2>0$, every $a_k=0$.
+\end{proof}
+
+\section{Orthonormal bases}
+
+\begin{definition}
+A sequence $q_1,\ldots,q_k$ is \emph{orthonormal} if
+\[
+ q_i\cdot q_j=\begin{cases}1&i=j,\\0&i\ne j.\end{cases}
+\]
+Thus its vectors are mutually orthogonal and have norm one.
+\end{definition}
+
+An orthogonal nonzero sequence becomes orthonormal by replacing each
+$v_j$ with $v_j/\|v_j\|$, which does not change its span.
+
+\begin{theorem}[Coordinates in an orthonormal basis]
+If $\mathcal B=(q_1,\ldots,q_d)$ is an orthonormal basis of $U$, then
+for $v\in U$,
+\[
+ \boxed{v=\sum_{j=1}^d(v\cdot q_j)q_j,\qquad
+ [v]_{\mathcal B}=(v\cdot q_1,\ldots,v\cdot q_d)^{\mathsf T}.}
+\]
+\end{theorem}
+\begin{proof}
+Write $v=\sum_j c_jq_j$ and take the inner product with $q_k$ on the
+right. Linearity and orthonormality give $v\cdot q_k=c_k$.
+\end{proof}
+
+\begin{example}
+An orthonormal basis of $\mathbb R^2$ is
+\[
+ q_1=\frac1{\sqrt2}(1,1)^{\mathsf T},\qquad
+ q_2=\frac1{\sqrt2}(1,-1)^{\mathsf T}.
+\]
+For $v=(1,3)^{\mathsf T}$, the coordinates are
+$v\cdot q_1=2\sqrt2$ and $v\cdot q_2=-\sqrt2$.
+Hence $v=2\sqrt2\,q_1-\sqrt2\,q_2$.
+\end{example}
+
+\section{Orthogonal projection}
+
+\begin{definition}
+The projection of $v$ onto the direction of a nonzero vector $u$ is
+\[
+ \boxed{\operatorname{proj}_u(v)=\frac{v\cdot u}{u\cdot u}\,u.}
+\]
+\end{definition}
+
+The projection belongs to $\spanop(u)$, and its residual is orthogonal to $u$:
+\[
+ \left(v-\frac{v\cdot u}{u\cdot u}u\right)\cdot u=0.
+\]
+It is the unique vector in $\spanop(u)$ with this property:
+if $v-cu$ is orthogonal to $u$, the equation forces
+$c=(v\cdot u)/(u\cdot u)$.
+
+\begin{center}
+\input{figures/algebra-projection}
+\end{center}
+
+For real vectors with angle $\theta$, the signed component along
+$u/\|u\|$ is $\|v\|\cos\theta$.
+The projection's length is $\|v\|\,|\cos\theta|$;
+the absolute value matters for an obtuse angle.
+
+\subsection{Projection onto a subspace}
+
+For an orthonormal basis $q_1,\ldots,q_d$ of $U$, define
+\[
+ p=\operatorname{proj}_U(v)=\sum_{j=1}^d(v\cdot q_j)q_j.
+\]
+Then $p\in U$ and $v-p$ is orthogonal to every vector of $U$.
+These properties determine $p$ uniquely, independently of the basis:
+if $p,p'$ both work, their difference belongs to $U$ and is orthogonal
+to $U$, hence to itself. It has norm zero, so $p=p'$.
+
+\begin{proposition}[Closest point interpretation; additional clarification]
+The projection $p$ is the unique vector in $U$ closest to $v$.
+\end{proposition}
+\begin{proof}
+For $y\in U$, $v-y=(v-p)+(p-y)$ is an orthogonal decomposition.
+Thus $\|v-y\|^2=\|v-p\|^2+\|p-y\|^2\geq\|v-p\|^2$,
+with equality exactly when $y=p$.
+\end{proof}
+
+\section{The Gram--Schmidt process}
+
+Given independent $b_1,\ldots,b_k$, subtract projections onto the
+previously constructed directions:
+\begin{align*}
+ v_1&=b_1,\\
+ v_2&=b_2-\frac{b_2\cdot v_1}{v_1\cdot v_1}v_1,\\
+ v_j&=b_j-\sum_{i=1}^{j-1}
+             \frac{b_j\cdot v_i}{v_i\cdot v_i}v_i
+             \qquad(2\leq j\leq k).
+\end{align*}
+Finally set $q_j=v_j/\|v_j\|$.
+
+\begin{theorem}[Gram--Schmidt]
+Each $v_j$ is nonzero, the $v_j$ are orthogonal, and
+\[
+ \spanop(v_1,\ldots,v_j)=\spanop(b_1,\ldots,b_j)
+ \quad(1\leq j\leq k).
+\]
+The $q_j$ are orthonormal. Every subspace of $F^n$ therefore has an
+orthonormal basis.
+\end{theorem}
+\begin{proof}
+Induct on $j$. Independence makes $v_1=b_1$ nonzero.
+Assume the assertions hold through $j-1$.
+For $\ell<j$, take the inner product with $v_\ell$ on the right:
+\[
+ v_j\cdot v_\ell=b_j\cdot v_\ell
+ -\frac{b_j\cdot v_\ell}{v_\ell\cdot v_\ell}
+ (v_\ell\cdot v_\ell)=0.
+\]
+All other terms vanish by orthogonality.
+The definition subtracts a vector in the preceding span, so adjoining
+$v_j$ or adjoining $b_j$ gives the same enlarged span.
+If $v_j=0$, then $b_j$ belongs to the span of its predecessors, contrary
+to independence. All denominators are therefore positive and
+normalisation is valid. Starting with a basis of a subspace proves the
+last assertion.
+\end{proof}
+
+\begin{remark}
+Over $\mathbb C$, the numerator is $b_j\cdot v_i$, not $v_i\cdot b_j$,
+under our convention. They are conjugates and need not be equal.
+\end{remark}
+
+\begin{example}[A complete three-dimensional calculation]
+Start with
+\[
+ b_1=\begin{pmatrix}1\\2\\3\end{pmatrix},\quad
+ b_2=\begin{pmatrix}4\\5\\6\end{pmatrix},\quad
+ b_3=\begin{pmatrix}7\\8\\10\end{pmatrix}.
+\]
+Their determinant is $-3$, so they are independent.
+As $\|b_1\|^2=14$ and $b_2\cdot b_1=32$,
+\[
+ v_1=b_1,\qquad
+ v_2=b_2-\frac{16}{7}b_1
+     =\frac37\begin{pmatrix}4\\1\\-2\end{pmatrix}.
+\]
+Projection onto a direction is unchanged by rescaling its generator,
+so use $w_2=(4,1,-2)^{\mathsf T}$ at the next step.
+We have $b_3\cdot b_1=53$, $b_3\cdot w_2=16$ and $\|w_2\|^2=21$.
+Thus
+\begin{align*}
+ v_3&=b_3-\frac{53}{14}b_1-\frac{16}{21}w_2\\
+ &=\frac16\begin{pmatrix}1\\-2\\1\end{pmatrix}.
+\end{align*}
+After normalisation,
+\[
+ \boxed{
+ q_1=\frac1{\sqrt{14}}\begin{pmatrix}1\\2\\3\end{pmatrix},\quad
+ q_2=\frac1{\sqrt{21}}\begin{pmatrix}4\\1\\-2\end{pmatrix},\quad
+ q_3=\frac1{\sqrt6}\begin{pmatrix}1\\-2\\1\end{pmatrix}.}
+\]
+Their pairwise dot products vanish and each has norm one.
+\end{example}
+
+\method{Keep the orthogonal vectors unnormalised during subtraction,
+then normalise at the end to avoid unnecessary square roots.
+A zero residual indicates dependence in the input sequence.}
+
+\section{Orthogonal and unitary matrices}
+
+\begin{definition}
+A real square matrix $Q$ is \emph{orthogonal} if $Q^{\mathsf T}Q=I_n$.
+A complex square matrix $Q$ is \emph{unitary} if $Q^*Q=I_n$.
+\end{definition}
+
+For an orthogonal matrix, $Q^{-1}=Q^{\mathsf T}$; for a unitary matrix,
+$Q^{-1}=Q^*$.
+A square matrix with a left inverse is invertible, by the
+invertibility theorem.
+
+\begin{proposition}
+A real square matrix is orthogonal exactly when its columns are an
+orthonormal basis of $\mathbb R^n$.
+The complex analogue holds with unitary matrices and $\mathbb C^n$.
+\end{proposition}
+\begin{proof}
+For real columns $q_i$, entry $(i,j)$ of $Q^{\mathsf T}Q$ is $q_i\cdot q_j$.
+For complex columns, entry $(i,j)$ of $Q^*Q$ is $q_j\cdot q_i$ under
+our convention. It equals $\delta_{ij}$ exactly when the columns are
+orthonormal. There are $n$ independent columns, so they form a basis.
+\end{proof}
+
+Orthogonal and unitary matrices preserve inner products:
+\[
+ (Qu)\cdot(Qv)=u\cdot(Q^*Qv)=u\cdot v.
+\]
+Thus they preserve lengths and orthogonality.
+Real orthogonal matrices also preserve real angles.
+Taking determinants in $Q^{\mathsf T}Q=I_n$ gives
+$(\det Q)^2=1$, so $\det Q=1$ or $-1$.
+
+\begin{remark}
+An orthogonal \emph{matrix} has orthonormal columns, including length one.
+Merely having orthogonal nonzero columns is insufficient:
+$2I_n$ has orthogonal columns but is not an orthogonal matrix.
+\end{remark}
+
+\section{Real symmetric matrices and the spectral theorem}
+
+\begin{definition}
+A real matrix is \emph{symmetric} if $A^{\mathsf T}=A$.
+A complex matrix is \emph{Hermitian} if $A^*=A$.
+\end{definition}
+
+\begin{lemma}
+Every complex eigenvalue of a real symmetric matrix is real.
+Eigenvectors for distinct eigenvalues are orthogonal.
+\end{lemma}
+\begin{proof}
+Let $Av=\lambda v$ with $v\in\mathbb C^n$ nonzero. Since $A^*=A$,
+\[
+ \lambda\|v\|^2=(Av)\cdot v
+ =v\cdot(Av)=\overline\lambda\|v\|^2.
+\]
+The positive norm squared gives $\lambda=\overline\lambda$.
+If $Au=\lambda u$ and $Av=\mu v$, then
+\[
+ \lambda(u\cdot v)=(Au)\cdot v=u\cdot(Av)=\mu(u\cdot v).
+\]
+Distinct real $\lambda,\mu$ force $u\cdot v=0$.
+\end{proof}
+
+\begin{lemma}[A real eigenvector can be chosen]
+A real symmetric matrix of positive size has a nonzero real eigenvector.
+\end{lemma}
+\begin{proof}
+Its characteristic polynomial has a complex root $\lambda$; the
+previous lemma makes $\lambda$ real.
+Write a complex eigenvector as $v=x+iy$ with $x,y\in\mathbb R^n$.
+Because $A,\lambda$ are real, $Av=\lambda v$ gives
+$Ax=\lambda x$ and $Ay=\lambda y$.
+At least one of $x,y$ is nonzero, giving a real eigenvector.
+\end{proof}
+
+\begin{theorem}[Real spectral theorem; source Theorem 5.22, strengthened form]
+Every real symmetric matrix $A$ has an orthonormal basis of real
+eigenvectors. Equivalently, a real orthogonal matrix $Q$ exists with
+\[
+ \boxed{Q^{\mathsf T}AQ=D,\qquad A=QDQ^{\mathsf T},}
+\]
+where $D$ is real and diagonal. In particular, $A$ is diagonalisable
+over $\mathbb R$.
+\end{theorem}
+\begin{proof}
+Induct on $n$, with $n=1$ immediate.
+Choose a real unit eigenvector $q_1$ with eigenvalue $\lambda$.
+Extend it to a basis and apply Gram--Schmidt.
+Since $q_1$ is already a unit vector, it remains the first vector.
+This gives an orthogonal $Q_0=[\,q_1\ q_2\ \cdots\ q_n\,]$.
+
+The first column of $Q_0^{\mathsf T}AQ_0$ is
+$(\lambda,0,\ldots,0)^{\mathsf T}$.
+Symmetry forces the same zeros in the first row, so
+\[
+ Q_0^{\mathsf T}AQ_0=\begin{pmatrix}\lambda&0\\0&B\end{pmatrix},
+\]
+where $B$ is real symmetric of size $n-1$.
+By induction, an orthogonal $Q_1$ makes $Q_1^{\mathsf T}BQ_1=D_1$ diagonal.
+Then
+\[
+ Q=Q_0\begin{pmatrix}1&0\\0&Q_1\end{pmatrix}
+\]
+is orthogonal and $Q^{\mathsf T}AQ=\diag(\lambda,D_1)$.
+Its columns are the required eigenvector basis.
+\end{proof}
+
+\begin{example}
+For $A=\begin{pmatrix}2&1\\1&2\end{pmatrix}$, take
+$Q=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}$.
+Its columns are orthonormal eigenvectors and
+$Q^{\mathsf T}AQ=\diag(3,1)$.
+This is the diagonalisation from Chapter~\ref{chap:algebra-linear-maps},
+now with an orthogonal change of basis.
+\end{example}
+
+\begin{remark}[Complex symmetric is different from Hermitian]
+Over $\mathbb C$, $A^{\mathsf T}=A$ alone does not imply diagonalisability.
+For example,
+\[
+ A=\begin{pmatrix}1&i\\i&-1\end{pmatrix}
+\]
+is symmetric and nonzero but $A^2=0$.
+Any eigenvalue must be zero; diagonalisation would therefore force
+$A=0$, a contradiction.
+The complex spectral theorem requires $A^*=A$:
+a Hermitian matrix has real eigenvalues and a unitary diagonalisation
+$Q^*AQ=D$. This is the Hermitian analogue mentioned in the source.
+\end{remark}

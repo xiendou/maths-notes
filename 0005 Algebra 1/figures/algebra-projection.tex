@@ -1,0 +1,13 @@
+% Drawing only: edit the chapter text in chapters/algebra-05-orthogonality.tex.
+\begin{tikzpicture}[>=Stealth,scale=1.05]
+ \coordinate (O) at (0,0);
+ \coordinate (P) at (3,0);
+ \coordinate (V) at (3,1.8);
+ \draw[->,muted] (-0.4,0)--(4.4,0) node[right] {$\spanop(u)$};
+ \draw[->,thick,ink] (O)--(V) node[midway,above left] {$v$};
+ \draw[->,very thick,accent] (O)--(P)
+   node[midway,below] {$p=\operatorname{proj}_u(v)$};
+ \draw[->,dashed,ink] (P)--(V) node[midway,right] {$v-p$};
+ \draw (2.8,0)--(2.8,0.2)--(3,0.2);
+ \node[below left] at (O) {$0$};
+\end{tikzpicture}

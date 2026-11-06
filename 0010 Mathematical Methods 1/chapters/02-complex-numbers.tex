@@ -1,0 +1,278 @@
+% !TeX root = ../mathematical-methods1.tex
+\chapter{Complex Numbers}\label{chap:complex-numbers}
+
+This chapter follows the lecturer's algebra and geometry of complex numbers,
+which provide a foundation for later complex analysis. The examples and their
+calculations are retained in lecture order. Conditions on division and arguments
+are made explicit where needed.
+
+\section{Introduction and arithmetic}
+
+One motivation comes from physics and engineering. An alternating current
+\[
+ I(t)=A\cos(\omega t+\phi)
+ =\operatorname{Re}\bigl(Ae^{i\omega t+i\phi}\bigr)
+\]
+can be handled conveniently using complex exponentials. Another motivation is
+polynomial equations: $x^2+1=0$ has no real solution, but it has the complex
+solutions $x=\pm i$.
+
+Adjoin an imaginary unit $i$ with $i^2=-1$. It follows that
+\[
+ i^3=-i,\qquad i^4=1,
+\]
+and these powers repeat cyclically. A complex number has the form
+\[
+ z=x+iy,\qquad x,y\in\mathbb R.
+\]
+Its real part is $\operatorname{Re}z=x$ and its imaginary part is
+$\operatorname{Im}z=y$; the imaginary part is a real number, not $iy$.
+The set of all complex numbers is
+\[
+ \mathbb C=\{x+iy:x,y\in\mathbb R\}.
+\]
+
+Addition and multiplication use the usual algebraic rules with $i^2=-1$:
+\begin{align*}
+ (x_1+iy_1)+(x_2+iy_2)
+ &=(x_1+x_2)+i(y_1+y_2),\\
+ (x_1+iy_1)(x_2+iy_2)
+ &=x_1x_2+ix_1y_2+ix_2y_1+i^2y_1y_2\\
+ &=(x_1x_2-y_1y_2)+i(x_1y_2+x_2y_1).
+\end{align*}
+For $z=x+iy\ne0$, rationalise the denominator to find its inverse:
+\begin{align*}
+ z^{-1}=\frac1{x+iy}
+ &=\frac{x-iy}{(x+iy)(x-iy)}\\
+ &=\frac{x-iy}{x^2+y^2}
+ =\frac{x}{x^2+y^2}-i\frac{y}{x^2+y^2}.
+\end{align*}
+The denominator is nonzero because $x$ and $y$ are not both zero.
+These operations make $\mathbb C$ an algebraic field; division is defined
+for every nonzero denominator.
+
+\begin{example}[Lecture Example 1: a reciprocal]
+For $z=1+i$,
+\begin{align*}
+ \frac1z
+ &=\frac1{1+i}\frac{1-i}{1-i}
+ =\frac{1-i}{(1+i)(1-i)}\\
+ &=\frac{1-i}{1-i^2}
+ =\frac{1-i}{2}=\frac12-\frac12i.
+\end{align*}
+\end{example}
+
+\subsection{Conjugate and modulus}
+For $z=x+iy$, define its conjugate and modulus by
+\[
+ \overline z=x-iy,\qquad |z|=\sqrt{x^2+y^2}\in[0,\infty).
+\]
+Then
+\[
+ z\overline z=(x+iy)(x-iy)=x^2+y^2=|z|^2.
+\]
+Thus $|z|=\sqrt{z\overline z}$ and, for $z\ne0$,
+\[
+ \boxed{\frac1z=\frac{\overline z}{z\overline z}
+ =\frac{\overline z}{|z|^2}}.
+\]
+
+\section{Polar coordinates and powers}
+
+
+A complex number $z=x+iy$ corresponds to the point $(x,y)$ in the complex
+(or Argand) plane. For $z\ne0$, write
+\[
+ x=r\cos\theta,\qquad y=r\sin\theta,\qquad r=\sqrt{x^2+y^2}=|z|>0.
+\]
+The angle $\theta$ is an argument of $z$; adding an integer multiple of
+$2\pi$ gives another argument. One may choose $0\le\theta<2\pi$, or use
+another interval of length $2\pi$ consistently. The argument of $0$ is undefined.
+The polar form is
+\[
+ z=r(\cos\theta+i\sin\theta).
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+ \draw[->] (-0.4,0)--(4.5,0) node[right] {$\operatorname{Re}z$};
+ \draw[->] (0,-0.4)--(0,3) node[above] {$\operatorname{Im}z$};
+ \draw[->,thick,ink] (0,0)--(3.2,2) node[midway,above left] {$r$};
+ \fill (3.2,2) circle (2pt) node[above right] {$z=x+iy$};
+ \draw[dashed] (3.2,0) node[below] {$x$}--(3.2,2)--(0,2) node[left] {$y$};
+ \draw (0.8,0) arc[start angle=0,end angle=32,radius=0.8];
+ \node at (1.05,0.28) {$\theta$};
+ \node[below left] at (0,0) {$0$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Multiplication in polar form}
+Let $z_j=r_j(\cos\theta_j+i\sin\theta_j)$ for $j=1,2$.
+Using the trigonometric addition formulas,
+\begin{align*}
+ z_1z_2
+ &=r_1r_2\bigl[\cos\theta_1\cos\theta_2-\sin\theta_1\sin\theta_2\\
+ &\hspace{28mm}+i(\sin\theta_1\cos\theta_2+\sin\theta_2\cos\theta_1)\bigr]\\
+ &=r_1r_2\bigl[\cos(\theta_1+\theta_2)+i\sin(\theta_1+\theta_2)\bigr].
+\end{align*}
+The moduli multiply and the arguments add, with arguments understood modulo $2\pi$.
+In particular,
+\begin{align*}
+ (\cos\theta+i\sin\theta)^2&=\cos2\theta+i\sin2\theta,\\
+ (\cos\theta+i\sin\theta)^3&=\cos3\theta+i\sin3\theta.
+\end{align*}
+Induction gives the same rule for every positive integer power. It also holds
+for power zero. For $m>0$, taking a reciprocal gives
+\begin{align*}
+ (\cos\theta+i\sin\theta)^{-m}
+ &=\frac1{\cos(m\theta)+i\sin(m\theta)}\\
+ &=\frac{\cos(m\theta)-i\sin(m\theta)}{\cos^2(m\theta)+\sin^2(m\theta)}\\
+ &=\cos(-m\theta)+i\sin(-m\theta),
+\end{align*}
+since cosine is even and sine is odd. Therefore
+\begin{theorem}[de Moivre's theorem]
+For every integer $n$ and real $\theta$,
+\[
+ \boxed{(\cos\theta+i\sin\theta)^n=\cos(n\theta)+i\sin(n\theta)}.
+\]
+\end{theorem}
+
+\begin{example}[Lecture Example 2: a multiple-angle polynomial]
+Express $\sin5\theta/\sin\theta$ as a polynomial in $\cos\theta$
+where $\sin\theta\ne0$.
+Put $c=\cos\theta$ and $s=\sin\theta$. By de Moivre and the binomial formula,
+\begin{align*}
+ \cos5\theta+i\sin5\theta
+ &=(c+is)^5\\
+ &=c^5+5c^4is+10c^3i^2s^2+10c^2i^3s^3+5ci^4s^4+i^5s^5\\
+ &=(c^5-10c^3s^2+5cs^4)+i(5c^4s-10c^2s^3+s^5).
+\end{align*}
+Equating imaginary parts and dividing by $s\ne0$,
+\begin{align*}
+ \frac{\sin5\theta}{\sin\theta}
+ &=5c^4-10c^2s^2+s^4\\
+ &=5c^4-10c^2(1-c^2)+(1-c^2)^2\\
+ &=\boxed{16\cos^4\theta-12\cos^2\theta+1}.
+\end{align*}
+\end{example}
+
+\section{The complex exponential and Euler's formula}
+
+Euler's formula is
+\[
+ \boxed{e^{i\theta}=\cos\theta+i\sin\theta}.
+\]
+The lecture notes its connection with the power-series representations of
+$e^x$, sine and cosine; these series are introduced in Chapter~3 and studied
+further in analysis. Replacing $\theta$ by $-\theta$ gives
+\[
+ e^{-i\theta}=\cos\theta-i\sin\theta.
+\]
+Adding and subtracting these identities gives
+\[
+ \boxed{\cos\theta=\frac{e^{i\theta}+e^{-i\theta}}2},
+ \qquad
+ \boxed{\sin\theta=\frac{e^{i\theta}-e^{-i\theta}}{2i}}.
+\]
+Polar form can now be written $z=re^{i\theta}$.
+In particular, $e^{i\pi}=-1$ and $e^{2\pi i}=1$.
+
+\begin{example}[Lecture Example 3: expanding a power of cosine]
+Show that
+\[
+ \cos^6\theta=\frac1{32}\cos6\theta+\frac3{16}\cos4\theta
+ +\frac{15}{32}\cos2\theta+\frac5{16}.
+\]
+Let $z=e^{i\theta}$. Then $e^{-i\theta}=z^{-1}=\overline z$ and
+$\cos\theta=(z+z^{-1})/2$. Consequently,
+\begin{align*}
+ \cos^6\theta
+ &=\frac1{64}(z+z^{-1})^6\\
+ &=\frac1{64}\bigl(z^6+6z^4+15z^2+20+15z^{-2}+6z^{-4}+z^{-6}\bigr)\\
+ &=\frac1{32}\frac{z^6+z^{-6}}2
+ +\frac3{16}\frac{z^4+z^{-4}}2
+ +\frac{15}{32}\frac{z^2+z^{-2}}2+\frac5{16}\\
+ &=\frac1{32}\cos6\theta+\frac3{16}\cos4\theta
+ +\frac{15}{32}\cos2\theta+\frac5{16}.
+\end{align*}
+\end{example}
+
+\section{Roots of complex numbers}
+
+\begin{example}[Lecture Example 4: the fourth roots of $-4$]
+Find all $z\in\mathbb C$ such that $z^4=-4$.
+Since $-4=4e^{i\pi}$, write $z=re^{i\theta}$ with $r>0$.
+Then
+\[
+ r^4e^{4i\theta}=4e^{i\pi}
+ \quad\Longleftrightarrow\quad
+ r^4=4,\qquad4\theta=\pi+2\pi k\quad(k\in\mathbb Z).
+\]
+Thus $r=\sqrt2$ and $\theta=\pi/4+k\pi/2$. Four consecutive values of $k$
+give all distinct roots; further values repeat them. Taking $k=0,1,2,3$,
+\begin{align*}
+ z_0&=\sqrt2 e^{i\pi/4}=1+i,\\
+ z_1&=\sqrt2 e^{3i\pi/4}=-1+i,\\
+ z_2&=\sqrt2 e^{5i\pi/4}=-1-i,\\
+ z_3&=\sqrt2 e^{7i\pi/4}=1-i.
+\end{align*}
+Negative arguments, as used for two of the roots in the manuscript, give the
+same numbers: $e^{5i\pi/4}=e^{-3i\pi/4}$ and
+$e^{7i\pi/4}=e^{-i\pi/4}$.
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35,>=Stealth]
+ \draw[->] (-1.9,0)--(1.9,0) node[right] {$\operatorname{Re}z$};
+ \draw[->] (0,-1.8)--(0,1.9) node[above] {$\operatorname{Im}z$};
+ \draw[dashed,muted] (0,0) circle[radius=1.414214];
+ \draw[ink] (1,1)--(-1,1)--(-1,-1)--(1,-1)--cycle;
+ \foreach \x/\y in {1/1,-1/1,-1/-1,1/-1} {\fill (\x,\y) circle (1.5pt);}
+ \node[above right] at (1,1) {$1+i$};
+ \node[above left] at (-1,1) {$-1+i$};
+ \node[below left] at (-1,-1) {$-1-i$};
+ \node[below right] at (1,-1) {$1-i$};
+\end{tikzpicture}
+\end{center}
+
+\Needspace{12\baselineskip}
+\section{The geometry of complex numbers}
+
+\begin{example}[Lecture Example 5: a modulus locus]
+Given $a$, find all $z\in\mathbb C$ such that
+\[
+ \left|\frac{z-1}{z+3}\right|=a,\qquad z\ne-3.
+\]
+The left-hand side is real and nonnegative. Hence there are no solutions if
+$a\notin\mathbb R$ or $a<0$.
+If $a=0$, the only solution is $z=1$.
+For $a>0$, put $z=x+iy$. Squaring gives
+\begin{align*}
+ \frac{(x-1)^2+y^2}{(x+3)^2+y^2}&=a^2,\\
+ (x-1)^2+y^2&=a^2\bigl((x+3)^2+y^2\bigr),\\
+ (1-a^2)(x^2+y^2)-2(1+3a^2)x&=9a^2-1.
+\end{align*}
+If $a=1$, the last equation is $-8x=8$, so the locus is the line
+\[
+ \boxed{x=-1}.
+\]
+If $a>0$ and $a\ne1$, divide by $1-a^2$ and complete the square:
+\begin{align*}
+ x^2+y^2-\frac{2(1+3a^2)}{1-a^2}x
+ &=\frac{9a^2-1}{1-a^2},\\
+ \left(x-\frac{1+3a^2}{1-a^2}\right)^2+y^2
+ &=\frac{9a^2-1}{1-a^2}+\frac{(1+3a^2)^2}{(1-a^2)^2}\\
+ &=\frac{16a^2}{(1-a^2)^2}.
+\end{align*}
+Thus the locus is a circle with centre and radius
+\[
+ \boxed{\left(\frac{1+3a^2}{1-a^2},0\right)},
+ \qquad\boxed{R=\frac{4a}{|1-a^2|}}.
+\]
+The excluded point $z=-3$ is not on any of these solution loci.
+Geometrically, the original condition prescribes the ratio of the distances
+from $z$ to $1$ and to $-3$.
+\end{example}
+
+\section*{My questions and revision notes}
+% Add your own explanations, sketches, questions and alternative derivations here.

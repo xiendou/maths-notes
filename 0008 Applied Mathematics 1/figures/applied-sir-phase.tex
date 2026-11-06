@@ -1,0 +1,23 @@
+% !TeX root = ../applied-mathematics1-companion.tex
+% Dimensionless illustration N=1, S0=.99, I0=.01, rho=.3; not observed data.
+\begin{center}
+\begin{tikzpicture}[x=7.4cm,y=5cm,>=Stealth]
+\draw[->] (0,0)--(1.06,0) node[right] {$S/N$};
+\draw[->] (0,0)--(0,1.06) node[above] {$I/N$};
+\draw[muted,dotted] (0,1)--(1,0);
+\draw[muted,dashed] (.3,0)--(.3,.7);
+\draw[very thick,ink,domain=0.0404097352:.99,samples=100]
+ plot (\x,{1-\x+.3*ln(\x/.99)});
+\draw[->,thick,ink] (.72,{1-.72+.3*ln(.72/.99)})
+ --(.66,{1-.66+.3*ln(.66/.99)});
+\draw[->,thick,ink] (.15,{1-.15+.3*ln(.15/.99)})
+ --(.12,{1-.12+.3*ln(.12/.99)});
+\fill (.99,.01) circle (1.5pt) node[above left,yshift=2pt] {initial};
+\fill (.3,{.7+.3*ln(.3/.99)}) circle (1.5pt) node[above right] {peak};
+\node[below] at (.3,0) {$\rho/N$};
+\node[above right,muted] at (.68,.32) {$S+I=N$};
+\node[below left] at (0,0) {$0$};
+\end{tikzpicture}
+
+{\small Illustrative SIR trajectory; arrows move towards decreasing $S$.}
+\end{center}

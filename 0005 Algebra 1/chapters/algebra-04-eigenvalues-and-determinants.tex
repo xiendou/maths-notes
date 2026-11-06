@@ -1,0 +1,362 @@
+% !TeX root = ../algebra-1.tex
+\chapter{Eigenvalues, diagonalisation and determinants}
+\label{chap:algebra-eigenvalues}
+
+\section{Eigenvectors and eigenspaces}
+
+\begin{definition}
+Let $A$ be an $n\times n$ matrix over $F$.
+A \emph{nonzero} vector $v\in F^n$ is an \emph{eigenvector} with
+\emph{eigenvalue} $\lambda\in F$ if
+\[
+ Av=\lambda v.
+\]
+The \emph{eigenspace} for $\lambda$ is
+\[
+ E_\lambda(A)=N(A-\lambda I_n).
+\]
+\end{definition}
+
+An eigenvector is a direction preserved by the map: its image is a
+scalar multiple of itself. Zero is never an eigenvector, although zero
+can be an eigenvalue.
+The eigenspace is a subspace and includes zero; its nonzero vectors are
+exactly the eigenvectors for that eigenvalue.
+
+\begin{example}[The all-ones matrix]
+Let $J$ be the $3\times3$ matrix all of whose entries are $1$.
+For $v=(a,b,c)^{\mathsf T}$,
+$Jv=(a+b+c)(1,1,1)^{\mathsf T}$.
+It follows that
+\begin{align*}
+ E_0(J)&=\{(a,b,c)^{\mathsf T}:a+b+c=0\}\\
+ &=\spanop\bigl((-1,1,0)^{\mathsf T},(-1,0,1)^{\mathsf T}\bigr),\\
+ E_3(J)&=\spanop\bigl((1,1,1)^{\mathsf T}\bigr).
+\end{align*}
+These are the only eigenvalues: if $Jv=\lambda v$ and $\lambda\ne0$,
+then $v$ is a multiple of $(1,1,1)^{\mathsf T}$, which forces $\lambda=3$.
+\end{example}
+
+\begin{example}[The field matters]
+For $A=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$, we have $A^2=-I_2$.
+If $Av=\lambda v$ with $v\ne0$, then $\lambda^2=-1$, so there are
+no real eigenvalues or real eigenvectors.
+Over $\mathbb C$ there are two eigenvalues:
+\[
+ A\begin{pmatrix}-i\\1\end{pmatrix}
+ =i\begin{pmatrix}-i\\1\end{pmatrix},\qquad
+ A\begin{pmatrix}i\\1\end{pmatrix}
+ =-i\begin{pmatrix}i\\1\end{pmatrix}.
+\]
+\end{example}
+
+\section{When is a matrix diagonalisable?}
+
+\begin{definition}
+$A$ is \emph{diagonalisable over $F$} if there is an invertible matrix
+$P$ over $F$ such that $P^{-1}AP$ is diagonal.
+\end{definition}
+
+\begin{theorem}[Eigenvector basis criterion]
+$A$ is diagonalisable over $F$ if and only if $F^n$ has a basis of
+eigenvectors of $A$.
+If $P=[\,v_1\ \cdots\ v_n\,]$ consists of such a basis and
+$Av_j=\lambda_jv_j$, then
+\[
+ P^{-1}AP=\diag(\lambda_1,\ldots,\lambda_n).
+\]
+\end{theorem}
+\begin{proof}
+The equality $AP=PD$ is an equality of columns:
+its $j$th column says $Av_j=\lambda_jv_j$.
+Invertibility of $P$ means that its columns form a basis.
+Multiplying by $P^{-1}$ proves both directions.
+\end{proof}
+
+The order of the eigenvalues on the diagonal must match the order of the
+eigenvectors in $P$.
+The preceding rotation matrix is diagonalisable over $\mathbb C$, but not
+over $\mathbb R$.
+
+\begin{example}[A matrix that is not diagonalisable]
+For
+\[
+ A=\begin{pmatrix}1&1\\0&1\end{pmatrix},
+ \qquad E_1(A)=\spanop((1,0)^{\mathsf T}).
+\]
+Indeed, $Av=\lambda v$ first gives
+$(1-\lambda)y=0$ and $(1-\lambda)x+y=0$.
+A nonzero solution forces $\lambda=1$, and then $y=0$.
+Thus there are not enough independent eigenvectors to form a basis.
+\end{example}
+
+\begin{lemma}[Independence of distinct eigenspaces]
+Let $\lambda_1,\ldots,\lambda_r$ be distinct eigenvalues and
+$v_j\in E_{\lambda_j}(A)$.
+If $v_1+\cdots+v_r=0$, then every $v_j=0$.
+\end{lemma}
+\begin{proof}
+Use induction on $r$. The case $r=1$ is immediate.
+Apply $A-\lambda_r I$ to the given relation:
+\[
+ \sum_{j=1}^{r-1}(\lambda_j-\lambda_r)v_j=0.
+\]
+The induction hypothesis implies
+$(\lambda_j-\lambda_r)v_j=0$ for $j<r$.
+Distinctness makes these scalar factors nonzero, so $v_j=0$ for $j<r$;
+the original relation then gives $v_r=0$.
+\end{proof}
+
+\begin{corollary}
+Eigenvectors with distinct eigenvalues are linearly independent.
+An $n\times n$ matrix has at most $n$ distinct eigenvalues.
+If it has $n$ distinct eigenvalues in $F$, it is diagonalisable over $F$.
+\end{corollary}
+\begin{proof}
+Apply the lemma to $a_jv_j$ in a proposed linear relation.
+Nonzero $v_j$ then force all coefficients to vanish.
+There cannot be more than $n$ independent vectors in $F^n$, while
+$n$ independent vectors form a basis.
+\end{proof}
+
+\begin{theorem}[Dimension criterion]
+If $\lambda_1,\ldots,\lambda_r$ are all the eigenvalues in $F$, then
+\[
+ A\text{ is diagonalisable over }F
+ \quad\Longleftrightarrow\quad
+ \sum_{j=1}^r\dim E_{\lambda_j}(A)=n.
+\]
+\end{theorem}
+\begin{proof}
+Choose a basis in each eigenspace. The preceding lemma shows that their
+combined sequence is independent: group a linear relation according to
+eigenvalue, then use independence within each eigenspace.
+The combined sequence is an eigenvector basis exactly when it has
+length $n$. If an eigenvector basis already exists, each of its vectors
+belongs to one of these eigenspaces, so their sum is all of $F^n$.
+\end{proof}
+
+Distinct eigenvalues are sufficient, but not necessary.
+For example, $I_n$ is already diagonal although it has only one
+eigenvalue.
+
+\section{Determinants}
+
+The source uses the determinant and its properties without constructing
+it from first principles. We follow that scope here.
+For a square matrix, $\det A$ is a scalar satisfying, in particular,
+\[
+ \det I_n=1,\qquad \det(AB)=\det A\,\det B,\qquad
+ A\text{ invertible}\ \Longleftrightarrow\ \det A\ne0.
+\]
+The last condition extends the invertibility theorem in
+Chapter~\ref{chap:algebra-subspaces}.
+The determinant is not generally additive: $\det(A+B)$ need not equal
+$\det A+\det B$.
+
+For small matrices,
+\[
+ \det\begin{pmatrix}a&b\\c&d\end{pmatrix}=ad-bc,
+\]
+and expansion along the first row gives
+\[
+ \det\begin{pmatrix}a&b&c\\d&e&f\\g&h&i\end{pmatrix}
+ =a(ei-fh)-b(di-fg)+c(dh-eg).
+\]
+The signs in this expansion are $+,-,+$.
+
+\subsection{Computing determinants by elimination}
+
+The elementary row operations affect determinants as follows.
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Operation & Effect on determinant\\
+\midrule
+Swap two rows & Multiply by $-1$\\
+Multiply one row by $c$ & Multiply by $c$\\
+Add a multiple of one row to another & No change\\
+\bottomrule
+\end{tabular}
+\end{center}
+For an upper or lower triangular matrix,
+\[
+ \boxed{\det A=a_{11}a_{22}\cdots a_{nn}.}
+\]
+For an upper triangular matrix with nonzero diagonal, eliminate entries
+above the diagonal using row additions to obtain a diagonal matrix;
+its determinant is the product of its diagonal entries.
+If a diagonal entry is zero, such a triangular matrix is singular
+(its homogeneous system has a nonzero solution by backward solving),
+so its determinant and its diagonal product are both zero.
+The lower triangular case follows similarly.
+
+\method{Reduce to triangular form, keeping track of every row swap and
+row scaling. Multiply the diagonal entries, then undo the recorded
+factors. Using only row additions avoids scaling factors.}
+
+\begin{example}
+Using row additions alone,
+\[
+ \begin{pmatrix}1&2&3\\4&5&6\\7&8&10\end{pmatrix}
+ \longrightarrow
+ \begin{pmatrix}1&2&3\\0&-3&-6\\0&-6&-11\end{pmatrix}
+ \longrightarrow
+ \begin{pmatrix}1&2&3\\0&-3&-6\\0&0&1\end{pmatrix}.
+\]
+Thus the determinant is $-3$.
+Replacing the last entry $10$ by $9$ gives a zero row after elimination
+and determinant zero.
+The cyclic permutation matrix
+$\begin{pmatrix}0&1&0\\0&0&1\\1&0&0\end{pmatrix}$ has determinant $1$,
+because two row swaps turn it into $I_3$.
+\end{example}
+
+\subsection{The cofactor inverse formula}
+
+For reference, the larger inverse formula mentioned in
+Chapter~\ref{chap:algebra-matrices} has a compact description.
+Delete row $i$ and column $j$ to obtain the minor matrix $A_{ij}$, and
+define the cofactor $C_{ij}=(-1)^{i+j}\det A_{ij}$.
+The \emph{adjugate} is the transpose of the cofactor matrix:
+$\operatorname{adj}(A)=(C_{ji})$.
+Cofactor expansion gives
+\[
+ A\operatorname{adj}(A)=\operatorname{adj}(A)A=(\det A)I_n.
+\]
+Indeed, a diagonal entry is a determinant expansion; an off-diagonal
+entry is the expansion of a matrix with two identical rows or columns,
+whose determinant is zero.
+Consequently,
+\[
+ \boxed{A^{-1}=\frac{\operatorname{adj}(A)}{\det A}\quad(\det A\ne0).}
+\]
+For larger matrices, row reduction is usually more practical.
+This cofactor explanation supplements the explicit small-matrix formulae
+in the source.
+
+\section{The characteristic polynomial}
+
+\begin{definition}
+The \emph{characteristic polynomial} of $A$ is
+\[
+ c_A(t)=\det(tI_n-A).
+\]
+It is a monic polynomial of degree $n$.
+\end{definition}
+
+The convention $\det(tI-A)$ fixes the leading sign.
+Some texts use $\det(A-tI)$, which differs by the factor $(-1)^n$
+and has the same roots.
+
+\begin{theorem}
+$\lambda\in F$ is an eigenvalue of $A$ if and only if $c_A(\lambda)=0$.
+\end{theorem}
+\begin{proof}
+\[
+ c_A(\lambda)=0
+ \ \Longleftrightarrow\ \lambda I_n-A\text{ is singular}
+ \ \Longleftrightarrow\ N(\lambda I_n-A)\ne\{0_n\}.
+\]
+A nonzero vector in this kernel satisfies $Av=\lambda v$.
+\end{proof}
+
+For $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$,
+\[
+ c_A(t)=(t-a)(t-d)-bc=t^2-(a+d)t+(ad-bc).
+\]
+For a triangular matrix,
+$c_A(t)=\prod_{j=1}^n(t-a_{jj})$, so its eigenvalues are precisely its
+diagonal entries.
+
+\begin{corollary}[Source Corollary 4.21]
+Every complex $n\times n$ matrix with $n\geq1$ has an eigenvalue and a
+nonzero eigenvector over $\mathbb C$.
+\end{corollary}
+\begin{proof}
+The fundamental theorem of algebra gives a complex root of $c_A$.
+The theorem then gives a nonzero vector in the corresponding kernel.
+\end{proof}
+
+This conclusion need not hold over $\mathbb R$: the real rotation example
+has characteristic polynomial $t^2+1$.
+Existence of a complex eigenvector also does not imply existence of a
+whole eigenvector basis.
+
+\subsection{Repeated roots}
+
+The \emph{algebraic multiplicity} of an eigenvalue is its multiplicity as
+a root of $c_A(t)$.
+Its \emph{geometric multiplicity} is $\dim E_\lambda(A)$.
+This terminology helps distinguish repeated roots from the number of
+independent eigenvectors they supply.
+For $J$, $c_J(t)=t^2(t-3)$: the zero eigenvalue has both multiplicities
+two, and the eigenvalue $3$ has both multiplicities one.
+For $\begin{pmatrix}1&1\\0&1\end{pmatrix}$,
+$c_A(t)=(t-1)^2$ but $\dim E_1(A)=1$.
+
+\section{A complete diagonalisation procedure}
+
+\begin{enumerate}
+\item Find $c_A(t)$ and its roots in the chosen field $F$.
+\item For each distinct root $\lambda$, row-reduce $A-\lambda I_n$ and
+      find a basis of $E_\lambda(A)$.
+\item Add the eigenspace dimensions. If the total is less than $n$,
+      $A$ is not diagonalisable over $F$.
+\item Otherwise place the eigenvectors in the columns of $P$ and their
+      eigenvalues, in the same order, on the diagonal of $D$.
+\item Verify $AP=PD$. This checks the result without explicitly computing
+      $P^{-1}$.
+\end{enumerate}
+
+\begin{example}[Three distinct eigenvalues]
+For
+\[
+ A=\begin{pmatrix}1&2&3\\0&4&5\\0&0&6\end{pmatrix},
+ \qquad c_A(t)=(t-1)(t-4)(t-6).
+\]
+Solving the three kernel systems gives, with convenient integer scalings,
+\[
+ E_1=\spanop\left(\begin{pmatrix}1\\0\\0\end{pmatrix}\right),\quad
+ E_4=\spanop\left(\begin{pmatrix}2\\3\\0\end{pmatrix}\right),\quad
+ E_6=\spanop\left(\begin{pmatrix}16\\25\\10\end{pmatrix}\right).
+\]
+Thus
+\[
+ P=\begin{pmatrix}1&2&16\\0&3&25\\0&0&10\end{pmatrix},\qquad
+ D=\diag(1,4,6),\qquad AP=PD.
+\]
+Rescaling any eigenvector by a nonzero scalar changes $P$ but does not
+change its eigenvalue.
+\end{example}
+
+\begin{example}[A repeated eigenvalue that causes no problem]
+For the all-ones matrix,
+\[
+ P=\begin{pmatrix}-1&-1&1\\1&0&1\\0&1&1\end{pmatrix},\qquad
+ D=\diag(0,0,3).
+\]
+The first two columns form a basis of $E_0(J)$ and the last spans $E_3(J)$.
+They form an eigenvector basis, so $P^{-1}JP=D$.
+\end{example}
+
+\begin{proposition}[Only one eigenvalue]
+Suppose the only eigenvalue of $A$ in $F$ is $\lambda$.
+Then $A$ is diagonalisable over $F$ if and only if $A=\lambda I_n$.
+\end{proposition}
+\begin{proof}
+If $A$ is diagonalisable, its diagonal form must be $\lambda I_n$.
+Then $A=P(\lambda I_n)P^{-1}=\lambda I_n$.
+The converse holds because $\lambda I_n$ is already diagonal.
+\end{proof}
+
+\begin{example}
+The matrix
+\[
+ \begin{pmatrix}
+ 2&2&3&4\\0&2&5&6\\0&0&2&7\\0&0&0&2
+ \end{pmatrix}
+\]
+has characteristic polynomial $(t-2)^4$.
+It is not $2I_4$, so it is not diagonalisable.
+\end{example}

@@ -1,92 +1,70 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=25mm]{geometry}
+% !TeX program = xelatex
+% Main file. Edit individual chapters in chapters/.
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,enumitem,microtype}
+\usepackage{xcolor,fancyhdr,needspace}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
 \usepackage{hyperref}
-
-\newtheorem{theorem}{Theorem}[section]
+\definecolor{ink}{HTML}{16324F}
+\definecolor{muted}{HTML}{52616B}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=ink,
+  pdftitle={Analysis 1 - Chapter Notes},bookmarksnumbered=true}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlist{itemsep=3pt,topsep=5pt}
+\newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
-
-\title{Analysis 1\\[0.4em]\large Lecture Notes and Revision}
-\author{Dou}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\numberwithin{equation}{chapter}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Analysis 1}
+\fancyhead[R]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter}{} }
+\setcounter{tocdepth}{1}
+\title{Analysis 1\\[0.4em]\large}
+\author{Roger D.}
 \date{2026/27}
-
 \begin{document}
 \maketitle
+\pagenumbering{roman}
+\chapter*{About these notes}
+\addcontentsline{toc}{chapter}{About these notes}
+These editable study notes are based on \emph{Analysis} by Christopher
+Brocklebank and James Yang (October 2024), following Prof.~Had\v zi\'c's
+UCL Analysis 1 course in 2024--25. They are a rewritten companion, rather
+than a verbatim transcription or official course material.
+
+The four chapters follow the source's order. Definitions, principal results,
+worked examples and proof arguments have been rewritten in consistent notation.
+Repeated attempts at proofs have been combined.
+
+Obvious mathematical errors have been corrected. Some arguments left unfinished
+or assigned as exercises in the source are supplied here; these additions are
+identified where relevant. The source's missing figure placeholders are not
+reproduced. The accompanying README records the main editorial decisions.
+
+Throughout, $\mathbb N=\{1,2,3,\ldots\}$ and all sequences are real unless stated
+otherwise. A statement labelled non-examinable in the source is retained with
+that attribution; this is not a statement about the current year's assessment.
 \tableofcontents
-
-
-% Each lecture can be a new \section. Use \subsection for its main topics.
-% Lines beginning with % are reminders to you; they do not appear in the PDF.
-\section{Real numbers: natural numbers and integers}
-\noindent\textbf{Lecture date:} \emph{Add date here}
-
-\subsection{Natural numbers}
-For this lecture, the natural numbers start at $1$:
-\[
-\mathbb{N}=\{1,2,3,4,\ldots\}.
-\]
-Thus $0\notin\mathbb{N}$.
-
-\subsection{Operations and order on $\mathbb{N}$}
-The natural numbers are closed under addition and multiplication:
-\[
-m,n\in\mathbb{N}\quad\Longrightarrow\quad
-m+n\in\mathbb{N}\quad\text{and}\quad mn\in\mathbb{N}.
-\]
-For any $m,n\in\mathbb{N}$, exactly one of $m>n$, $m=n$, or $m<n$
-holds. Also, $m\geq n$ means $m>n$ or $m=n$.
-
-\subsection{Properties}
-For $m,n,p\in\mathbb{N}$:
-\begin{align*}
-m+n &= n+m, & mn &= nm && \text{(commutativity)},\\
-(m+n)+p &= m+(n+p), & (mn)p &= m(np) && \text{(associativity)},\\
-m(n+p) &= mn+mp &&&& \text{(distributivity)}.
-\end{align*}
-Order is transitive:
-\[
-m>n\ \text{and}\ n>p\quad\Longrightarrow\quad m>p,
-\]
-and similarly
-\[
-m\geq n\ \text{and}\ n\geq p\quad\Longrightarrow\quad m\geq p.
-\]
-
-\subsection{Why introduce integers?}
-Some equations have no solution in $\mathbb{N}$. For example,
-$x+1=0$ requires $x=-1$. This motivates the integers:
-\[
-\mathbb{Z}=\{\ldots,-3,-2,-1,0,1,2,3,\ldots\}.
-\]
-
-\subsection{Questions to revisit}
-% Add questions during the lecture; answer them afterwards.
-
-\subsection{Revision summary}
-% In your own words: what does N contain, and why do we need Z?
-
-% For the next lecture, copy this pattern:
-% \section{Next lecture title}
-% \noindent\textbf{Lecture date:} ...
-% \subsection{First topic}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\clearpage
+\pagenumbering{arabic}
+\input{chapters/analysis-01-foundations-and-sequences}
+\input{chapters/analysis-02-infinite-series}
+\input{chapters/analysis-03-limits-and-continuity}
+\input{chapters/analysis-04-differentiation}
 \end{document}

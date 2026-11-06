@@ -1,0 +1,565 @@
+% !TeX root = ../analysis1.tex
+\chapter{Foundations and Sequences}\label{chap:analysis-foundations}
+
+\section{What analysis is about}
+Analysis provides precise definitions and proofs for ideas from calculus:
+limits, infinite sums, continuity and derivatives. An \emph{axiom} is a
+starting assumption; a \emph{theorem} is a statement proved from assumptions.
+A \emph{lemma} is a result used to establish another result, and a
+\emph{corollary} follows readily from a previous result.
+
+\begin{example}[Why infinite sums need definitions]
+The harmonic series $\sum_{n=1}^{\infty}1/n$ diverges, whereas
+$\sum_{n=1}^{\infty}(-1)^{n+1}/n$ converges. Rearranging a conditionally
+convergent series may change its sum. Thus the rules for finite sums cannot
+be applied to infinite sums without checking their hypotheses.
+Chapter~\ref{chap:analysis-series} makes these statements precise.
+\end{example}
+
+\begin{example}[Smooth does not imply equal to a Taylor series]
+Consider
+\[
+f(x)=\begin{cases}e^{-1/x^2},&x>0,\\0,&x\leq0.\end{cases}
+\]
+All derivatives at $0$ exist and are zero, so its Taylor series there is the
+zero series. Nevertheless $f(x)>0$ for $x>0$. Merely having derivatives of
+all orders does not ensure that a function equals its Taylor series.
+This is a motivating example; the differentiability assertion is revisited
+at the end of Chapter~\ref{chap:analysis-differentiation}.
+\end{example}
+
+\section{Number systems and rational approximation}
+\subsection{From natural numbers to real numbers}
+The familiar number systems satisfy
+\[
+\mathbb N\subset\mathbb Z\subset\mathbb Q\subset\mathbb R\subset\mathbb C.
+\]
+Here $0\notin\mathbb N$. Addition and multiplication on $\mathbb N$ are
+commutative and associative, and multiplication distributes over addition:
+\begin{align*}
+m+n&=n+m,&mn&=nm,\\
+(m+n)+p&=m+(n+p),&(mn)p&=m(np),\\
+m(n+p)&=mn+mp.
+\end{align*}
+For any $m,n$, exactly one of $m<n$, $m=n$, $m>n$ holds. Order is transitive.
+
+Subtraction need not stay in $\mathbb N$: $x+m=n$ has the integer solution
+$x=n-m$. This motivates
+$\mathbb Z=\{\ldots,-2,-1,0,1,2,\ldots\}$.
+Division need not stay in $\mathbb Z$, motivating
+\[
+\mathbb Q=\left\{\frac pq:p,q\in\mathbb Z,\ q\ne0\right\}.
+\]
+Fractions have the rules
+\[
+\frac mn+\frac pq=\frac{mq+pn}{nq},\qquad
+\frac mn\frac pq=\frac{mp}{nq},\qquad
+\frac{m/n}{p/q}=\frac{mq}{np}\quad(p\ne0).
+\]
+Every rational has a reduced representation with coprime numerator and
+denominator. Terminating or eventually periodic decimal expansions represent
+rational numbers. Non-periodic decimal expansions motivate a larger system,
+$\mathbb R$; a real number outside $\mathbb Q$ is called \emph{irrational}.
+We will use completeness, rather than decimals, to characterise $\mathbb R$.
+
+\begin{lemma}[Parity]
+If an integer $n$ is odd, then $n^2$ is odd. Consequently, if $n^2$ is even,
+then $n$ is even.
+\end{lemma}
+\begin{proof}
+Writing $n=2k+1$ gives
+$n^2=4k^2+4k+1=2(2k^2+2k)+1$. The second statement is the contrapositive.
+\end{proof}
+
+\begin{theorem}[Irrationality of $\sqrt2$]
+There is no rational number $x$ with $x^2=2$.
+\end{theorem}
+\begin{proof}
+Suppose $x=p/q$ in lowest terms, with $q>0$. Then $p^2=2q^2$, so $p$ is even.
+Write $p=2k$. Substitution gives $4k^2=2q^2$, hence $q^2=2k^2$, and $q$ is
+also even. This contradicts coprimality.
+\end{proof}
+
+\subsection{Pell's equation and approximation}
+Once the positive square root of $2$ is available, the equation
+$|p^2-2q^2|=1$, for $p,q\in\mathbb N$, gives
+\[
+\left|\frac pq-\sqrt2\right|
+=\frac{1}{q^2(p/q+\sqrt2)}<\frac1{q^2}.
+\]
+Thus a solution with large $q$ gives a good rational approximation.
+
+\begin{proposition}[A recursive family of approximations]
+Define $p_1=q_1=1$ and
+\[
+p_{n+1}=p_n+2q_n,\qquad q_{n+1}=p_n+q_n.
+\]
+Then $p_n,q_n\in\mathbb N$, $p_n^2-2q_n^2=(-1)^n$, and $q_n\geq n$.
+Consequently $p_n/q_n\to\sqrt2$.
+\end{proposition}
+\begin{proof}
+The assertions hold at $n=1$. If they hold at $n$, then
+\begin{align*}
+p_{n+1}^2-2q_{n+1}^2
+&=(p_n+2q_n)^2-2(p_n+q_n)^2\\
+&=-(p_n^2-2q_n^2)=(-1)^{n+1},
+\end{align*}
+and $q_{n+1}\geq1+n$. Induction proves the claims. The error is less than
+$1/q_n^2\leq1/n^2$, which tends to zero.
+\end{proof}
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$n$&$p_n$&$q_n$&$p_n/q_n$ (approximately)\\\midrule
+1&1&1&1.000000\\
+2&3&2&1.500000\\
+3&7&5&1.400000\\
+4&17&12&1.416667\\
+5&41&29&1.413793\\
+6&99&70&1.414286\\\bottomrule
+\end{tabular}
+\end{center}
+\begin{remark}
+An induction proof checks a base case and proves that the assertion for $n$
+implies the assertion for $n+1$. The limiting conclusion above completes an
+argument left unfinished on source p.~9.
+\end{remark}
+
+\section{Ordered fields and inequalities}
+\begin{definition}[Field]
+A field $F$ is a set with addition and multiplication satisfying the following
+properties for all $a,b,c\in F$:
+\begin{enumerate}
+\item $(a+b)+c=a+(b+c)$ and $a+b=b+a$.
+\item There is $0\in F$ with $a+0=a$; every $a$ has an additive inverse $-a$.
+\item $(ab)c=a(bc)$ and $ab=ba$.
+\item There is $1\in F$, $1\ne0$, with $a1=a$; every nonzero $a$ has an
+inverse $a^{-1}$ with $aa^{-1}=1$.
+\item $a(b+c)=ab+ac$.
+\end{enumerate}
+These are the nine arithmetic axioms, grouped by operation.
+\end{definition}
+
+\begin{definition}[Ordered field]
+An ordered field is a field with a total order $\leq$ satisfying
+antisymmetry and transitivity, together with
+\[
+a\leq b\ \Longrightarrow\ a+c\leq b+c,
+\qquad
+a\leq b,\ c\geq0\ \Longrightarrow\ ac\leq bc.
+\]
+Totality means that $a\leq b$ or $b\leq a$ for every pair. Multiplication by
+a negative number reverses the inequality.
+\end{definition}
+Both $\mathbb Q$ and $\mathbb R$ are ordered fields. The condition $c\geq0$
+is essential; it was omitted from the corresponding axiom in the source.
+
+\begin{lemma}[Basic field consequences]
+In a field, $a0=0$. Also, $ab=0$ implies $a=0$ or $b=0$.
+\end{lemma}
+\begin{proof}
+Distributivity gives $a0=a(0+0)=a0+a0$; subtract $a0$. If $a\ne0$, multiply
+$ab=0$ by $a^{-1}$ to obtain $b=0$.
+\end{proof}
+
+\begin{lemma}
+For $0\leq a,b$ in an ordered field, $a\leq b$ if and only if $a^2\leq b^2$.
+\end{lemma}
+\begin{proof}
+If $a\leq b$, then $a^2\leq ab\leq b^2$. Conversely, $a>b\geq0$ would give
+$a^2-b^2=(a-b)(a+b)>0$, contradicting $a^2\leq b^2$.
+\end{proof}
+
+\begin{definition}[Absolute value]
+For $x\in\mathbb R$,
+\[
+|x|=\begin{cases}x,&x\geq0,\\-x,&x<0.\end{cases}
+\]
+The quantity $|x-y|$ is the distance between $x$ and $y$.
+\end{definition}
+Useful identities include $|xy|=|x||y|$, $|x|^2=x^2$, and
+$|x|<r\iff-r<x<r$ for $r>0$.
+
+\begin{proposition}[Triangle and reverse triangle inequalities]
+For $x,y\in\mathbb R$,
+\[
+|x+y|\leq|x|+|y|,\qquad
+\bigl||x|-|y|\bigr|\leq|x-y|.
+\]
+\end{proposition}
+\begin{proof}
+Since $xy\leq|x||y|$, we have
+$(x+y)^2\leq(|x|+|y|)^2$. Both sides to be compared after taking square
+roots are nonnegative, giving the triangle inequality.
+Applying it to $x=(x-y)+y$ gives $|x|-|y|\leq|x-y|$.
+Interchanging $x,y$ gives the other half of the reverse inequality.
+\end{proof}
+
+\section{Completeness, supremum and infimum}
+\begin{definition}[Bounds and extremal elements]
+A set $S\subseteq\mathbb R$ is \emph{bounded above} if there is $M\in\mathbb R$
+with $x\leq M$ for every $x\in S$. It is \emph{bounded below} if there is $m$
+with $m\leq x$ for every $x\in S$. It is \emph{bounded} if both hold.
+
+A maximum is an upper bound belonging to $S$; a minimum is a lower bound
+belonging to $S$. Write $\max S$ and $\min S$ when they exist.
+\end{definition}
+
+\begin{definition}[Supremum and infimum]
+For a nonempty set bounded above, $s=\sup S$ means:
+\begin{enumerate}
+\item $x\leq s$ for every $x\in S$;
+\item for every $\varepsilon>0$, some $x\in S$ satisfies $s-\varepsilon<x$.
+\end{enumerate}
+Thus $s$ is the least upper bound. For a nonempty set bounded below,
+$t=\inf S$ means that $t\leq x$ for all $x\in S$ and that every
+$\varepsilon>0$ admits some $x\in S$ with $x<t+\varepsilon$.
+\end{definition}
+
+\begin{theorem}[Completeness of the real numbers]
+There exists a complete ordered field, denoted $\mathbb R$.
+Completeness means that every nonempty subset bounded above has a supremum
+in $\mathbb R$. Equivalently, every nonempty subset bounded below has an
+infimum in $\mathbb R$.
+\end{theorem}
+We take existence of this field as a foundational result; its construction
+is outside these notes. The infimum statement follows from
+$\inf S=-\sup(-S)$. Completeness is the extra property distinguishing
+$\mathbb R$ from $\mathbb Q$.
+
+\begin{proposition}
+If $\max S$ exists, then $\sup S=\max S$. Similarly, if $\min S$ exists,
+then $\inf S=\min S$.
+\end{proposition}
+\begin{proof}
+A maximum $s\in S$ is an upper bound, and every upper bound is at least $s$
+because it bounds every element of $S$. The minimum proof is analogous.
+\end{proof}
+
+\begin{theorem}[Archimedean property]\label{thm:analysis-archimedean}
+The natural numbers are not bounded above in $\mathbb R$.
+\end{theorem}
+\begin{proof}
+If $H=\sup\mathbb N$ existed, $H-1$ would not be an upper bound. Hence
+some $n\in\mathbb N$ would satisfy $n>H-1$, and $n+1>H$ would contradict
+that $H$ bounds $\mathbb N$.
+\end{proof}
+In particular, for every $\varepsilon>0$ there is $n\in\mathbb N$ with
+$1/n<\varepsilon$.
+
+\begin{example}[Existence of $\sqrt2$ from completeness]
+Let $S=\{x\in\mathbb R:x>0,\ x^2<2\}$. It contains $1$ and is bounded
+above by $2$, so $M=\sup S$ exists, with $1\leq M\leq2$.
+We show $M^2=2$.
+
+If $M^2<2$, choose $0<h<1$ so that
+$(2M+1)h<2-M^2$. Then
+\[
+(M+h)^2=M^2+2Mh+h^2<M^2+(2M+1)h<2,
+\]
+contradicting that $M$ is an upper bound.
+
+If $M^2>2$, choose $0<h<M$ with $2Mh<M^2-2$. Then
+$(M-h)^2>M^2-2Mh>2$. Every $x\in S$ must satisfy $x<M-h$, since otherwise
+$x^2\geq(M-h)^2>2$. Thus $M-h$ is an upper bound smaller than $M$, another
+contradiction. Therefore $M^2=2$, and $M$ is the positive square root.
+\end{example}
+
+\begin{example}[Intervals and endpoints]
+For $a<b$, the intervals are
+\[
+(a,b)=\{x:a<x<b\},\quad [a,b]=\{x:a\leq x\leq b\},\quad
+[a,b)=\{x:a\leq x<b\}.
+\]
+\begin{center}
+\begin{tabular}{lcccc}
+\toprule
+Set&Infimum&Minimum&Supremum&Maximum\\\midrule
+$(a,b)$&$a$&none&$b$&none\\
+$[a,b]$&$a$&$a$&$b$&$b$\\
+$[a,b)$&$a$&$a$&$b$&none\\
+$[a,\infty)$&$a$&$a$&none in $\mathbb R$&none\\\bottomrule
+\end{tabular}
+\end{center}
+\end{example}
+
+\begin{example}
+For $S=\{3-1/n:n\in\mathbb N\}$, $\inf S=\min S=2$ and $\sup S=3$,
+while no maximum exists. Indeed, all its elements are less than $3$.
+Given $\varepsilon>0$, choose $n>1/\varepsilon$; then $3-1/n>3-\varepsilon$.
+The same argument gives $\sup\{1-1/n:n\in\mathbb N\}=1$.
+\end{example}
+
+\begin{definition}[Neighbourhood]
+For $a\in\mathbb R$ and $\varepsilon>0$, the $\varepsilon$-neighbourhood
+of $a$ is $(a-\varepsilon,a+\varepsilon)=\{x:|x-a|<\varepsilon\}$.
+\end{definition}
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+\draw[->] (-3,0)--(3,0);
+\draw[very thick,ink] (-1.8,0)--(1.8,0);
+\foreach \x/\lab in {-1.8/{a-\varepsilon},0/a,1.8/{a+\varepsilon}}
+ {\draw (\x,-.08)--(\x,.08) node[below=5pt] {$\lab$};}
+\draw[fill=white] (-1.8,0) circle (2pt);
+\draw[fill=white] (1.8,0) circle (2pt);
+\end{tikzpicture}
+\end{center}
+
+\section{Sequences and their limits}
+\begin{definition}[Sequence and boundedness]
+A real sequence is a function $\mathbb N\to\mathbb R$, written $(x_n)_{n\geq1}$.
+Its range is $\{x_n:n\in\mathbb N\}$. A sequence is bounded above, below,
+or on both sides when its range has the corresponding property.
+Equivalently, it is bounded if some $M>0$ satisfies $|x_n|\leq M$ for all $n$.
+\end{definition}
+For example, $x_n=n$ is bounded below but not above, whereas $x_n=(-1)^n$
+is bounded. A finite initial part of a sequence does not determine its limit.
+
+\begin{definition}[Convergence]\label{def:analysis-sequence-limit}
+We say $x_n\to L\in\mathbb R$ if
+\[
+\forall\varepsilon>0\ \exists N\in\mathbb N\ \forall n\geq N:
+\quad |x_n-L|<\varepsilon.
+\]
+We also write $\lim_{n\to\infty}x_n=L$. A sequence that has no finite real
+limit is called divergent.
+\end{definition}
+The order of quantifiers matters: $N$ may depend on $\varepsilon$, but must
+work for \emph{every} subsequent $n$. Replacing $n\geq N$ by $n>N$, or
+allowing a real threshold $N$, gives an equivalent definition.
+
+\begin{example}[Direct limit proofs]
+For $x_n=1/n$, given $\varepsilon>0$, choose $N>1/\varepsilon$. Then
+$n\geq N$ implies $|x_n|\leq1/N<\varepsilon$, so $1/n\to0$.
+
+Also $1-2^{-n}\to1$, since $2^n\geq n$ and
+$|(1-2^{-n})-1|=2^{-n}\leq1/n$.
+For another example,
+\[
+\left|\frac{2n^2-1}{n^2+1}-2\right|=\frac3{n^2+1}\leq\frac3{n^2}.
+\]
+Choosing $N>\sqrt{3/\varepsilon}$ proves the limit is $2$.
+\end{example}
+
+\begin{remark}[Negating convergence to a specified value]
+The statement $x_n\not\to L$ means
+\[
+\exists\varepsilon_0>0\ \forall N\in\mathbb N\ \exists n\geq N:
+\quad |x_n-L|\geq\varepsilon_0.
+\]
+For example, $1/n\not\to1$: choose $\varepsilon_0=1/2$, and take
+$n\geq\max\{N,2\}$. To prove divergence, one must exclude \emph{every}
+possible finite limit, not merely one proposed value.
+\end{remark}
+
+\begin{theorem}[Uniqueness of the limit]
+A sequence has at most one limit.
+\end{theorem}
+\begin{proof}
+Suppose $x_n\to L_1$ and $x_n\to L_2$, with $L_1\ne L_2$. Set
+$\varepsilon=|L_1-L_2|/2$. For sufficiently large $n$, both distances to
+$x_n$ are less than $\varepsilon$. Thus
+\[
+|L_1-L_2|\leq|L_1-x_n|+|x_n-L_2|<2\varepsilon=|L_1-L_2|,
+\]
+a contradiction.
+\end{proof}
+
+\begin{theorem}[Convergent sequences are bounded]\label{thm:analysis-bounded}
+If $x_n\to L\in\mathbb R$, then $(x_n)$ is bounded.
+\end{theorem}
+\begin{proof}
+Use $\varepsilon=1$ to find $N$ with $|x_n-L|<1$ for $n\geq N$.
+Then $|x_n|<|L|+1$ on this tail. The finitely many earlier terms are bounded
+as well: take $M=\max\{|x_1|,\ldots,|x_N|,|L|+1\}$.
+\end{proof}
+
+\begin{theorem}[Sandwich theorem]\label{thm:analysis-sandwich}
+Suppose $x_n\leq y_n\leq z_n$ for all sufficiently large $n$ and both
+$x_n\to L$ and $z_n\to L$. Then $y_n\to L$.
+\end{theorem}
+\begin{proof}
+For any $\varepsilon>0$, sufficiently large $n$ satisfy
+$L-\varepsilon<x_n\leq y_n\leq z_n<L+\varepsilon$.
+\end{proof}
+\begin{example}
+Since $-1/n^2\leq(-1)^n/n^2\leq1/n^2$, the sequence $(-1)^n/n^2$ tends
+to $0$.
+\end{example}
+
+\section{Algebra of sequence limits}
+\begin{theorem}[Algebra of limits]\label{thm:analysis-limit-algebra}
+If $x_n\to x$ and $y_n\to y$, then
+\[
+x_n+y_n\to x+y,\qquad cx_n\to cx,\qquad x_ny_n\to xy.
+\]
+If additionally $y\ne0$, then $y_n\ne0$ eventually and $x_n/y_n\to x/y$
+on that tail. If all $y_n\ne0$, the quotient is a sequence from the outset.
+\end{theorem}
+\begin{proof}
+\textbf{Sum.} Make $|x_n-x|<\varepsilon/2$ and $|y_n-y|<\varepsilon/2$.
+The triangle inequality gives
+$|x_n+y_n-(x+y)|<\varepsilon$. The constant-multiple rule follows directly
+from $|cx_n-cx|=|c||x_n-x|$ (and is immediate for $c=0$).
+
+\textbf{Product.} By Theorem~\ref{thm:analysis-bounded}, choose $M\geq1$
+with $|y_n|\leq M$ for all $n$. For sufficiently large $n$, both errors
+$|x_n-x|$ and $|y_n-y|$ are less than $\varepsilon/(M+|x|)$. Then
+\begin{align*}
+|x_ny_n-xy|
+&=|y_n(x_n-x)+x(y_n-y)|\\
+&\leq M|x_n-x|+|x||y_n-y|<\varepsilon.
+\end{align*}
+\textbf{Quotient.} Since $y\ne0$, eventually
+$|y_n-y|<|y|/2$, so $|y_n|>|y|/2$. Hence
+\[
+\left|\frac1{y_n}-\frac1y\right|
+=\frac{|y_n-y|}{|y_n||y|}
+\leq\frac{2|y_n-y|}{|y|^2}\longrightarrow0.
+\]
+Apply the product rule to $x_n(1/y_n)$.
+\end{proof}
+\begin{remark}
+If $y_n\ne0$ for every $n$ and $y_n\to y\ne0$, then in fact $|y_n|\geq c>0$
+for every $n$. Take the minimum of $|y|/2$ and the finitely many nonzero
+initial absolute values. This is the source's auxiliary quotient-rule lemma.
+\end{remark}
+\begin{example}
+Dividing numerator and denominator by $n^2$ gives
+\[
+\frac{2n^2-1}{n^2+1}=\frac{2-1/n^2}{1+1/n^2}\longrightarrow2.
+\]
+This shorter argument becomes valid once the algebra of limits is proved.
+\end{example}
+\begin{proposition}[Order passes to limits]
+If $x_n\leq y_n$ eventually, $x_n\to x$, and $y_n\to y$, then $x\leq y$.
+\end{proposition}
+\begin{proof}
+If $x>y$, choose $\varepsilon=(x-y)/3$. Eventually
+$x_n>x-\varepsilon>y+\varepsilon>y_n$, a contradiction.
+\end{proof}
+
+\section{Infinite limits and monotone sequences}
+\begin{definition}[Divergence to infinity]
+We write $x_n\to+\infty$ if for every $M\in\mathbb R$ some $N$ satisfies
+$x_n>M$ whenever $n\geq N$. We write $x_n\to-\infty$ if for every
+$m\in\mathbb R$ eventually $x_n<m$.
+\end{definition}
+These are forms of divergence, not convergence to a real number. For example,
+$n^2\to+\infty$, but $(-1)^n$ has neither a finite nor an infinite limit.
+
+\begin{definition}[Monotonicity]
+A sequence is \emph{increasing} (nondecreasing) if $x_{n+1}\geq x_n$ for
+all $n$, and \emph{strictly increasing} if these inequalities are strict.
+Decreasing and strictly decreasing are defined by reversing the signs.
+A sequence is \emph{monotone} if it is increasing or decreasing.
+\end{definition}
+
+\begin{theorem}[Monotone convergence]\label{thm:analysis-monotone}
+An increasing sequence bounded above converges to $\sup\{x_n:n\in\mathbb N\}$.
+A decreasing sequence bounded below converges to its infimum.
+\end{theorem}
+\begin{proof}
+In the increasing case, put $s=\sup\{x_n\}$. Given $\varepsilon>0$, some
+$x_N>s-\varepsilon$. For every $n\geq N$,
+$s-\varepsilon<x_N\leq x_n\leq s<s+\varepsilon$.
+Apply this result to $(-x_n)$ to obtain the decreasing case.
+\end{proof}
+An increasing sequence unbounded above tends to $+\infty$: once it exceeds
+any prescribed $M$, every subsequent term does too. The decreasing analogue
+holds for $-\infty$.
+
+\begin{example}[A recursive limit]
+Let $x_1=1$ and $x_{n+1}=(x_n+1)/3$. Induction gives $x_n\geq1/2$, because
+$x_n\geq1/2$ implies $x_{n+1}\geq(1/2+1)/3=1/2$. Also
+\[
+x_{n+1}-x_n=\frac23\left(\frac12-x_n\right)\leq0.
+\]
+The sequence is decreasing and bounded below, so it converges to some $L$.
+Passing to the limit gives $L=(L+1)/3$, hence $L=1/2$.
+\end{example}
+\begin{remark}[Prove existence before solving for the limit]
+For the Fibonacci sequence $F_1=F_2=1$ and $F_{n+2}=F_{n+1}+F_n$, blindly
+assuming a finite limit gives $L=2L$, hence $L=0$. This is invalid: the
+sequence is unbounded. Indeed $F_{n+2}\geq F_{n+1}+1$, so it grows without
+bound. A fixed-point equation identifies a possible limit only after
+convergence has been justified.
+\end{remark}
+
+\section{Subsequences and Bolzano--Weierstrass}
+\begin{definition}[Subsequence]
+If $j_1<j_2<\cdots$ are natural numbers, then $(x_{j_n})$ is a subsequence
+of $(x_n)$. Necessarily $j_n\geq n$.
+\end{definition}
+\begin{theorem}
+If $x_n\to L$, every subsequence tends to $L$. The same holds for
+$L=+\infty$ or $-\infty$.
+\end{theorem}
+\begin{proof}
+Once all terms with index at least $N$ satisfy the required estimate,
+$x_{j_n}$ satisfies it for $n\geq N$, since $j_n\geq n$.
+\end{proof}
+Thus two subsequences with different limits prove divergence. In particular,
+a fixed shift $x_{n+k}$ has the same limit as $x_n$.
+
+\begin{example}
+For $x_n=1/n+\sin(n\pi/2)$, we have $x_{2n}=1/(2n)\to0$ while
+$x_{4n+1}=1/(4n+1)+1\to1$. Therefore $(x_n)$ diverges.
+\end{example}
+
+\begin{lemma}
+Every real sequence has a monotone subsequence.
+\end{lemma}
+\begin{proof}
+Call $n$ a \emph{peak} if $x_n\geq x_m$ for every $m>n$.
+If there are infinitely many peaks, list them in increasing order
+$j_1<j_2<\cdots$. Then $(x_{j_n})$ is decreasing.
+
+If there are only finitely many peaks, choose $j_1$ beyond all of them
+(or $j_1=1$ if there are none). As $j_1$ is not a peak, some $j_2>j_1$
+satisfies $x_{j_2}>x_{j_1}$. Repeating constructs a strictly increasing
+subsequence.
+\end{proof}
+
+\begin{theorem}[Bolzano--Weierstrass]\label{thm:analysis-bw}
+Every bounded real sequence has a convergent subsequence.
+\end{theorem}
+\begin{proof}
+Take a monotone subsequence using the lemma. It is still bounded, so it
+converges by Theorem~\ref{thm:analysis-monotone}.
+\end{proof}
+\begin{example}[Many subsequential limits]
+List the fractions in $(0,1)$ in successive denominator blocks:
+\[
+\frac12;\quad \frac13,\frac23;\quad
+\frac14,\frac24,\frac34;\quad\ldots.
+\]
+Every $r\in[0,1]$ is the limit of a subsequence. For each denominator
+$q\geq2$, choose $p_q\in\{1,\ldots,q-1\}$ with
+$|p_q/q-r|\leq1/q$. Picking this entry from each consecutive block gives
+a subsequence tending to $r$. This supplies the exercise argument on
+source p.~32.
+\end{example}
+
+\section{The Cauchy--Schwarz inequality}
+\begin{theorem}[Cauchy--Schwarz]
+For real $x_1,\ldots,x_n$ and $y_1,\ldots,y_n$,
+\[
+\left(\sum_{k=1}^n x_ky_k\right)^2
+\leq\left(\sum_{k=1}^n x_k^2\right)
+     \left(\sum_{k=1}^n y_k^2\right).
+\]
+\end{theorem}
+\begin{proof}
+Write $A=\sum y_k^2$, $B=\sum x_ky_k$ and $C=\sum x_k^2$.
+If $A=0$, every $y_k=0$ and the claim is immediate. Otherwise,
+\[
+0\leq\sum_{k=1}^n(x_k-ty_k)^2=At^2-2Bt+C
+\]
+for every real $t$. Substituting $t=B/A$ gives $C-B^2/A\geq0$, proving
+$B^2\leq AC$.
+\end{proof}
+For $n=2$, the difference between the right and left sides is
+$(x_1y_2-x_2y_1)^2$. In $\mathbb R^3$, the geometric interpretation is
+$|\mathbf x\cdot\mathbf y|\leq\|\mathbf x\|\|\mathbf y\|$, since the dot
+product equals $\|\mathbf x\|\|\mathbf y\|\cos\theta$.

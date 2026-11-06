@@ -34,6 +34,21 @@
 **/MATH0005 lecture notes.pdf
 **/reference/
 
+
+# Ignore lecture resource folders everywhere
+**/lecture_resources/
+**/lecture_resource/
+
+# Ignore exercise LaTeX files everywhere
+**/*-exercises.tex
+
+# Ignore README files everywhere
+**/README*.md
+**/*README*.md
+# Except the root README
+!/README.md
+
+
 # Local editor, operating-system and credential files.
 **/.DS_Store
 **/.env

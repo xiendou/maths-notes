@@ -1,0 +1,24 @@
+% !TeX root = ../applied-mathematics1-companion.tex
+\begin{center}
+\begin{tikzpicture}[x=.8cm,y=.8cm,>=Stealth]
+\draw[->] (0,0)--(8.8,0) node[right] {$x$};
+\draw[->] (0,0)--(0,5.8) node[above] {$y$};
+\foreach \x in {.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5}
+ \foreach \y in {.5,1.5,2.5,3.5,4.5} {
+ \pgfmathsetmacro{\dx}{\x*(5-\x-\y)}
+ \pgfmathsetmacro{\dy}{\y*(8-\x-2*\y)}
+ \pgfmathsetmacro{\norm}{max(sqrt(\dx*\dx+\dy*\dy),.01)}
+ \draw[->,muted!60] (\x,\y)--++({.24*\dx/\norm},{.24*\dy/\norm});}
+\draw[thick,ink] (0,5)--(5,0);
+\draw[thick,accent,dashed] (0,4)--(8,0);
+\node[ink,above right] at (.2,4.8) {$x+y=5$};
+\node[accent,above right] at (5,1.5) {$x+2y=8$};
+\foreach \p in {(0,0),(5,0),(0,4),(2,3)} \fill \p circle (2pt);
+\node[below left] at (0,0) {$0$};
+\node[below] at (5,0) {$5$};
+\node[left] at (0,4) {$4$};
+\node[above right,fill=white,inner sep=1pt] at (2,3) {$(2,3)$};
+\end{tikzpicture}
+
+{\small Competition model: oblique nullclines and normalised flow arrows.}
+\end{center}

@@ -1,0 +1,540 @@
+% !TeX root = ../mathematical-methods1.tex
+\chapter{Vectors}\label{chap:vectors}
+
+This chapter follows the lecturer's vector algebra, including the \textbf{index-notation}. 
+It provides a foundation for later vector
+calculus. Bold letters replace the manuscript's underlined vector notation.
+All coordinates refer to a right-handed orthonormal Cartesian system.
+
+\section{A geometric approach to vectors}
+
+Informally, a vector is an arrow with a direction and a length. More precisely,
+a geometric vector is an equivalence class of directed line segments in
+three-dimensional Euclidean space. The segment from $A$ to $B$ represents
+$\overrightarrow{AB}$; $A$ is its initial point and $B$ its terminal point.
+Two directed segments represent the same vector when they have the same length
+and direction, even if their starting points differ. Parallel arrows pointing
+in opposite directions do not represent the same nonzero vector.
+
+Examples from mechanics are the position vector $\mathbf r=\overrightarrow{OP}$
+of a point relative to a fixed origin $O$, and its velocity $\mathbf v$.
+If the endpoints coincide, $\overrightarrow{AA}=\mathbf0$ is the zero vector,
+which has zero magnitude and no distinguished direction.
+
+\subsection{Addition, subtraction and scalar multiplication}
+If $\mathbf v_1$ and $\mathbf v_2$ are successive displacements, their total
+is $\mathbf v_1+\mathbf v_2$. Place the tail of the second arrow at the tip
+of the first; the resultant joins the initial tail to the final tip.
+The parallelogram construction shows
+$\mathbf v_1+\mathbf v_2=\mathbf v_2+\mathbf v_1$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+ \draw[->,thick] (0,0)--(3,0) node[midway,below] {$\mathbf v_1$};
+ \draw[->,thick] (0,0)--(1,2) node[midway,left] {$\mathbf v_2$};
+ \draw[->,dashed] (3,0)--(4,2) node[midway,right] {$\mathbf v_2$};
+ \draw[->,dashed] (1,2)--(4,2) node[midway,above] {$\mathbf v_1$};
+ \draw[->,very thick,ink] (0,0)--(4,2)
+   node[midway,above,sloped] {$\mathbf v_1+\mathbf v_2$};
+\end{tikzpicture}
+\end{center}
+
+Subtraction reverses addition: if $\mathbf a=\mathbf b+\mathbf c$, then
+$\mathbf c=\mathbf a-\mathbf b$. In particular, $-\mathbf v$ has the same
+magnitude as $\mathbf v$ and the opposite direction, and
+$\mathbf v+(-\mathbf v)=\mathbf0$.
+Repeated addition gives $2\mathbf v=\mathbf v+\mathbf v$ and
+$3\mathbf v=\mathbf v+\mathbf v+\mathbf v$.
+For $\lambda\in\mathbb R$, the vector $\lambda\mathbf v$ has length
+$|\lambda|\,|\mathbf v|$; for nonzero $\mathbf v$ it points in the same
+direction when $\lambda>0$ and in the opposite direction when $\lambda<0$.
+Also $0\mathbf v=\mathbf0$.
+
+\subsection{Properties of the operations}
+For vectors $\mathbf u,\mathbf v,\mathbf w$ and real numbers $\lambda,\mu$,
+\begin{align*}
+ \mathbf v+\mathbf w&=\mathbf w+\mathbf v,
+   & (\mathbf u+\mathbf v)+\mathbf w&=\mathbf u+(\mathbf v+\mathbf w),\\
+ \mathbf v+\mathbf0&=\mathbf v,
+   & \mathbf v+(-\mathbf v)&=\mathbf0,\\
+ (\lambda+\mu)\mathbf v&=\lambda\mathbf v+\mu\mathbf v,
+   & \lambda(\mathbf v+\mathbf w)&=\lambda\mathbf v+\lambda\mathbf w,\\
+ \lambda(\mu\mathbf v)&=(\lambda\mu)\mathbf v,
+   & 1\mathbf v&=\mathbf v.
+\end{align*}
+These can be verified geometrically. Matrices, functions and polynomials also
+obey these vector-space rules with suitable addition and scalar multiplication;
+geometric arrows are one instance of a broader algebraic idea.
+
+\begin{example}[Lecture Example 1: the midpoint theorem]
+Let $ABC$ be a triangle, and let $D,E$ be the midpoints of $AB,BC$ respectively.
+Show that $DE$ is parallel to $AC$ and has half its length.
+\begin{align*}
+ \overrightarrow{DE}
+ &=\overrightarrow{DB}+\overrightarrow{BE}\\
+ &=\frac12\overrightarrow{AB}+\frac12\overrightarrow{BC}\\
+ &=\frac12(\overrightarrow{AB}+\overrightarrow{BC})
+ =\frac12\overrightarrow{AC}.
+\end{align*}
+The positive scalar $1/2$ gives the claimed direction and length.
+\end{example}
+
+\section{Cartesian coordinates}
+
+Fix an origin $O$ and perpendicular coordinate axes $x,y,z$ in a right-handed
+orientation. Let $\mathbf i,\mathbf j,\mathbf k$ be the unit vectors along
+these axes. A point $P=(x,y,z)$ has position vector
+\[
+ \mathbf r=\overrightarrow{OP}=x\mathbf i+y\mathbf j+z\mathbf k.
+\]
+Conversely, translate the tail of any vector to $O$ to write it uniquely as
+\[
+ \mathbf v=v_1\mathbf i+v_2\mathbf j+v_3\mathbf k
+ =\begin{pmatrix}v_1\\v_2\\v_3\end{pmatrix}
+ =\langle v_1,v_2,v_3\rangle.
+\]
+The numbers $v_1,v_2,v_3$ are its components. Vector operations become
+\[
+ \begin{pmatrix}u_1\\u_2\\u_3\end{pmatrix}
+ +\begin{pmatrix}v_1\\v_2\\v_3\end{pmatrix}
+ =\begin{pmatrix}u_1+v_1\\u_2+v_2\\u_3+v_3\end{pmatrix},
+ \qquad
+ \lambda\begin{pmatrix}v_1\\v_2\\v_3\end{pmatrix}
+ =\begin{pmatrix}\lambda v_1\\\lambda v_2\\\lambda v_3\end{pmatrix}.
+\]
+
+\begin{example}[Lecture Example 2: coordinates of a midpoint]
+Let $A=(a_1,a_2,a_3)$ and $B=(b_1,b_2,b_3)$, and let $M$ be their midpoint.
+\begin{align*}
+ \overrightarrow{OM}
+ &=\overrightarrow{OA}+\frac12\overrightarrow{AB}\\
+ &=\overrightarrow{OA}+\frac12(\overrightarrow{OB}-\overrightarrow{OA})\\
+ &=\frac12(\overrightarrow{OA}+\overrightarrow{OB}).
+\end{align*}
+Thus
+\[
+ M=\left(\frac{a_1+b_1}{2},\frac{a_2+b_2}{2},\frac{a_3+b_3}{2}\right).
+\]
+\end{example}
+
+\subsection{Length and unit vectors}
+Pythagoras, applied first in a coordinate plane and then in space, gives
+\[
+ |\mathbf v|^2=v_1^2+v_2^2+v_3^2,
+ \qquad |\mathbf v|=\sqrt{v_1^2+v_2^2+v_3^2}.
+\]
+Since $|\lambda\mathbf v|=|\lambda|\,|\mathbf v|$, every nonzero vector
+can be normalised:
+\[
+ \widehat{\mathbf v}=\frac{\mathbf v}{|\mathbf v|},
+ \qquad |\widehat{\mathbf v}|=
+ \frac{|\mathbf v|}{|\mathbf v|}=1.
+\]
+A vector of length $1$ is called a unit vector. The zero vector cannot be normalised.
+
+\section{Straight lines}
+
+A line is specified by a point $P_0$ on it and a nonzero direction vector
+$\mathbf v$. If $\mathbf r_0=\overrightarrow{OP_0}$, then its points satisfy
+\[
+ \boxed{\mathbf r=\mathbf r_0+t\mathbf v,\qquad t\in\mathbb R.}
+\]
+Writing $P_0=(x_0,y_0,z_0)$ and $\mathbf v=\langle v_1,v_2,v_3\rangle$
+gives the parametric equations
+\[
+ x=x_0+tv_1,\qquad y=y_0+tv_2,\qquad z=z_0+tv_3.
+\]
+If all three direction components are nonzero, eliminate $t$ to obtain
+\[
+ \frac{x-x_0}{v_1}=\frac{y-y_0}{v_2}=\frac{z-z_0}{v_3}.
+\]
+If a component is zero, use the corresponding constant-coordinate equation
+instead of dividing by zero.
+
+\begin{example}[Lecture Example 3: a line through two points]
+Find the parametric and Cartesian forms of the line through
+$P_0=(1,2,3)$ and $Q_0=(2,1,-1)$.
+Its direction is
+\[
+ \overrightarrow{P_0Q_0}=\overrightarrow{OQ_0}-\overrightarrow{OP_0}
+ =\langle2,1,-1\rangle-\langle1,2,3\rangle=\langle1,-1,-4\rangle.
+\]
+Thus
+\[
+ \mathbf r=\langle1,2,3\rangle+t\langle1,-1,-4\rangle,
+\]
+so
+\[
+ x=1+t,\qquad y=2-t,\qquad z=3-4t,
+ \qquad \frac{x-1}{1}=\frac{y-2}{-1}=\frac{z-3}{-4}.
+\]
+\end{example}
+
+\section{The scalar or dot product}
+
+The mechanical motivation is work done by a constant force $\mathbf F$
+through a displacement $\mathbf d$:
+$W=|\mathbf F||\mathbf d|\cos\theta$.
+For nonzero vectors meeting at angle $\theta\in[0,\pi]$, define
+\[
+ \mathbf a\cdot\mathbf b=|\mathbf a||\mathbf b|\cos\theta.
+\]
+Set the product to zero if either vector is zero. Two nonzero vectors are
+orthogonal exactly when $\theta=\pi/2$, equivalently
+$\mathbf a\cdot\mathbf b=0$.
+
+\subsection{Deriving the component formula}
+The cosine rule gives
+\[
+ |\mathbf a-\mathbf b|^2=|\mathbf a|^2+|\mathbf b|^2
+ -2|\mathbf a||\mathbf b|\cos\theta.
+\]
+Therefore
+\begin{align*}
+ \mathbf a\cdot\mathbf b
+ &=\frac12\bigl(|\mathbf a|^2+|\mathbf b|^2-|\mathbf a-\mathbf b|^2\bigr)\\
+ &=\frac12\sum_{i=1}^3\bigl(a_i^2+b_i^2-(a_i-b_i)^2\bigr)\\
+ &=a_1b_1+a_2b_2+a_3b_3.
+\end{align*}
+In particular,
+\[
+ \boxed{\mathbf a\cdot\mathbf b
+ =|\mathbf a||\mathbf b|\cos\theta
+ =a_1b_1+a_2b_2+a_3b_3},
+ \qquad
+ \theta=\arccos\frac{\mathbf a\cdot\mathbf b}{|\mathbf a||\mathbf b|}.
+\]
+The angle formula requires both vectors to be nonzero.
+
+\subsection{Properties}
+For real $\lambda$,
+\begin{align*}
+ \mathbf a\cdot(\mathbf b+\mathbf c)&=\mathbf a\cdot\mathbf b+\mathbf a\cdot\mathbf c,\\
+ (\lambda\mathbf a)\cdot\mathbf b&=\lambda(\mathbf a\cdot\mathbf b),\\
+ \mathbf a\cdot\mathbf b&=\mathbf b\cdot\mathbf a.
+\end{align*}
+For example, the first identity follows by expanding components:
+\begin{align*}
+ \mathbf a\cdot(\mathbf b+\mathbf c)
+ &=a_1(b_1+c_1)+a_2(b_2+c_2)+a_3(b_3+c_3)\\
+ &=(a_1b_1+a_2b_2+a_3b_3)+(a_1c_1+a_2c_2+a_3c_3).
+\end{align*}
+The other two follow similarly.
+
+\subsection{Equations of planes}
+A plane through $P_0$ with a nonzero normal vector $\mathbf n$ consists of
+points $P$ for which $\overrightarrow{P_0P}\perp\mathbf n$.
+Writing their position vectors as $\mathbf r_0,\mathbf r$,
+\begin{align*}
+ (\mathbf r-\mathbf r_0)\cdot\mathbf n&=0,\\
+ \mathbf r\cdot\mathbf n&=\mathbf r_0\cdot\mathbf n=d.
+\end{align*}
+If $\mathbf n=\langle n_1,n_2,n_3\rangle$, the \textbf{Cartesian equation} is
+\[
+ \boxed{n_1x+n_2y+n_3z=d}.
+\]
+Alternatively, with two nonparallel directions $\mathbf u,\mathbf v$
+parallel to the plane,
+\[
+ \boxed{\mathbf r=\mathbf r_0+s\mathbf u+t\mathbf v,\qquad s,t\in\mathbb R.}
+\]
+The nonparallel condition ensures that this describes a plane rather than a line.
+
+\subsection{Orthogonal projection}
+For $\mathbf u\ne\mathbf0$, project $\mathbf v$ onto the direction of
+$\mathbf u$. The signed component is $|\mathbf v|\cos\theta$, and hence
+\begin{align*}
+ \mathbf p=\operatorname{proj}_{\mathbf u}\mathbf v
+ &=|\mathbf v|\cos\theta\frac{\mathbf u}{|\mathbf u|}\\
+ &=\boxed{\frac{\mathbf v\cdot\mathbf u}{|\mathbf u|^2}\mathbf u}.
+\end{align*}
+Check that the remaining component is orthogonal to $\mathbf u$:
+\[
+ (\mathbf v-\mathbf p)\cdot\mathbf u
+ =\mathbf v\cdot\mathbf u
+ -\frac{\mathbf v\cdot\mathbf u}{|\mathbf u|^2}(\mathbf u\cdot\mathbf u)=0.
+\]
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Stealth]
+ \draw[->] (0,0)--(5,0) node[right] {$\mathbf u$ direction};
+ \draw[->,thick,ink] (0,0)--(3,2) node[above] {$\mathbf v$};
+ \draw[->,thick] (0,0)--(3,0) node[midway,below] {$\mathbf p$};
+ \draw[dashed] (3,0)--(3,2);
+ \draw (2.75,0)--(2.75,0.25)--(3,0.25);
+\end{tikzpicture}
+\end{center}
+
+\begin{example}[Lecture Example 4: angle and projection]
+Let $\mathbf a=\langle1,2,1\rangle$ and
+$\mathbf b=\langle-2,1,2\rangle$. Then
+\[
+ \mathbf a\cdot\mathbf b=-2+2+2=2,
+ \quad |\mathbf a|=\sqrt6,\quad |\mathbf b|=3.
+\]
+Thus
+\[
+ \cos\theta=\frac{2}{3\sqrt6}=\frac{\sqrt6}{9},
+ \qquad\theta=\arccos\left(\frac{\sqrt6}{9}\right).
+\]
+The projection of $\mathbf a$ onto $\mathbf b$ is
+\[
+ \operatorname{proj}_{\mathbf b}\mathbf a
+ =\frac29\langle-2,1,2\rangle
+ =\left\langle-\frac49,\frac29,\frac49\right\rangle.
+\]
+\end{example}
+
+\section{The vector or cross product}
+
+The motivation is torque. A force $\mathbf F$ applied at position $\mathbf r$
+relative to a fixed point $O$ produces torque of magnitude
+$|\mathbf r||\mathbf F|\sin\theta$. Its axis is perpendicular to both
+$\mathbf r$ and $\mathbf F$, with the sense determined by a right-hand rule.
+This motivates the torque vector $\boldsymbol\tau=\mathbf r\times\mathbf F$.
+Viewed from the tip of $\boldsymbol\tau$ towards the origin, the induced
+rotation is anticlockwise.
+
+\begin{definition}[Cross product]
+For nonzero, noncollinear vectors $\mathbf a,\mathbf b$, their cross product
+$\mathbf c=\mathbf a\times\mathbf b$ is characterised by
+\begin{enumerate}
+ \item $|\mathbf c|=|\mathbf a||\mathbf b|\sin\theta$;
+ \item $\mathbf c$ is perpendicular to both $\mathbf a$ and $\mathbf b$;
+ \item $\mathbf a,\mathbf b,\mathbf c$ form a right-handed triple.
+\end{enumerate}
+If either vector is zero or the vectors are collinear, set their cross product
+to zero. Nonzero collinear vectors are parallel or antiparallel.
+\end{definition}
+
+\subsection{Deriving the Cartesian formula}
+Write $\mathbf a=\langle a_1,a_2,a_3\rangle$ and
+$\mathbf b=\langle b_1,b_2,b_3\rangle$.
+A perpendicular vector $\mathbf c=\langle x,y,z\rangle$ satisfies
+\[
+ a_1x+a_2y+a_3z=0,\qquad b_1x+b_2y+b_3z=0.
+\]
+If $D=a_1b_2-a_2b_1\ne0$, solving these equations gives
+\[
+ x=\frac{a_2b_3-a_3b_2}{D}z,\qquad
+ y=\frac{a_3b_1-a_1b_3}{D}z.
+\]
+Thus the perpendicular direction is
+\[
+ \mathbf q=\langle a_2b_3-a_3b_2,\ a_3b_1-a_1b_3,\ a_1b_2-a_2b_1\rangle,
+ \qquad\mathbf c=t\mathbf q.
+\]
+For noncollinear vectors at least one such minor is nonzero; if $D=0$,
+choose another pair of coordinates. The component expression for $\mathbf q$
+remains the same. Expanding and collecting terms gives
+\begin{align*}
+ |\mathbf q|^2
+ &=(a_2b_3-a_3b_2)^2+(a_3b_1-a_1b_3)^2+(a_1b_2-a_2b_1)^2\\
+ &=(a_1^2+a_2^2+a_3^2)(b_1^2+b_2^2+b_3^2)
+   -(a_1b_1+a_2b_2+a_3b_3)^2\\
+ &=|\mathbf a|^2|\mathbf b|^2-(\mathbf a\cdot\mathbf b)^2\\
+ &=|\mathbf a|^2|\mathbf b|^2\sin^2\theta.
+\end{align*}
+The magnitude condition on $\mathbf c=t\mathbf q$ gives $t=\pm1$.
+The right-handed convention chooses $t=1$, consistently with
+$\mathbf i\times\mathbf j=\mathbf k$.
+Therefore
+\begin{align*}
+ \mathbf a\times\mathbf b
+ &=(a_2b_3-a_3b_2)\mathbf i
+ +(a_3b_1-a_1b_3)\mathbf j
+ +(a_1b_2-a_2b_1)\mathbf k.
+\end{align*}
+
+\subsection{Properties and areas}
+The definition and component formula imply
+\begin{align*}
+ \mathbf a\cdot(\mathbf a\times\mathbf b)&=0,\\
+ \mathbf a\times\mathbf b&=-\mathbf b\times\mathbf a,\\
+ (\mathbf a+\mathbf b)\times\mathbf c
+   &=\mathbf a\times\mathbf c+\mathbf b\times\mathbf c,\\
+ |\mathbf a\times\mathbf b|^2+(\mathbf a\cdot\mathbf b)^2
+   &=|\mathbf a|^2|\mathbf b|^2.
+\end{align*}
+In particular,
+\[
+ \mathbf i\times\mathbf j=\mathbf k,\quad
+ \mathbf j\times\mathbf k=\mathbf i,\quad
+ \mathbf k\times\mathbf i=\mathbf j,\qquad
+ \mathbf i\times\mathbf i=\mathbf j\times\mathbf j=\mathbf k\times\mathbf k=\mathbf0.
+\]
+A parallelogram with adjacent edges $\mathbf a,\mathbf b$ has height
+$|\mathbf b|\sin\theta$ above a base of length $|\mathbf a|$, so
+\[
+ \operatorname{Area}(\text{parallelogram})=|\mathbf a\times\mathbf b|,
+ \qquad
+ \operatorname{Area}(\text{triangle})=\frac12|\mathbf a\times\mathbf b|.
+\]
+
+\section{Triple products}
+
+The \emph{scalar triple product} is
+\[
+ [\mathbf a,\mathbf b,\mathbf c]=\mathbf a\cdot(\mathbf b\times\mathbf c).
+\]
+For a parallelepiped with edges $\mathbf a,\mathbf b,\mathbf c$, take the
+base to be the parallelogram spanned by $\mathbf b,\mathbf c$.
+For a nondegenerate base its area is $|\mathbf b\times\mathbf c|$.
+The height is the magnitude of the projection of $\mathbf a$ onto the normal:
+\begin{align*}
+ h
+ &=\left|\frac{\mathbf a\cdot(\mathbf b\times\mathbf c)}
+ {|\mathbf b\times\mathbf c|^2}(\mathbf b\times\mathbf c)\right|\\
+ &=\frac{|\mathbf a\cdot(\mathbf b\times\mathbf c)|}{|\mathbf b\times\mathbf c|}.
+\end{align*}
+Hence the volume is
+\[
+ V=|\mathbf b\times\mathbf c|h
+ =\boxed{|[\mathbf a,\mathbf b,\mathbf c]|}.
+\]
+This volume formula also gives zero for a degenerate parallelepiped.
+The scalar triple product is signed volume: it is positive for a right-handed
+triple and negative for a left-handed triple. It is unchanged by cyclic
+permutations and changes sign when any pair is swapped:
+\begin{align*}
+ [\mathbf a,\mathbf b,\mathbf c]
+ &=[\mathbf b,\mathbf c,\mathbf a]=[\mathbf c,\mathbf a,\mathbf b],\\
+ [\mathbf a,\mathbf b,\mathbf c]&=-[\mathbf b,\mathbf a,\mathbf c].
+\end{align*}
+The \emph{vector triple product} $\mathbf a\times(\mathbf b\times\mathbf c)$
+will be evaluated using index notation below.
+
+\section{Index notation}
+
+Relabel the standard basis as
+$\mathbf e_1=\mathbf i$, $\mathbf e_2=\mathbf j$, $\mathbf e_3=\mathbf k$.
+\textbf{Einstein notation} convention suppresses the summation sign for a repeated
+index: here every summed index runs from $1$ to $3$. For example,
+\[
+ \mathbf a=a_i\mathbf e_i
+ =\sum_{i=1}^3a_i\mathbf e_i.
+\]
+A free index is not summed; a repeated dummy index can be renamed consistently.
+
+\subsection{The Kronecker delta and the dot product}
+Define
+\[
+ \delta_{ij}=\mathbf e_i\cdot\mathbf e_j
+ =\begin{cases}1,&i=j,\\0,&i\ne j.\end{cases}
+\]
+Then
+\begin{align*}
+ \mathbf a\cdot\mathbf b
+ &=(a_i\mathbf e_i)\cdot(b_j\mathbf e_j)\\
+ &=a_i b_j(\mathbf e_i\cdot\mathbf e_j)
+ =\delta_{ij}a_i b_j=a_i b_i.
+\end{align*}
+The useful contraction rules are
+$\delta_{ij}A_j=A_i$ and $\delta_{ij}A_i=A_j$.
+
+\subsection{The Levi--Civita symbol and the cross product}
+Expand a cross product of basis vectors in the same basis:
+\[
+ \mathbf e_i\times\mathbf e_j=\varepsilon_{ijk}\mathbf e_k,
+ \qquad
+ \varepsilon_{ijk}=(\mathbf e_i\times\mathbf e_j)\cdot\mathbf e_k
+ =[\mathbf e_i,\mathbf e_j,\mathbf e_k].
+\]
+The last equality follows from the cyclic property of the scalar triple product.
+Since the basis is right-handed and orthonormal, $\varepsilon_{123}=1$ and
+\[
+ \varepsilon_{ijk}=
+ \begin{cases}
+ +1,&(i,j,k)=(1,2,3),(2,3,1),(3,1,2),\\
+ -1,&(i,j,k)=(1,3,2),(3,2,1),(2,1,3),\\
+ 0,&\text{any two indices coincide}.
+ \end{cases}
+\]
+Thus $\varepsilon_{ijk}=\varepsilon_{jki}=\varepsilon_{kij}$ and swapping
+any two indices changes its sign. The cross product becomes
+\[
+ \boxed{\mathbf a\times\mathbf b
+ =a_i b_j(\mathbf e_i\times\mathbf e_j)
+ =\varepsilon_{ijk}a_i b_j\mathbf e_k}.
+\]
+
+\subsection{Contracting two Levi--Civita symbols}
+The identity needed for a vector triple product is
+\[
+ \boxed{\varepsilon_{kij}\varepsilon_{kn\ell}
+ =\delta_{in}\delta_{j\ell}-\delta_{i\ell}\delta_{jn}}.
+\]
+There is a sum over $k$. A nonzero term requires $i\ne j$, $n\ne\ell$
+and a $k$ different from all four indices. Consequently there are two
+nonzero cases: $i=n\ne j=\ell$ gives $+1$, while
+$i=\ell\ne j=n$ gives $-1$. In every other case the sum is zero,
+which is exactly the right-hand side.
+
+\subsection{The vector triple product}
+\begin{align*}
+ \mathbf a\times(\mathbf b\times\mathbf c)
+ &=\mathbf a\times(\varepsilon_{ijk}b_i c_j\mathbf e_k)\\
+ &=\varepsilon_{ijk}b_i c_j a_\ell
+       (\mathbf e_\ell\times\mathbf e_k)\\
+ &=\varepsilon_{ijk}\varepsilon_{\ell kn}a_\ell b_i c_j\mathbf e_n\\
+ &=\varepsilon_{kij}\varepsilon_{kn\ell}a_\ell b_i c_j\mathbf e_n\\
+ &=(\delta_{in}\delta_{j\ell}-\delta_{i\ell}\delta_{jn})
+       a_\ell b_i c_j\mathbf e_n\\
+ &=(a_jc_j)b_n\mathbf e_n-(a_i b_i)c_n\mathbf e_n\\
+ &=(\mathbf a\cdot\mathbf c)\mathbf b-(\mathbf a\cdot\mathbf b)\mathbf c.
+\end{align*}
+Therefore
+\[
+ \boxed{\mathbf a\times(\mathbf b\times\mathbf c)
+ =(\mathbf a\cdot\mathbf c)\mathbf b-(\mathbf a\cdot\mathbf b)\mathbf c}.
+\]
+Week 2 ends with this calculation unfinished; Week 3 supplies the contraction
+identity and completes it. The recap is combined here rather than duplicated.
+
+\section{A determinant mnemonic and a plane example}
+
+The component formula can be remembered by expanding formally along the first row:
+\begin{align*}
+ \mathbf a\times\mathbf b
+ &=\begin{vmatrix}
+ \mathbf i&\mathbf j&\mathbf k\\a_1&a_2&a_3\\b_1&b_2&b_3
+ \end{vmatrix}\\
+ &=\mathbf i\begin{vmatrix}a_2&a_3\\b_2&b_3\end{vmatrix}
+ -\mathbf j\begin{vmatrix}a_1&a_3\\b_1&b_3\end{vmatrix}
+ +\mathbf k\begin{vmatrix}a_1&a_2\\b_1&b_2\end{vmatrix},
+\end{align*}
+where $\left|\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right|=ad-bc$.
+The vector-valued first row is a mnemonic for cofactor expansion.
+
+\begin{example}[Lecture Example 5: plane through three points and distance]
+Let
+\[
+ A=(-1,0,1),\qquad B=(2,-2,1),\qquad C=(3,-3,0),\qquad D=(-3,-1,2).
+\]
+Find a Cartesian equation of the plane through $A,B,C$ and its distance from $D$.
+A normal vector is
+\begin{align*}
+ \mathbf n
+ &=\overrightarrow{AB}\times\overrightarrow{AC}
+ =\langle3,-2,0\rangle\times\langle4,-3,-1\rangle\\
+ &=\mathbf i\bigl((-2)(-1)-0(-3)\bigr)
+ -\mathbf j\bigl(3(-1)-0(4)\bigr)
+ +\mathbf k\bigl(3(-3)-(-2)(4)\bigr)\\
+ &=2\mathbf i+3\mathbf j-\mathbf k=\langle2,3,-1\rangle.
+\end{align*}
+With $\mathbf r_A=\langle-1,0,1\rangle$,
+$\mathbf r_A\cdot\mathbf n=-3$. Thus the plane is
+\[
+ \boxed{2x+3y-z=-3}.
+\]
+The shortest distance is the length of the projection of $\overrightarrow{AD}$
+onto the normal. Since $\overrightarrow{AD}=\langle-2,-1,1\rangle$,
+\begin{align*}
+ d
+ &=\left|\operatorname{proj}_{\mathbf n}\overrightarrow{AD}\right|
+ =\frac{|\overrightarrow{AD}\cdot\mathbf n|}{|\mathbf n|}\\
+ &=\frac{|-4-3-1|}{\sqrt{4+9+1}}
+ =\frac8{\sqrt{14}}=\boxed{\frac{4\sqrt{14}}7}.
+\end{align*}
+\end{example}
+
+

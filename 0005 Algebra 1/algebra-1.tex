@@ -1,0 +1,89 @@
+% !TeX program = xelatex
+% Main file. The editable text is in chapters/.
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,enumitem,microtype}
+\usepackage{xcolor,fancyhdr,needspace}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{hyperref}
+\definecolor{ink}{HTML}{16324F}
+\definecolor{muted}{HTML}{52616B}
+\definecolor{accent}{HTML}{A65332}
+\hypersetup{colorlinks=true,linkcolor=ink,urlcolor=ink,
+ pdftitle={Algebra 1 - Chapter Notes},bookmarksnumbered=true}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlist{itemsep=3pt,topsep=5pt}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\numberwithin{equation}{chapter}
+\DeclareMathOperator{\spanop}{span}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\method}[1]{\par\textbf{Method.} #1\par}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Algebra 1}
+\fancyhead[R]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter}{} }
+\setcounter{tocdepth}{1}
+\title{Algebra 1\\[0.4em]\large}
+\author{Roger D.}
+\date{2026/27}
+\begin{document}
+\maketitle
+\pagenumbering{roman}
+\chapter*{About these notes}
+\addcontentsline{toc}{chapter}{About these notes}
+These editable notes are based on Matthew Towers's \emph{MATH0005 Algebra 1
+2026}, using the supplied revision dated 4 November 2026 (83 pages).
+The earlier 6 October revision is retained as a separate source file.
+This is a rewritten study companion, not an official or verbatim transcription.
+
+The five chapters follow the source's order. Definitions, central results,
+proofs and representative calculations are reorganised into a common style.
+Repetitive elementary calculations are combined, while the principal methods
+and all section topics are retained.
+
+Theorem and example numbering is automatic and differs from the source.
+Several important source theorem numbers are included in headings for ease
+of comparison. Added methods and clarifications are identified where useful;
+proofs deliberately omitted by the source are not attributed to it as if
+present. The accompanying README records corrections and scope.
+
+\textbf{Scalars.} Unless stated otherwise, $F$ means either $\mathbb R$ or
+$\mathbb C$. Vectors are columns. A basis is ordered, since order determines
+coordinates. The notation $N(A)$ denotes the kernel and $C(A)$ the column
+space. Row-space vectors are represented as columns, following the source.
+
+\textbf{Complex inner product convention.} We keep the source's convention
+$u\cdot v=u^{\mathsf T}\overline v$, which is linear in the first argument
+and conjugate-linear in the second. Other books may reverse this convention;
+projection coefficients here consistently use $v\cdot u$ when projecting
+$v$ onto $u$. Ordinary angle formulae are restricted to real vectors.
+
+Edit chapter files in \texttt{chapters/}; compile this main file to combine
+them with \verb|\input|. Drawings are stored separately in \texttt{figures/}.
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\input{chapters/algebra-01-matrices-and-linear-systems}
+\input{chapters/algebra-02-subspaces-and-dimension}
+\input{chapters/algebra-03-linear-maps-and-coordinates}
+\input{chapters/algebra-04-eigenvalues-and-determinants}
+\input{chapters/algebra-05-orthogonality}
+\end{document}
