@@ -1,3 +1,392 @@
 % !TeX root = ../mathematical-methods1.tex
 \chapter{Partial Derivatives}\label{chap:partial-derivatives}
 
+This chapter concerns derivatives of functions of two or more variables,
+also called multivariable derivatives. It begins on handwritten p.~69 of
+\texttt{Slides\_Week-5.pdf}. Functions are assumed to be ``nice enough'',
+meaning that the derivatives used exist and are continuous.
+
+\section{Introduction}
+
+For $f:(a,b)\to\mathbb R$, the graph of $f$ is a \emph{curve} $y=f(x)$ in the
+$(x,y)$-plane. For a function of two variables $f(x,y)$, the graph
+$z=f(x,y)$ is a \emph{surface} in $(x,y,z)$-space.
+
+\begin{definition}[Level sets]
+For $c\in\mathbb R$, the level set of $f$ at height $c$ is
+\[
+ \{(x,y): f(x,y)=c\}.
+\]
+Drawing several level sets in the $(x,y)$-plane gives a contour map of the surface.
+\end{definition}
+
+\begin{example}[Lecture Example 1: a paraboloid]
+Sketch the surface $z=f(x,y)$ for $f(x,y)=x^2+y^2$.
+
+The level sets are:
+\begin{itemize}
+ \item $c<0$: the empty set $\varnothing$;
+ \item $c=0$: the single point $x=y=0$;
+ \item $c>0$: $x^2+y^2=c$, a circle of radius $\sqrt c$ centred at the origin.
+\end{itemize}
+Lifting each circle to height $z=c$ (an ``elevated map'') produces the
+paraboloid $z=x^2+y^2$.
+\end{example}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+ \begin{scope}
+  \draw[->] (-2,0)--(2.1,0) node[right] {$x$};
+  \draw[->] (0,-2)--(0,2.1) node[above] {$y$};
+  \fill[ink] (0,0) circle (1.5pt);
+  \foreach \c/\r in {1/0.7,2/0.99,3/1.21,4/1.4}
+   \draw[ink] (0,0) circle (\r);
+  \node[font=\small] at (0,-2.5) {Level sets $x^2+y^2=c$};
+ \end{scope}
+ \begin{scope}[xshift=6cm,yshift=-1.6cm]
+  \draw[->] (0,0)--(0,3.5) node[above] {$z$};
+  \draw[->] (0,0)--(2.2,0) node[right] {$y$};
+  \draw[->] (0,0)--(-1.2,-0.9) node[below left] {$x$};
+  \draw[ink,thick,domain=-1.6:1.6,samples=50] plot (\x,{\x*\x});
+  \foreach \h in {0.64,1.44,2.56}
+   \draw[blue] (0,\h) ellipse ({sqrt(\h)} and {0.18*sqrt(\h)});
+  \node[font=\small] at (0.4,-1.5) {Paraboloid $z=x^2+y^2$};
+ \end{scope}
+\end{tikzpicture}
+\end{center}
+
+For $y=f(x)$, the tangent line to the graph at $x_0$ is
+$L_t:\ y=f(x_0)+f'(x_0)(x-x_0)$. For a surface $z=f(x,y)$, the analogue is a
+\emph{tangent plane} $P_t$ at $(x_0,y_0)$. To describe $P_t$ we need two
+vectors in it, which we obtain from \emph{sections} (or \emph{slices}) of the
+surface:
+\begin{itemize}
+ \item the $y$-slice ($y=y_0$ held constant): $z=f(x,y_0)$, a function of $x$;
+ \item the $x$-slice ($x=x_0$ held constant): $z=f(x_0,y)$, a function of $y$.
+\end{itemize}
+The slopes of the tangent lines to these slices are the partial derivatives.
+
+\section{Partial derivatives}
+
+\begin{definition}[Partial derivatives]
+The partial derivatives of $f(x,y)$ at $(x_0,y_0)$ are
+\begin{align*}
+ \frac{\partial f}{\partial x}(x_0,y_0)
+ &:=\lim_{h\to0}\frac{f(x_0+h,y_0)-f(x_0,y_0)}{h},\\
+ \frac{\partial f}{\partial y}(x_0,y_0)
+ &:=\lim_{h\to0}\frac{f(x_0,y_0+h)-f(x_0,y_0)}{h},
+\end{align*}
+provided the limits exist.
+\end{definition}
+
+The symbol $\partial$ is read ``curly d''. As $f'$ abbreviates
+$\mathrm df/\mathrm dx$, we abbreviate
+\[
+ \frac{\partial f}{\partial x}=f_x,\qquad \frac{\partial f}{\partial y}=f_y.
+\]
+To calculate a partial derivative, use the usual single-variable rules with
+respect to the variable in question, \emph{holding the other variable(s) constant}.
+
+\begin{example}[Lecture Example 2]
+Let $f(x,y)=\sin(x^2y)+xy$. Find $f_x$ and $f_y$.
+
+Holding $y$ constant and using the chain rule,
+\[
+ f_x=\cos(x^2y)\cdot2xy+y.
+\]
+Holding $x$ constant,
+\[
+ f_y=\cos(x^2y)\cdot x^2+x.
+\]
+\end{example}
+
+\subsection{Higher derivatives}
+The second derivatives are
+\[
+ \frac{\partial^2f}{\partial x^2}=f_{xx}:=\frac{\partial}{\partial x}\Bigl(\frac{\partial f}{\partial x}\Bigr)=(f_x)_x,
+ \qquad
+ \frac{\partial^2f}{\partial y^2}=f_{yy}:=\frac{\partial}{\partial y}\Bigl(\frac{\partial f}{\partial y}\Bigr)=(f_y)_y,
+\]
+together with the \emph{mixed derivatives}
+\[
+ \frac{\partial^2f}{\partial y\,\partial x}:=\frac{\partial}{\partial y}\Bigl(\frac{\partial f}{\partial x}\Bigr)=(f_x)_y=f_{xy},
+ \qquad
+ f_{yx}:=(f_y)_x.
+\]
+In the subscript notation, differentiate in the order the subscripts are read
+from left to right.
+
+\begin{example}[Lecture Example 3]
+Find all first and second derivatives of $f(x,y)=\sin(x^2y)+xy$.
+
+From Example~2,
+\[
+ f_x=2xy\cos(x^2y)+y,\qquad f_y=x^2\cos(x^2y)+x.
+\]
+The second derivatives are
+\begin{align*}
+ f_{xx}&=2y\cos(x^2y)-4x^2y^2\sin(x^2y),\\
+ f_{yy}&=-x^4\sin(x^2y),\\
+ f_{xy}&=2x\cos(x^2y)-2x^3y\sin(x^2y)+1,\\
+ f_{yx}&=2x\cos(x^2y)-2x^3y\sin(x^2y)+1.
+\end{align*}
+\end{example}
+
+Observe that $f_{xy}=f_{yx}$. This holds generally.
+
+\begin{theorem}[Clairaut's theorem]
+If $f_x$, $f_y$, $f_{xx}$, $f_{xy}$, $f_{yx}$ and $f_{yy}$ exist and are
+continuous, then
+\[
+ f_{xy}=f_{yx}.
+\]
+\end{theorem}
+The proof belongs to Analysis. More generally, for smooth enough $f$ the
+order of differentiation does not matter for any higher derivatives, for example
+$f_{xxy}=f_{xyx}=f_{yxx}$.
+
+\section{Tangent plane and linear approximation}
+
+For $y=f(x)$, the slope $f'(x_0)$ gives a direction vector
+$\mathbf t=\mathbf i+f'(x_0)\mathbf j$ for the tangent line.
+For $z=f(x,y)$, the partial derivatives $f_x$ and $f_y$ are the slopes of the
+tangent vectors to the $y$- and $x$-slices.
+
+The $y$-slice at $y=y_0$ is the curve $\mathbf r(x)=\langle x,\,y_0,\,f(x,y_0)\rangle$.
+Its tangent vector
+\[
+ \mathbf u=\langle1,\,0,\,f_x(x_0,y_0)\rangle
+\]
+lies in the tangent plane $P_t$. Similarly, the tangent to the $x$-slice,
+\[
+ \mathbf v=\langle0,\,1,\,f_y(x_0,y_0)\rangle,
+\]
+lies in $P_t$.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+ % axes: z up, y right, x towards the viewer (down-left)
+ \draw[->] (0,0)--(0,3.6) node[above] {$z$};
+ \draw[->] (0,0)--(4.6,0) node[right] {$y$};
+ \draw[->] (0,0)--(-1.8,-1.5) node[below left] {$x$};
+ % tangent plane as a parallelogram
+ \draw[muted,fill=ink!6] (0.2,1.3)--(3.6,1.9)--(2.4,3.4)--(-1.0,2.8)--cycle;
+ \node[font=\small] at (3.4,3.1) {$P_t$};
+ % point of tangency and its foot (x0,y0)
+ \coordinate (P) at (1.3,2.35);
+ \coordinate (F) at (1.3,-0.6);
+ \draw[dashed,muted] (F)--(P);
+ \draw[dashed,muted] (F)--(-0.72,-0.6) node[left] {$x_0$};
+ \draw[dashed,muted] (F)--(2.02,0) node[above right] {$y_0$};
+ \fill (P) circle (1.6pt);
+ \draw[->,thick,red] (P)--++(-0.75,-0.45) node[left] {$\mathbf u$};
+ \draw[->,thick,blue] (P)--++(1.1,0.2) node[right] {$\mathbf v$};
+\end{tikzpicture}
+\end{center}
+
+A parametric equation of $P_t$ is therefore
+\[
+ \mathbf r=\mathbf r_0+s\mathbf u+t\mathbf v,\qquad s,t\in\mathbb R,
+ \qquad \mathbf r_0=\langle x_0,\,y_0,\,f(x_0,y_0)\rangle.
+\]
+A normal to $P_t$ is
+\[
+ \mathbf n=\mathbf u\times\mathbf v=
+ \begin{vmatrix}
+  \mathbf i&\mathbf j&\mathbf k\\
+  1&0&f_x\\
+  0&1&f_y
+ \end{vmatrix}
+ =\langle-f_x,\,-f_y,\,1\rangle.
+\]
+A Cartesian equation of $P_t$ is $\mathbf n\cdot(\mathbf r-\mathbf r_0)=0$, that is,
+\[
+ -f_x(x-x_0)-f_y(y-y_0)+\bigl(z-f(x_0,y_0)\bigr)=0.
+\]
+Rearranging,
+\begin{equation}
+ \boxed{z=f(x_0,y_0)+f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)}.
+ \tag{1}\label{eq:mm-tangent-plane}
+\end{equation}
+Equation \eqref{eq:mm-tangent-plane} is the equation of the tangent plane
+$P_t$ at $(x_0,y_0)$. It is also the first-order approximation of $f(x,y)$
+near $(x_0,y_0)$:
+\[
+ f(x,y)\approx f(x_0,y_0)+f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0).
+\]
+
+\begin{example}[Lecture Example 4]
+Find the tangent plane to $z=f(x,y)=2x^2+y^2$ at $(x_0,y_0)=(1,1)$.
+
+Here $f(1,1)=2+1=3$, $f_x=4x$ so $f_x(1,1)=4$, and $f_y=2y$ so $f_y(1,1)=2$.
+By \eqref{eq:mm-tangent-plane},
+\[
+ z=3+4(x-1)+2(y-1)
+ \quad\Longleftrightarrow\quad
+ \boxed{z=4x+2y-3}.
+\]
+\end{example}
+
+\section{The multivariable chain rule}
+
+Recall the chain rule for $y=y(x)$ and $x=x(t)$:
+\[
+ \frac{\mathrm d}{\mathrm dt}y(x(t))=y'(x(t))\,x'(t)
+ \quad\Longleftrightarrow\quad
+ \frac{\mathrm dy}{\mathrm dt}=\frac{\mathrm dy}{\mathrm dx}\frac{\mathrm dx}{\mathrm dt}.
+\]
+In two variables, let $z=f(x,y)$ with $x=x(t)$ and $y=y(t)$.
+What is $\frac{\mathrm d}{\mathrm dt}f(x(t),y(t))$? It follows from Analysis that
+\[
+ \frac{\mathrm d}{\mathrm dt}f(x(t),y(t))
+ =f_x\bigl(x(t),y(t)\bigr)\,x'(t)+f_y\bigl(x(t),y(t)\bigr)\,y'(t),
+\]
+or, in Leibniz notation,
+\begin{equation}
+ \boxed{\frac{\mathrm d}{\mathrm dt}f(x(t),y(t))
+ =\frac{\partial f}{\partial x}\frac{\mathrm dx}{\mathrm dt}
+ +\frac{\partial f}{\partial y}\frac{\mathrm dy}{\mathrm dt}}.
+ \tag{2}\label{eq:mm-chain}
+\end{equation}
+
+\textbf{Exercise.} Derive \eqref{eq:mm-chain} formally using the linear
+approximations of $f(x,y)$ and of $x(t)$, $y(t)$.
+
+\begin{example}[Lecture Example 5]
+Let $z=f(x,y)=x^2y+3xy^4$ with $x(t)=\sin(2t)$ and $y(t)=\cos t$.
+Find $\mathrm df/\mathrm dt$ in terms of $t$.
+
+We have
+\[
+ f_x=2xy+3y^4,\quad f_y=x^2+12xy^3,\quad x'(t)=2\cos2t,\quad y'(t)=-\sin t.
+\]
+By \eqref{eq:mm-chain},
+\begin{align*}
+ \frac{\mathrm df}{\mathrm dt}
+ &=(2xy+3y^4)\,2\cos2t+(x^2+12xy^3)(-\sin t)\\
+ &=2\cos2t\bigl(2\sin2t\cos t+3\cos^4t\bigr)
+   -\sin t\bigl(\sin^22t+12\sin2t\cos^3t\bigr).
+\end{align*}
+\end{example}
+
+\subsection{More general chain rules}
+Now let $z=f(x,y)$ with $x=x(u,v)$ and $y=y(u,v)$. This is a multivariable
+change of variables $(x,y)\leftrightarrow(u,v)$. We want
+\[
+ f_u:=\frac{\partial}{\partial u}f\bigl(x(u,v),y(u,v)\bigr),
+ \qquad
+ f_v:=\frac{\partial}{\partial v}f\bigl(x(u,v),y(u,v)\bigr).
+\]
+Applying \eqref{eq:mm-chain} with $v$ held fixed for $f_u$, and with $u$ held
+fixed for $f_v$, gives
+\begin{equation}
+ \boxed{
+ \frac{\partial z}{\partial u}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial u}
+ +\frac{\partial z}{\partial y}\frac{\partial y}{\partial u},
+ \qquad
+ \frac{\partial z}{\partial v}=\frac{\partial z}{\partial x}\frac{\partial x}{\partial v}
+ +\frac{\partial z}{\partial y}\frac{\partial y}{\partial v}}.
+ \tag{3}\label{eq:mm-chain-uv}
+\end{equation}
+In matrix form, \eqref{eq:mm-chain-uv} reads
+\begin{equation}
+ \begin{pmatrix} z_u\\ z_v\end{pmatrix}
+ =\begin{pmatrix} x_u&y_u\\ x_v&y_v\end{pmatrix}
+  \begin{pmatrix} z_x\\ z_y\end{pmatrix}.
+ \tag{3'}
+\end{equation}
+Here
+\[
+ \begin{pmatrix} x_u&y_u\\ x_v&y_v\end{pmatrix}
+ =\begin{pmatrix}
+  \dfrac{\partial x}{\partial u}&\dfrac{\partial y}{\partial u}\\[8pt]
+  \dfrac{\partial x}{\partial v}&\dfrac{\partial y}{\partial v}
+ \end{pmatrix}
+\]
+is the \emph{Jacobian matrix} of the change of variables, and
+\[
+ \nabla f=\begin{pmatrix} f_x\\ f_y\end{pmatrix}
+ =\begin{pmatrix} \partial f/\partial x\\ \partial f/\partial y\end{pmatrix}
+\]
+is the \emph{gradient vector} of $f$, or ``gradient of $f$'' for short.
+It is also written $\boldsymbol\nabla f$. The gradient has many uses.
+
+\begin{remark}
+Some texts write the Jacobian as the transpose of this matrix, with rows
+indexed by $x,y$ and columns by $u,v$. The lecture's arrangement makes
+\eqref{eq:mm-chain-uv} a matrix times the gradient.
+\end{remark}
+
+\section{Directional derivatives and the gradient}
+
+Recall that $f_x$ and $f_y$ are the slopes of $f$ in the $x$- and
+$y$-directions, along the slices. What is the slope in some other direction?
+
+\begin{definition}[Directional derivative]
+Let $\hat{\mathbf u}=\langle u_1,u_2\rangle$ be a unit vector in the $(x,y)$-plane.
+The directional derivative of $f(x,y)$ in the direction $\hat{\mathbf u}$ is
+the slope of the slice in that direction:
+\[
+ D_{\hat{\mathbf u}}f(x_0,y_0)
+ :=\lim_{h\to0}\frac{f(x_0+hu_1,\,y_0+hu_2)-f(x_0,y_0)}{h}.
+\]
+\end{definition}
+
+Equivalently,
+\[
+ D_{\hat{\mathbf u}}f(x_0,y_0)
+ =\frac{\mathrm d}{\mathrm dt}\Bigl[f(x_0+tu_1,\,y_0+tu_2)\Bigr]_{t=0}.
+\]
+By the chain rule \eqref{eq:mm-chain}, with $x'(t)=u_1$ and $y'(t)=u_2$,
+\[
+ D_{\hat{\mathbf u}}f(x_0,y_0)
+ =f_x(x_0,y_0)\,u_1+f_y(x_0,y_0)\,u_2
+ =\langle f_x,f_y\rangle\cdot\langle u_1,u_2\rangle.
+\]
+Hence
+\[
+ \boxed{D_{\hat{\mathbf u}}f(x_0,y_0)=\nabla f(x_0,y_0)\cdot\hat{\mathbf u}},
+ \qquad
+ \nabla f:=\begin{pmatrix} \partial f/\partial x\\ \partial f/\partial y\end{pmatrix}.
+\]
+Taking $\hat{\mathbf u}=\mathbf i$ or $\mathbf j$ recovers $f_x$ or $f_y$.
+
+\subsection{Interpreting the gradient}
+The value $|D_{\hat{\mathbf u}}f(x_0,y_0)|$ is the magnitude of the slope in
+the direction $\hat{\mathbf u}$, and its sign tells us:
+\begin{itemize}
+ \item $D_{\hat{\mathbf u}}f>0$: $f$ increases in the direction $\hat{\mathbf u}$;
+ \item $D_{\hat{\mathbf u}}f<0$: $f$ decreases in the direction $\hat{\mathbf u}$;
+ \item $D_{\hat{\mathbf u}}f=0$: $f$ is approximately constant, so
+       $\hat{\mathbf u}$ is a level-set direction.
+\end{itemize}
+Let $\theta$ be the angle between $\nabla f$ and $\hat{\mathbf u}$. Since
+$|\hat{\mathbf u}|=1$,
+\[
+ D_{\hat{\mathbf u}}f=\nabla f\cdot\hat{\mathbf u}=|\nabla f|\cos\theta,
+ \qquad |D_{\hat{\mathbf u}}f|\le|\nabla f|.
+\]
+Therefore, when $\nabla f\ne\mathbf 0$:
+\begin{itemize}
+ \item $\theta=0$: $\hat{\mathbf u}$ is the direction of \emph{steepest ascent},
+       with slope $|\nabla f|$;
+ \item $\theta=\pi$: $\hat{\mathbf u}$ is the direction of \emph{steepest descent},
+       with slope $-|\nabla f|$;
+ \item $\theta=\pi/2$: $\hat{\mathbf u}\perp\nabla f$, a level-set direction.
+\end{itemize}
+
+\begin{center}
+\fbox{\parbox{0.8\linewidth}{\centering
+$\nabla f$ points in the direction of steepest ascent, and is perpendicular to the level sets of $f$.}}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+ \foreach \r in {0.7,1.2,1.7,2.2}
+  \draw[ink!60] (0,0) circle (\r);
+ \fill (1.2,0) circle (1.5pt);
+ \draw[->,thick,red] (1.2,0)--(2.2,0) node[right] {$\nabla f$};
+ \draw[->,thick,blue] (1.2,0)--(1.2,1) node[above right,fill=white,inner sep=1pt,font=\small] {level-set direction};
+ \node[font=\small] at (0,-2.7) {Level sets of $x^2+y^2$ with the gradient at a point};
+\end{tikzpicture}
+\end{center}

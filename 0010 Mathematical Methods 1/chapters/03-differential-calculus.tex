@@ -511,42 +511,177 @@ The corresponding expansions are
 Both equalities hold for all real $x$. In the lecture's expanded forms,
 $3!=6$, $5!=120$ and $4!=24$.
 
-\begin{example}
-\begin{align*}
-f(x)&=log(1+x), |x|<1.\\
-f(0)&=log1=0\\
-f'(x)&=\frac{1}{1+x} \rightarrow f'(0)=1\\
-f''(x)&=-\frac{1}{(1+x)^{2}}=-(1+x)^{-2} \rightarrow f''(0)=-1\\
-f'''(x)&=2(1+   x)^{-3}\rightarrow f'''(0)=2\\
-....\\
-f^{(n)}(x)&=(-1)^{n-1}(n-1)!\\
-\end{align*}
-Maclaurin's Series:
-\begin{align*}
-log(1+x)&\approx\sum_{n=0}^{\infty} (-1)^{n-1} \frac{(n-1)!}{n!}x^{n}\\
-\Rightarrow \sum_{n=1}^{\infty} (-1)^{n-1}\frac{x^{n}}{n}&=x-\frac{x^2}{2}+\frac{x^3}{3}-...
-\end{align*}
-\end{example}
+\subsection{Further Maclaurin series (handwritten pp.~63--66)}
 
-\begin{example}[Binomial Expansion]
+\begin{example}[Lecture Example 9: the logarithm]
+Let $f(x)=\log(1+x)$ for $|x|<1$. Then
+\begin{align*}
+ f(0)&=\log1=0,\\
+ f'(x)&=\frac{1}{1+x}, & f'(0)&=1,\\
+ f''(x)&=-\frac{1}{(1+x)^2}=-(1+x)^{-2}, & f''(0)&=-1,\\
+ f'''(x)&=2(1+x)^{-3}, & f'''(0)&=2.
+\end{align*}
+By induction, for $n\ge1$,
 \[
-f(x)=(1+x)^\alpha,\qquad \alpha\in\mathbb{R}.
+ f^{(n)}(x)=(-1)^{n-1}(n-1)!\,(1+x)^{-n},
+ \qquad f^{(n)}(0)=(-1)^{n-1}(n-1)!.
 \]
-For $|x|<1$, its Maclaurin series is
-\begin{align*}
-(1+x)^\alpha
-&=1+\sum_{n=1}^{\infty}
-  \frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!}x^n \\
-&=\sum_{n=0}^{\infty}\binom{\alpha}{n}x^n.
-\end{align*}
-Here $\binom{\alpha}{0}=1$.
-
-\textbf{NB:} If $\alpha$ is a non-negative integer, the series terminates
-and the identity holds for all real $x$. Otherwise, convergence at
-$x=1$ and $x=-1$ must be checked separately.
+Substituting in \eqref{eq:mm-maclaurin}, the $n=0$ term vanishes and
+$(n-1)!/n!=1/n$, so
+\[
+ \log(1+x)=\sum_{n=1}^{\infty}(-1)^{n-1}\frac{(n-1)!}{n!}x^n
+ =\sum_{n=1}^{\infty}(-1)^{n-1}\frac{x^n}{n}
+ =x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+\cdots.
+\]
+The series converges to $\log(1+x)$ for $|x|<1$ (and also at $x=1$).
 \end{example}
 
-\begin{example}
-Maclaurin Series o
+\begin{example}[Lecture Example 10: the binomial expansion]
+Let $f(x)=(1+x)^\alpha$ with $\alpha\in\mathbb R$, and find its Maclaurin series.
+\begin{align*}
+ f(0)&=1,\\
+ f'(x)&=\alpha(1+x)^{\alpha-1}, & f'(0)&=\alpha,\\
+ f''(x)&=\alpha(\alpha-1)(1+x)^{\alpha-2}, & f''(0)&=\alpha(\alpha-1).
+\end{align*}
+By induction, $f^{(n)}(0)=\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-n+1)$.
+Substituting in \eqref{eq:mm-maclaurin},
+\[
+ (1+x)^\alpha
+ =\sum_{n=0}^{\infty}\frac{\alpha(\alpha-1)\cdots(\alpha-n+1)}{n!}x^n.
+\]
+The coefficient is written $\binom{\alpha}{n}$, read ``$\alpha$ choose $n$'',
+with $\binom{\alpha}{0}=1$. This gives the \emph{generalised binomial formula}
+\begin{equation}
+ \boxed{(1+x)^\alpha=\sum_{n=0}^{\infty}\binom{\alpha}{n}x^n}.
+ \tag{4}\label{eq:mm-binomial}
+\end{equation}
+\end{example}
+
+\begin{remark}
+Formula \eqref{eq:mm-binomial} converges only for $|x|<1$, unless
+$\alpha=0,1,2,\ldots$. In that case $\binom{\alpha}{n}=0$ for all $n>\alpha$,
+the series is finite, and \eqref{eq:mm-binomial} is the usual binomial
+formula, valid for every real $x$. Behaviour at $x=\pm1$ for other $\alpha$
+must be checked separately.
+\end{remark}
+
+\begin{example}[Lecture Example 11: manipulate known series]
+Let
+\[
+ f(x)=\frac{\cos(x^3)}{(1+x^6)^{1/3}}.
+\]
+Find the terms of its Maclaurin series up to order $x^{12}$.
+
+Differentiating twelve times by brute force is a mess. Instead, manipulate
+known series. Substituting $y=x^3$ into the cosine series,
+\[
+ \cos y=1-\frac{y^2}{2}+\frac{y^4}{4!}-\cdots
+ \quad\Longrightarrow\quad
+ \cos(x^3)=1-\frac{x^6}{2}+\frac{x^{12}}{24}-\cdots.
+\]
+By \eqref{eq:mm-binomial} with $\alpha=-\tfrac13$,
+\[
+ (1+z)^{-1/3}=1-\frac13z+\frac{(-\frac13)(-\frac43)}{2}z^2+\cdots
+ =1-\frac13z+\frac29z^2+\cdots,
+\]
+and putting $z=x^6$ (valid for $|x|<1$),
+\[
+ (1+x^6)^{-1/3}=1-\frac13x^6+\frac29x^{12}+\cdots.
+\]
+Multiply the two series and keep the terms up to $x^{12}$:
+\begin{align*}
+ f(x)&=\cos(x^3)\,(1+x^6)^{-1/3}\\
+ &=\Bigl(1-\frac{x^6}{2}+\frac{x^{12}}{24}+\cdots\Bigr)
+   \Bigl(1-\frac13x^6+\frac29x^{12}+\cdots\Bigr)\\
+ &=1+\Bigl(-\frac12-\frac13\Bigr)x^6
+   +\Bigl(\frac1{24}+\Bigl(-\frac12\Bigr)\Bigl(-\frac13\Bigr)+\frac29\Bigr)x^{12}+\cdots\\
+ &=\boxed{1-\frac56x^6+\frac{31}{72}x^{12}+\cdots}.
+\end{align*}
+For the last coefficient: $\frac{3}{72}+\frac{12}{72}+\frac{16}{72}=\frac{31}{72}$.
+\end{example}
+
+\section{Hyperbolic functions}
+
+\begin{definition}[Hyperbolic cosine and sine]
+For $x\in\mathbb R$,
+\[
+ \cosh x:=\frac12\bigl(e^x+e^{-x}\bigr),\qquad
+ \sinh x:=\frac12\bigl(e^x-e^{-x}\bigr).
+\]
+The function $\cosh$ is even and $\sinh$ (pronounced ``shine'') is odd.
+\end{definition}
+
+Directly from the definitions,
+\[
+ e^x=\cosh x+\sinh x,
+\]
+which may be compared with Euler's formula $e^{i\theta}=\cos\theta+i\sin\theta$
+from Chapter~\ref{chap:complex-numbers}. Moreover,
+\begin{align*}
+ \cosh^2x-\sinh^2x&=1,\\
+ (\cosh x)'&=\sinh x, & (\sinh x)'&=\cosh x,\\
+ \int\cosh x\,\mathrm dx&=\sinh x+C, & \int\sinh x\,\mathrm dx&=\cosh x+C.
+\end{align*}
+For the identity, $\cosh^2x-\sinh^2x=\frac14\bigl[(e^x+e^{-x})^2-(e^x-e^{-x})^2\bigr]
+=\frac14\cdot4=1$.
+
+\subsection{Why ``hyperbolic''?}
+Recall that $x=\cos t$, $y=\sin t$ parametrises the unit circle
+$x^2+y^2=1$ in the $(x,y)$-plane. Now put
+\[
+ x=\cosh t,\qquad y=\sinh t.
+\]
+Then $x^2-y^2=\cosh^2t-\sinh^2t=1$, so the point $(x,y)$ lies on the
+\emph{hyperbola} $x^2-y^2=1$. Since $\cosh t\ge1$, this parametrisation traces
+its right-hand branch.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Stealth]
+ \draw[->] (-2.6,0)--(3.2,0) node[right] {$x$};
+ \draw[->] (0,-2.6)--(0,2.8) node[above] {$y$};
+ \draw[ink,thick] (0,0) circle (1);
+ \node[ink,font=\small] at (-1.25,1.1) {$x^2+y^2=1$};
+ \draw[muted,dashed] (-2.4,-2.4)--(2.4,2.4);
+ \draw[muted,dashed] (-2.4,2.4)--(2.4,-2.4);
+ \draw[blue,thick,domain=-1.5:1.5,samples=60]
+   plot ({cosh(\x)},{sinh(\x)});
+ \node[blue,font=\small,anchor=west] at (2.4,1.4) {$x^2-y^2=1$};
+ \node[below left,font=\small] at (1,0) {$1$};
+\end{tikzpicture}
+\end{center}
+
+\section{Integrals with reversed limits}
+
+\begin{definition}[Convention]
+For $a>b$, define
+\[
+ \int_a^b f(x)\,\mathrm dx:=-\int_b^a f(x)\,\mathrm dx.
+\]
+Also $\int_a^a f(x)\,\mathrm dx:=0$.
+\end{definition}
+
+\textbf{Why?} Recall the interval additivity of integrals: for $a<c<b$,
+\[
+ \int_a^b=\int_a^c+\int_c^b.
+\]
+The convention extends this identity to every ordering of $a,b,c$.
+For example, if $b<a<c$, ordinary additivity on $[b,c]$ gives
+$\int_b^c=\int_b^a+\int_a^c$. Hence
+\[
+ \int_a^c=\int_b^c-\int_b^a=\int_b^c+\int_a^b,
+\]
+which is again $\int_a^c=\int_a^b+\int_b^c$.
+
+\begin{example}[Exercise: the fundamental theorem for $x<0$]
+Let $f$ be continuous and $x<0$. By the fundamental theorem,
+\[
+ \frac{\mathrm d}{\mathrm dx}\int_x^0 f(t)\,\mathrm dt=-f(x),
+\]
+because increasing the lower limit removes area.
+With the convention, $\int_0^x f(t)\,\mathrm dt=-\int_x^0 f(t)\,\mathrm dt$, so
+\[
+ \frac{\mathrm d}{\mathrm dx}\int_0^x f(t)\,\mathrm dt=f(x).
+\]
+Thus the fundamental theorem remains valid for $x<0$.
 \end{example}
 
